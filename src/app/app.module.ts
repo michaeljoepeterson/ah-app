@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { fbConfig } from './firebase-config';
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -38,6 +38,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     AngularFireModule.initializeApp(fbConfig),
     NotificationsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [
     
