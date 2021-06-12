@@ -1,0 +1,52 @@
+<div>
+    <form (submit)="emailLogin($event)">
+        <h4>Login</h4>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+            id="email" 
+            type="text" 
+            class="form-control"
+            aria-label="Email" 
+            aria-describedby="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+            id="password" 
+            type="password" 
+            class="form-control" 
+            aria-label="password" 
+            aria-describedby="password">
+        </div>
+        <div class="form-group">
+            <button 
+            class="btn btn-outline-primary btn-block" 
+            type="submit">
+                Login
+            </button>
+        </div>
+        <div class="form-group">
+            <button 
+            class="btn btn-outline-primary btn-block" 
+            type="button"
+            (click)="loginWithGoogle()">
+            <span class="button-icon-container">
+                <img class="login-icon" src="assets/icons/g-icon.png"/>
+                <span>Google Sign In</span>
+            </span>
+            </button>
+        </div>
+        <div class="form-group">
+            <button 
+            class="btn btn-outline-primary btn-block" 
+            type="button"
+            (click)="loginWithFacebook()">
+                <span class="button-icon-container">
+                    <img class="login-icon" src="assets/icons/face-icon.png"/>
+                    <span>Facebook Login</span>
+                </span>
+            </button>
+        </div>
+    </form>
+</div>

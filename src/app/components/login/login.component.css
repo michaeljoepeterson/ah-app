@@ -1,0 +1,15 @@
+.login-icon{
+    width: 8%;
+}
+
+.button-icon-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 600px) {
+    .login-icon{
+        width: 6%;
+    }
+}

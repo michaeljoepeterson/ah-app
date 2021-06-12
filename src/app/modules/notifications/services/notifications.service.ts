@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LoginModalComponent } from '../components/login-modal/login-modal.component'
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +14,18 @@ export class NotificationsService {
     private dialog: MatDialog
   ) { }
 
-  /**
-   * open the login modal
+   /**
+   * open a modal with the provided component
    * @returns 
    */
-  openLoginModal():MatDialogRef<any>{
-    const loginModal = this.dialog.open(LoginModalComponent);
-    return loginModal;
+  openModal(component:any,height?:string,width?:string):MatDialogRef<any>{
+    const modal = this.dialog.open(component,{
+      width,
+      height
+    });
+    return modal;
   }
-  
+
   /**
    * display a error snack bar
    * @param message string message

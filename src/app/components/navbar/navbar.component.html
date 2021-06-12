@@ -9,8 +9,13 @@
           <a class="nav-link" [routerLink]="route.path">{{route.navName}}</a>
         </li>
       </ul>
-      <div class="auth-container">
+      <div class="auth-container" *ngIf="!initialLoad">
+        <ng-container *ngIf="authInfo && !authInfo.token">
           <button class="btn btn-outline-light" (click)="login()">Login</button>
+        </ng-container>
+        <ng-container *ngIf="authInfo.token">
+          <button class="btn btn-outline-light" (click)="logout()">Logout</button>
+        </ng-container>
       </div>
     </div>
   </nav>
