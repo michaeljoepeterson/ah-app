@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  email:string;
+  password:string;
 
   constructor(
     private authService:AuthService,
@@ -17,8 +19,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  emailLogin(event:any){
-    console.log('login email');
+  async emailLogin(event:any){
+    try{
+      await this.authService.signInEmail(this.email,this.password);
+    }
+    catch(e){
+      if(e.code !== 'auth/popup-closed-by-user'){
+        let message = 'Error logging in with goolge';
+        console.warn(message,e);
+        this.notificationService.displayErrorSnackBar(message,e);
+      }
+    }
   }
 
   async loginWithGoogle(){
@@ -46,4 +57,5 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+
 }

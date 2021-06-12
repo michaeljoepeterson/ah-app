@@ -4,42 +4,59 @@
         <div class="form-group">
             <label for="email">Email</label>
             <input 
+            name="email"
             id="email" 
-            type="text" 
+            type="email" 
             class="form-control"
             aria-label="Email" 
             aria-describedby="email"
             required
+            [(ngModel)]="email"
             >
-            <!-- <div 
-            *ngIf="email.invalid && (email.dirty || email.touched)"
-            class="alert">
-                <div *ngIf="email.errors?.required">
-                    Name is required.
+            <ng-container 
+            *ngIf="emailError">
+                <div class="warn">
+                    {{emailError}}
                 </div>
-            </div> -->
+            </ng-container>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input 
             id="password" 
+            name="password"
             type="password" 
             class="form-control" 
             aria-label="password" 
             aria-describedby="password"
             required
+            [(ngModel)]="password"
             >
+            <ng-container 
+            *ngIf="passwordError">
+                <div class="warn">
+                    {{passwordError}}
+                </div>
+            </ng-container>
         </div>
         <div class="form-group">
             <label for="confirm-password">Confirm Password</label>
             <input 
             id="confirm-password" 
+            name="confirm-password"
             type="password" 
             class="form-control" 
             aria-label="password" 
             aria-describedby="password"
             required
+            [(ngModel)]="confirmPass"
             >
+            <ng-container 
+            *ngIf="confrimPassError">
+                <div class="warn">
+                    {{confrimPassError}}
+                </div>
+            </ng-container>
         </div>
         <div class="form-group">
             <button 

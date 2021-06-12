@@ -69,4 +69,17 @@ export class AuthService {
       throw e;
     }
   }
+
+  createUserEmail(email:string,pass:string):Promise<any>{
+    return this.afAuth.createUserWithEmailAndPassword(email,pass)
+  }
+
+  /**
+   * sign in using email and password auth
+   * @param email 
+   * @param pass 
+   */
+  signInEmail(email:string,pass:string){
+    return this.afAuth.signInWithEmailAndPassword(email,pass);
+  }
 }
