@@ -5,8 +5,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active" *ngFor="let route of routeData">
-          <a class="nav-link" [routerLink]="route.path">{{route.navName}}</a>
+        <li 
+        [ngClass]="{
+          'nav-item':true,
+          'active':activeRoute === route.navName
+        }" 
+        *ngFor="let route of routeData">
+          <a 
+          class="nav-link" 
+          [routerLink]="route.path"
+          (click)="setActiveRoute(route.navName)">{{route.navName}}</a>
+        </li>
+        <li [ngClass]="{
+          'nav-item':true,
+          'active':activeRoute === 'admin'
+          }" 
+          *ngIf="authInfo && authInfo.token">
+          <a 
+          class="nav-link"  
+          routerLink="/admin"
+          (click)="setActiveRoute('admin')">Admin</a>
         </li>
       </ul>
       <div class="auth-container" *ngIf="!initialLoad">

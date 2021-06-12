@@ -24,6 +24,8 @@ export class NavbarComponent implements OnInit {
   authInfo:AuthInfo;
   loginModal:MatDialogRef<any>;
   initialLoad:boolean = true;
+  //todo set this from activated route
+  activeRoute:string = 'Home';
 
   constructor(
     private notificationService:NotificationsService,
@@ -74,5 +76,10 @@ export class NavbarComponent implements OnInit {
       console.warn(message,e);
       this.notificationService.displayErrorSnackBar(message,e);
     }
+  }
+
+  setActiveRoute(name:string){
+    this.activeRoute = name;
+    console.log(this.activeRoute);
   }
 }
