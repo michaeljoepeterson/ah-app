@@ -17,6 +17,8 @@ export class AuthService {
     token:'loading'
   });
   authInfo:Observable<AuthInfo> = this._authInfo.asObservable();
+  private _isLoggedIn:BehaviorSubject<boolean> = new BehaviorSubject(null);
+  isLoggedIn:Observable<boolean> = this._isLoggedIn.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -36,7 +38,12 @@ export class AuthService {
     ).subscribe(response => {
       let auth:AuthInfo = {
         token:response
+      };
+      let isLoggedIn = false;
+      if(response){
+        isLoggedIn = true;        
       }
+      this._isLoggedIn.next(isLoggedIn);
       this._authInfo.next(auth);
     });
   }

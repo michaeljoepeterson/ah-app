@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModalComponent } from './components/auth-modal/auth-modal.component';
 import { LoginComponent } from './components/login/login.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CreateAccountComponent } from './components/create-account/create-accou
     LandingPageComponent,
     AuthModalComponent,
     LoginComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +37,11 @@ import { CreateAccountComponent } from './components/create-account/create-accou
     AngularFireAuthModule,
     AngularFireModule.initializeApp(fbConfig),
     NotificationsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
