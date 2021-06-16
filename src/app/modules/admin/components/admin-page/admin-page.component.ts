@@ -45,7 +45,7 @@ export class AdminPageComponent implements OnInit {
     if(this.cleanUpSub){
       this.cleanUpSub.unsubscribe();
     }
-    this.cleanUpSub = this.authService.getTest().subscribe({
+    this.cleanUpSub = this.authService.getAppUser().subscribe({
       next:resp => {
         let {user} = resp;
         this.user = user;
@@ -59,6 +59,6 @@ export class AdminPageComponent implements OnInit {
       complete:() => {
         this.cleanUpSub.unsubscribe();
       }
-    })
+    });
   }
 }

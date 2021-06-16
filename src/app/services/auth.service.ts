@@ -3,7 +3,7 @@ import 'firebase/auth';
 import firebase from 'firebase';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthInfo } from '../models/users/authinfo';
 import { switchMap,map, concatMap, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -33,7 +33,7 @@ export class AuthService {
         let token = null;
         let email = null;
         if(user){
-          email =user.email;
+          email = user.email;
           token = await user.getIdToken();
         }
         return {token,email};
@@ -45,7 +45,8 @@ export class AuthService {
       };
       let isLoggedIn = false;
       if(response.token && response.email){
-        isLoggedIn = true;        
+        isLoggedIn = true;
+              
       }
       this._authInfo.next(auth);
       this._isLoggedIn.next(isLoggedIn);
@@ -98,10 +99,43 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email,pass);
   }
 
-  getTest():Observable<any>{
-    let email = this._authInfo.value.email;
-    let url = `${environment.apiUrl}users/${email}`;
+  createAppUser():Observable<any>{
+    let url = `${environment.apiUrl}users`;
     let headers = this.getAuthHeaders();
+    let options = {
+      headers
+    };
+    //to do add model
+    let user = {
+      email:this._authInfo.value.email
+    }
+    return this.http.post(url,user,options);
+  }
+
+  checkAppUser(email:string,token?:string):Observable<any>{
+    return this.getAppUser(email,token).pipe(
+      switchMap(response => {
+        if(response && response.user){
+          return of(null);
+        }
+        else{
+          return this.createAppUser();
+        }
+      })
+    )
+  }
+
+  getAppUser(email?:string,token?:string):Observable<any>{
+    email = email ? email : this._authInfo.value.email;
+    let url = `${environment.apiUrl}users/${email}`;
+    let headers:HttpHeaders;
+    if(token){
+      headers = new HttpHeaders();
+      headers = headers.append('authtoken',token);
+    }
+    else{
+      headers = this.getAuthHeaders();
+    }
     let options = {
       headers
     };

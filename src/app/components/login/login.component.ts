@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
 
   async emailLogin(event:any){
     try{
-      await this.authService.signInEmail(this.email,this.password);
+      let auth = await this.authService.signInEmail(this.email,this.password);
+      let token = await auth.user.getIdToken();
+      this.checkAppUser(auth.user.email,token);
     }
     catch(e){
       if(e.code !== 'auth/popup-closed-by-user'){
@@ -34,7 +36,9 @@ export class LoginComponent implements OnInit {
 
   async loginWithGoogle(){
     try{
-      await this.authService.googleSignIn();
+      let auth:any = await this.authService.googleSignIn();
+      let token = await auth.user.getIdToken();
+      this.checkAppUser(auth.user.email,token);
     }
     catch(e){
       if(e.code !== 'auth/popup-closed-by-user'){
@@ -47,7 +51,9 @@ export class LoginComponent implements OnInit {
 
   async loginWithFacebook(){
     try{
-      await this.authService.facebookSignIn();
+      let auth = await this.authService.facebookSignIn();
+      let token = await auth.user.getIdToken();
+      this.checkAppUser(auth.user.email,token);
     }
     catch(e){
       if(e.code !== 'auth/popup-closed-by-user'){
@@ -58,4 +64,23 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  checkAppUser(email:string,token:string){
+    debugger;
+    let sub = this.authService.checkAppUser(email,token).subscribe({
+      next:resp => resp,
+      error:e => {
+        let message = 'Error logging in';
+        console.warn(message,e);
+        this.notificationService.displayErrorSnackBar(message,e);
+      },
+      complete:() => {
+        try{
+          sub.unsubscribe();
+        }
+        catch(e){
+          console.warn('error cleaning up: ',e);
+        }
+      }
+    });
+  }
 }

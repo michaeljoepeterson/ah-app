@@ -62,7 +62,9 @@ export class CreateAccountComponent implements OnInit {
     }
     this.resetErrors();
     try{
-      await this.authService.createUserEmail(this.email,this.password);
+      let auth = await this.authService.createUserEmail(this.email,this.password);
+      let token = await auth.user.getIdToken();
+      this.authService.checkAppUser(this.email,token).subscribe(resp => resp);
     }
     catch(e){
       const message = "Error creating account";
