@@ -1,3 +1,6 @@
 <ng-container appIsLoggedIn>
     <p>admin-page works!</p>
+    <ng-container *ngIf="user">
+        You are logged in as {{user.email}}
+    </ng-container>
 </ng-container>

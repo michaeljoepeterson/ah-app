@@ -9,7 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navbar',
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
@@ -29,7 +29,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private notificationService:NotificationsService,
-    private authService:AuthService
+    private authService:AuthService,
+    private ref:ChangeDetectorRef
   ) { }
 
   ngOnInit(){
@@ -45,6 +46,7 @@ export class NavbarComponent implements OnInit {
         this.authInfo = {};
         this.initialLoad = false;
       }
+      this.ref.markForCheck();
     });
   }
 
