@@ -107,14 +107,17 @@ export class AuthService {
     };
     //to do add model
     let user = {
-      email:this._authInfo.value.email
-    }
+      user:{
+        email:this._authInfo.value.email
+      }
+    };
     return this.http.post(url,user,options);
   }
 
   checkAppUser(email:string,token?:string):Observable<any>{
     return this.getAppUser(email,token).pipe(
       switchMap(response => {
+        console.log(response);
         if(response && response.user){
           return of(null);
         }

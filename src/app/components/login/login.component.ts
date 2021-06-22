@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit {
   }
 
   checkAppUser(email:string,token:string){
-    debugger;
     let sub = this.authService.checkAppUser(email,token).subscribe({
       next:resp => resp,
       error:e => {
