@@ -16,7 +16,7 @@
           [routerLink]="route.path"
           (click)="setActiveRoute(route.navName)">{{route.navName}}</a>
         </li>
-        <li [ngClass]="{
+        <!-- <li [ngClass]="{
           'nav-item':true,
           'active':activeRoute === 'admin'
           }" 
@@ -25,7 +25,7 @@
           class="nav-link"  
           routerLink="/admin"
           (click)="setActiveRoute('admin')">Admin</a>
-        </li>
+        </li> -->
       </ul>
       <div class="auth-container" *ngIf="!initialLoad">
         <ng-container *ngIf="authInfo && !authInfo.token">

@@ -26,6 +26,16 @@ export class NavbarComponent implements OnInit {
   initialLoad:boolean = true;
   //todo set this from activated route
   activeRoute:string = 'Home';
+  adminName:string = 'Admin';
+  dashboardName:string = 'Dashboard';
+  adminRoute:RouteData = {
+    path:'/admin',
+    navName:this.adminName
+  };
+  dashboardRoute:RouteData = {
+    path:'/dashboard',
+    navName:this.dashboardName
+  }
 
   constructor(
     private notificationService:NotificationsService,
@@ -41,6 +51,17 @@ export class NavbarComponent implements OnInit {
         if(this.authInfo.token && this.loginModal){
           this.loginModal.close();
         }
+        if(this.authInfo.token){
+          let hasAdmin = this.checkHasLink(this.adminName) >= 0 ? true : false;
+          if(!hasAdmin){
+            this.addLink(this.adminRoute);
+            this.addLink(this.dashboardRoute);
+          }
+        }
+        else{
+          this.removeLink(this.adminName);
+          this.removeLink(this.dashboardName);
+        }
       }
       else if(info.token === null){
         this.authInfo = {};
@@ -48,6 +69,21 @@ export class NavbarComponent implements OnInit {
       }
       this.ref.markForCheck();
     });
+  }
+
+  checkHasLink(routeName):number{
+    return this.routeData.findIndex(route => route.navName === routeName);
+  }
+
+  removeLink(routeName:string){
+    let routeIndex = this.checkHasLink(routeName);
+    if(routeIndex >= 0){
+      this.routeData.splice(routeIndex,1);
+    }
+  }
+
+  addLink(link:RouteData){
+    this.routeData.push(link);
   }
 
   ngOnDestroy(){
