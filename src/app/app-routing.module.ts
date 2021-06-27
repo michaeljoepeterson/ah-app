@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: LandingPageComponent },
   { path: 'admin', loadChildren:() => import('./modules/admin/admin.module').then(m => m.AdminModule) },
+  { path: 'dashboard', loadChildren:() => import('./modules/client-dash/client-dash.module').then(m => m.ClientDashModule) },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '/404' }
 ];
