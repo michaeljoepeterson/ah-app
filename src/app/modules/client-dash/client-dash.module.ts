@@ -9,13 +9,22 @@ import { EventListComponent } from './components/event-list/event-list.component
 import { EventCardComponent } from './components/event-list/event-card/event-card.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { MainDashComponent } from './pages/main-dash/main-dash.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [ActionBarComponent, MainNavComponent, FolderNavComponent, EventListComponent, EventCardComponent, EventDetailsComponent, MainDashComponent],
+  declarations: [
+    ActionBarComponent, 
+    MainNavComponent, 
+    FolderNavComponent, 
+    EventListComponent, 
+    EventCardComponent, 
+    EventDetailsComponent, 
+    MainDashComponent],
   imports: [
     CommonModule,
-    ClientDashRoutingModule
+    ClientDashRoutingModule,
+    SharedModule
   ]
 })
 export class ClientDashModule { }

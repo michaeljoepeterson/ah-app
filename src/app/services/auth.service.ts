@@ -27,7 +27,6 @@ export class AuthService {
   ) { 
     this.googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     this.facebookProvider = new firebase.auth.FacebookAuthProvider();
-    console.log('auth');
     this.afAuth.authState.pipe(
       mergeMap(async (user) => {
         let token = null;
@@ -144,4 +143,5 @@ export class AuthService {
     };
     return this.http.get(url,options);
   }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-main-dash',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainDashComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService:AuthService
+  ) { 
+    //this.authService.setDashboardView(true);
+  }
 
   ngOnInit(): void {
+
+  }
+
+  ngOnDestroy(){
+    console.log('dash destroy');
+    //this.authService.setDashboardView(false);
   }
 
 }
