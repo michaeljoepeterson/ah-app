@@ -14,7 +14,8 @@ import { FolderNavItemComponent } from './components/navigation/folder-nav/folde
 import { FolderItemComponent } from './components/navigation/folder-nav/folder-item/folder-item.component';
 import { FileItemComponent } from './components/navigation/folder-nav/file-item/file-item.component';
 import { FolderNavListComponent } from './components/navigation/folder-nav/folder-nav-list/folder-nav-list.component';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { FolderNavListComponent } from './components/navigation/folder-nav/folde
   imports: [
     CommonModule,
     ClientDashRoutingModule,
-    SharedModule
+    SharedModule,
+    MatIconModule,
+    MatRippleModule
   ]
 })
 export class ClientDashModule { }

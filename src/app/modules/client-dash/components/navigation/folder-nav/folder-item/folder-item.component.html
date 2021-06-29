@@ -1,5 +1,15 @@
-<div [ngStyle]="{'margin-left':folderSpace + 'px'}">
-    <p>Folder name: {{folder.name}}</p>
+<div 
+[ngStyle]="{'margin-left':folderSpace + 'px'}"
+class="folder">
+    <div 
+    matRipple 
+    class="folder-header text-overflow-container">
+        <mat-icon aria-hidden="false" aria-label="expand folder">chevron_right</mat-icon>
+        <mat-icon class="material-icons-outlined" aria-hidden="false" aria-label="expand folder">folder_outline</mat-icon>
+        <span class="folder-name text-overflow-element">
+            {{folder.name}}
+        </span>
+    </div>
     <ng-container *ngIf="!folder.customSort">
         <ng-container *ngIf="folder.subFolders">
             <ng-container *ngFor="let folder of folder.subFolders">

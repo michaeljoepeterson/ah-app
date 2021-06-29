@@ -1,0 +1,17 @@
+.folder{
+}
+
+.folder-header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 24px;
+}
+
+.folder-header:hover{
+    cursor: pointer;
+}
+
+.folder-name{
+    margin-left: 5px;
+}

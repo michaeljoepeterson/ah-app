@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NotificationsService } from '../../../../notifications/services/notifications.service';
 import { AuthService } from '../../../../../services/auth.service';
-import { FolderItem } from '../../../models/folder-item';
+import { FolderItem, folderType } from '../../../models/folder-item';
 import { FolderNavService } from '../../../services/folder-nav.service';
+import { MenuItem } from 'primeng/api';
 
 /**
  * wrapper to handle the side navbar component 
@@ -20,6 +21,7 @@ export class FolderNavComponent implements OnInit {
   folders:FolderItem[];
   subscriptions:Subscription[] = [];
   generalSub:Subscription;
+  menuItems:MenuItem[] = [];
 
   constructor(
     private authService:AuthService,
@@ -49,6 +51,11 @@ export class FolderNavComponent implements OnInit {
         next:response => {
           this.folders = response;
           console.log('folder',this.folders);
+          /*
+          if(this.usePrime){
+            this.initPrimeMenue();
+          }
+          */
           this.ref.markForCheck();
         },
         error:err => {
@@ -70,4 +77,25 @@ export class FolderNavComponent implements OnInit {
       console.warn('Error cleainng up folders:',e);
     }
   }
+  
+  /*
+  initPrimeMenue(){
+
+  }
+
+  getFolderMenuItems(folder:FolderItem,items:MenuItem[] = []){
+    if(folder.files && folder.files.length){
+      folder.files.forEach(file => {
+        let item:MenuItem = {};
+        item.label = file.name;
+        item.icon = 'pi-file'        
+      });
+    }
+    if(folder.subFolders && folder.subFolders.length > 0){
+      this.getFolderMenuItems(folder.subFolders,items);
+    }
+    
+    return items;
+  }
+  */
 }

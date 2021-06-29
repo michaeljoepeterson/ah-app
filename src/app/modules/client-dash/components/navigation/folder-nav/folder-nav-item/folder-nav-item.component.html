@@ -1,10 +1,12 @@
-<ng-container *ngIf="item && item.type === foldertype">
-    <app-folder-item 
-    [folder]="item"
-    [folderSpace]="folderSpace"></app-folder-item>
-</ng-container>
-<ng-container *ngIf="item && item.type === fileType">
-    <app-file-item 
-    [file]="item"
-    [folderSpace]="folderSpace"></app-file-item>
-</ng-container>
+<div class="folder-nav-item">
+    <ng-container *ngIf="item && item.type === foldertype">
+        <app-folder-item 
+        [folder]="item"
+        [folderSpace]="folderSpace"></app-folder-item>
+    </ng-container>
+    <ng-container *ngIf="item && item.type === fileType">
+        <app-file-item 
+        [file]="item"
+        [folderSpace]="folderSpace"></app-file-item>
+    </ng-container>
+</div>

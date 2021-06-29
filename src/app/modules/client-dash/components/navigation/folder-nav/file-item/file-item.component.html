@@ -1,3 +1,6 @@
-<div [ngStyle]="{'margin-left':folderSpace + 'px'}">
-    <p>File Name:{{file.name}}</p>
+<div 
+[ngStyle]="{'margin-left':folderSpace + 'px'}" 
+class="file-header text-overflow-container">
+    <mat-icon class="material-icons-outlined" aria-hidden="false" aria-label="expand folder">assignment</mat-icon>
+    <span class="text-overflow-element">{{file.name}}</span>
 </div>
