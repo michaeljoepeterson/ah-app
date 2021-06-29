@@ -16,9 +16,10 @@ export class FolderItemComponent implements OnInit {
   /**
    * increment child spacing to imply folder structure
    */
+  @Input() folderExpanded:boolean = false;
   baseChildIncrement:number = 6;
   childAdjustedSpacing:number;
-  combinedItems:any[] = []
+  combinedItems:any[] = [];
 
   constructor() { }
 
@@ -42,5 +43,10 @@ export class FolderItemComponent implements OnInit {
       let {sortOrder} = folder;
       this.combinedItems[sortOrder] = new FolderItem(folder);
     });
+  }
+
+  expandFolder(){
+    console.log(this.folder);
+    
   }
 }
