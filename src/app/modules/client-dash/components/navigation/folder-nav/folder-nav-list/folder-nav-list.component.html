@@ -1,4 +1,6 @@
 <ng-container *ngIf="folders">
-    <p>folder-nav-list works!</p>
+    <ng-container *ngFor="let folder of folders">
+        <app-folder-nav-item [item]="folder"></app-folder-nav-item>
+    </ng-container>
 </ng-container>
 

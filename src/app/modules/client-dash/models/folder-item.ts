@@ -1,5 +1,7 @@
 import { FileItem, IfileItem } from "./file-item";
 
+export const folderType = 'folder';
+
 export interface IFolderItem{
     name:string;
     files?:(FileItem|IfileItem)[];
@@ -9,7 +11,8 @@ export interface IFolderItem{
 export class FolderItem implements IFolderItem{
     name:string = null;
     files?:FileItem[] = null;
-    subFolders?:FolderItem[] = null;
+    subFolders?:FolderItem[] = [];
+    type:string = folderType;
 
     constructor(data?:any){
         if(data){

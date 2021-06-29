@@ -1,1 +1,6 @@
-<p>folder-nav-item works!</p>
+<ng-container *ngIf="item && item.type === foldertype">
+    <app-folder-item [folder]="item"></app-folder-item>
+</ng-container>
+<ng-container *ngIf="item && item.type === fileType">
+    <app-file-item [file]="item"></app-file-item>
+</ng-container>

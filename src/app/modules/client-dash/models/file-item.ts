@@ -1,12 +1,15 @@
+export const fileType = 'file';
+
 export interface IfileItem{
     name:string;
-    event?:any
+    event?:any;
 }
 
 export class FileItem implements IfileItem{
     name:string = null;
     //to do event type
     event?:any = null;
+    type:string = fileType;
     
     constructor(data?:any){
         if(data){

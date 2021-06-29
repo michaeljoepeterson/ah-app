@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FolderItem } from 'src/app/modules/client-dash/models/folder-item';
+import { Component, Input, OnInit } from '@angular/core';
+import { FolderItem } from '../../../../models/folder-item';
 
+/**
+ * wrapper to handle folder data, it renders folder nav items which handle rendering either a folder or file
+ */
 @Component({
   selector: 'app-folder-nav-list',
   templateUrl: './folder-nav-list.component.html',
   styleUrls: ['./folder-nav-list.component.css']
 })
 export class FolderNavListComponent implements OnInit {
-  folders:FolderItem[];
+  @Input() folders:FolderItem[];
 
   constructor() { }
 
