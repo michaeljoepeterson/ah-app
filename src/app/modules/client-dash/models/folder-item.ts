@@ -10,7 +10,7 @@ export interface IFolderItem{
 
 export class FolderItem implements IFolderItem{
     name:string = null;
-    files?:FileItem[] = null;
+    files?:FileItem[] = [];
     subFolders?:FolderItem[] = [];
     type:string = folderType;
 

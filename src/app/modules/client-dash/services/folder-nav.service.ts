@@ -17,7 +17,20 @@ export class FolderNavService {
   getUserFolders(user:string):Observable<FolderItem[]>{
     let folderData:IFolderItem[] = [
       {
-        name:'First folder'
+        name:'First folder',
+        files:[
+          {
+            name:'Couple files here'
+          },
+          {
+            name:'file 2'
+          }
+        ],
+        subFolders:[
+          {
+            name:'my new sub folder'
+          }
+        ]
       },
       {
         name:'Second folder',
@@ -44,6 +57,19 @@ export class FolderNavService {
                   },
                   {
                     name:'Some file 2'
+                  }
+                ],
+                subFolders:[
+                  {
+                    name:'Got a new sub folder here',
+                    files:[
+                      {
+                        name:'Some file copy'
+                      },
+                      {
+                        name:'Some file 2 copy'
+                      }
+                    ]
                   }
                 ]
               }

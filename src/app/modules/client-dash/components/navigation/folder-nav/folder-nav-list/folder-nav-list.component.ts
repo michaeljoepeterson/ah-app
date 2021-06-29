@@ -11,6 +11,10 @@ import { FolderItem } from '../../../../models/folder-item';
 })
 export class FolderNavListComponent implements OnInit {
   @Input() folders:FolderItem[];
+  /**
+   * used to space out folders and imply folder structure
+   */
+  @Input() leftSpacing:number = 0;
 
   constructor() { }
 
