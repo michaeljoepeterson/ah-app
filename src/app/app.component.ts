@@ -22,6 +22,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
+    //can expand for other modules
     this.router.events
     .pipe(
       filter(e => e instanceof NavigationEnd)
