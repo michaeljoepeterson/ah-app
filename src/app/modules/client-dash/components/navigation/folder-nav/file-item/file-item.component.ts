@@ -8,6 +8,7 @@ import { FileItem } from '../../../../models/file-item';
 })
 export class FileItemComponent implements OnInit {
   @Input() file:FileItem;
+  @Input() folderSpace:number = 0;
 
   constructor() { }
 

@@ -20,10 +20,10 @@ export class FolderNavService {
         name:'First folder',
         files:[
           {
-            name:'Couple files here'
+            name:'file 2'
           },
           {
-            name:'file 2'
+            name:'Couple files here'
           }
         ],
         subFolders:[
@@ -34,20 +34,25 @@ export class FolderNavService {
       },
       {
         name:'Second folder',
+        customSort:true,
         files:[
           {
-            name:'My file'
+            name:'My file',
+            sortOrder:0
           },
           {
-            name:'My file 2'
+            name:'My file 2',
+            sortOrder:3
           }
         ],
         subFolders:[
           {
-            name:'Folder with no children'
+            name:'Folder with no children',
+            sortOrder:1
           },
           {
             name:'Folder with children',
+            sortOrder:2,
             subFolders:[
               {
                 name:'A folder here',

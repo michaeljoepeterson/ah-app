@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FileItem } from '../../../../models/file-item';
 import { FolderItem } from '../../../../models/folder-item';
 
 @Component({
@@ -15,13 +16,32 @@ export class FolderItemComponent implements OnInit {
   /**
    * increment child spacing to imply folder structure
    */
-  baseChildIncrement:number = 2;
+  baseChildIncrement:number = 5;
   childAdjustedSpacing:number;
+  combinedItems:any[] = []
 
   constructor() { }
 
   ngOnInit(): void {
     this.childAdjustedSpacing = this.folderSpace + this.baseChildIncrement; 
+    if(this.folder.customSort){
+      this.initCustomOrder();
+    }
   }
 
+  initCustomOrder(){
+    let length = this.folder.files.length + this.folder.subFolders.length;
+    for(let i = 0;i < length;i++){
+      this.combinedItems.push({});
+    }
+    this.folder.files.forEach(file => {
+      let {sortOrder} = file;
+      this.combinedItems[sortOrder] = new FileItem(file);
+    });
+    this.folder.subFolders.forEach(folder => {
+      let {sortOrder} = folder;
+      this.combinedItems[sortOrder] = new FolderItem(folder);
+    });
+    console.log(this.combinedItems);
+  }
 }

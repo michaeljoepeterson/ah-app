@@ -1,13 +1,26 @@
-<div>
+<div [ngStyle]="{'margin-left':folderSpace + 'px'}">
     <p>Folder name: {{folder.name}}</p>
-    <ng-container *ngIf="folder.files">
-        <ng-container *ngFor="let file of folder.files">
-            <app-folder-nav-item [item]="file"></app-folder-nav-item>
+    <ng-container *ngIf="!folder.customSort">
+        <ng-container *ngIf="folder.subFolders">
+            <ng-container *ngFor="let folder of folder.subFolders">
+                <app-folder-nav-item 
+                [item]="folder"
+                [folderSpace]="childAdjustedSpacing"></app-folder-nav-item>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="folder.files">
+            <ng-container *ngFor="let file of folder.files">
+                <app-folder-nav-item 
+                [item]="file"
+                [folderSpace]="childAdjustedSpacing"></app-folder-nav-item>
+            </ng-container>
         </ng-container>
     </ng-container>
-    <ng-container *ngIf="folder.subFolders">
-        <ng-container *ngFor="let folder of folder.subFolders">
-            <app-folder-nav-item [item]="folder"></app-folder-nav-item>
+    <ng-container *ngIf="folder.customSort">
+        <ng-container *ngFor="let item of combinedItems">
+            <app-folder-nav-item 
+            [item]="item"
+            [folderSpace]="childAdjustedSpacing"></app-folder-nav-item>
         </ng-container>
     </ng-container>
 </div>

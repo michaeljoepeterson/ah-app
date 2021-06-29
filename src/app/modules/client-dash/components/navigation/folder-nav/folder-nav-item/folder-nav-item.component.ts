@@ -12,6 +12,7 @@ import { folderType,FolderItem } from '../../../../models/folder-item';
 })
 export class FolderNavItemComponent implements OnInit {
   @Input() item:(FolderItem|FolderItem);
+  @Input() folderSpace:number = 0;
   fileType:string = fileType;
   foldertype:string = folderType;
 

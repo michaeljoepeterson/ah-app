@@ -6,6 +6,8 @@ export interface IFolderItem{
     name:string;
     files?:(FileItem|IfileItem)[];
     subFolders?:(FolderItem|IFolderItem)[];
+    sortOrder?:number;
+    customSort?:boolean
 }
 
 export class FolderItem implements IFolderItem{
@@ -13,6 +15,8 @@ export class FolderItem implements IFolderItem{
     files?:FileItem[] = [];
     subFolders?:FolderItem[] = [];
     type:string = folderType;
+    sortOrder?:number = null;
+    customSort?:boolean = false;
 
     constructor(data?:any){
         if(data){
@@ -25,7 +29,7 @@ export class FolderItem implements IFolderItem{
         let files = "files";
         let keys = Object.keys(this);
         keys.forEach(key => {
-            if(data[key] && key !== subFolders && key !== files){
+            if((data[key] || data[key] === 0) && key !== subFolders && key !== files){
                 this[key] = data[key];
             }
             else if(data[key] &&  key === subFolders){
