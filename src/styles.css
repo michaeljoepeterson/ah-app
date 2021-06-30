@@ -19,3 +19,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex: 0 0 0;
   max-width: 0;
 }
+
+.icon-container{
+  display: flex;
+}
+
+.icon-spacing{
+  margin-right: 10px;
+}
