@@ -1,0 +1,19 @@
+<div class="input-group">
+    <input  
+    type="text" 
+    class="form-control input-combo"
+    aria-label="search" 
+    aria-describedby="search"
+    [required]="required"
+    [(ngModel)]="textInput"
+    (ngModelChange)="onChange($event)"
+    placeholder="search"
+    >
+    <button
+    class="icon-button" 
+    mat-icon-button 
+    (click)="onClick()"
+    >
+        <mat-icon>{{icon}}</mat-icon>
+    </button>
+</div>

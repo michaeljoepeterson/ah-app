@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventCardComponent } from './event-card.component';
+import { InputButtonComboComponent } from './input-button-combo.component';
 
-describe('EventCardComponent', () => {
-  let component: EventCardComponent;
-  let fixture: ComponentFixture<EventCardComponent>;
+describe('InputButtonComboComponent', () => {
+  let component: InputButtonComboComponent;
+  let fixture: ComponentFixture<InputButtonComboComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventCardComponent ]
+      declarations: [ InputButtonComboComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventCardComponent);
+    fixture = TestBed.createComponent(InputButtonComboComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

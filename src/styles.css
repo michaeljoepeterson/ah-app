@@ -28,6 +28,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-right: 10px;
 }
 
+.color-1{
+  color: white;
+}
+
+.color-2{
+  color: lightgray;
+}
+
+.primary-button{
+  background-color: #6dc8bf !important;
+}
+
 .background-1{
   background-color: #1e262b;
 }

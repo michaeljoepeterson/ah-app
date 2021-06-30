@@ -1,0 +1,8 @@
+.note-control,.recent-note-control{
+    display: flex;
+    align-items: center;
+}
+
+.note-control{
+    margin-bottom: 10px;
+}

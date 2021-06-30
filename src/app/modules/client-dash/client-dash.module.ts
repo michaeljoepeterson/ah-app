@@ -5,9 +5,6 @@ import { ClientDashRoutingModule } from './client-dash-routing.module';
 import { ActionBarComponent } from './components/navigation/action-bar/action-bar.component';
 import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
 import { FolderNavComponent } from './components/navigation/folder-nav/folder-nav.component';
-import { EventListComponent } from './components/file-item-list/event-list.component';
-import { EventCardComponent } from './components/file-item-list/event-card/event-card.component';
-import { EventDetailsComponent } from './components/file-item-details/event-details.component';
 import { MainDashComponent } from './pages/main-dash/main-dash.component';
 import {SharedModule} from '../shared/shared.module';
 import { FolderNavItemComponent } from './components/navigation/folder-nav/folder-nav-item/folder-nav-item.component';
@@ -25,16 +22,39 @@ import { TagComponent } from './components/navigation/tags/tag/tag.component';
 import { DashNavComponent } from './components/navigation/dash-nav/dash-nav.component';
 import { ChartListComponent } from './components/chart-list/chart-list.component';
 import { ChartListItemComponent } from './components/chart-list/chart-list-item/chart-list-item.component';
+import { SearchContainerComponent } from './components/search-container/search-container.component';
+import { SearchInputComponent } from './components/search-container/search-input/search-input.component';
+import { NoteOptionsComponent } from './components/search-container/note-options/note-options.component';
+import { FolderCardListComponent } from './components/folder-card-list/folder-card-list.component';
+import { FolderCardComponent } from './components/folder-card-list/folder-card/folder-card.component';
+import { FolderCardDetailsComponent } from './components/folder-card-details/folder-card-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
     ActionBarComponent, 
     MainNavComponent, 
     FolderNavComponent, 
-    EventListComponent, 
-    EventCardComponent, 
-    EventDetailsComponent, 
-    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent, FileManagerComponent, TagsComponent, TrashComponent, TagComponent, DashNavComponent, ChartListComponent, ChartListItemComponent],
+    MainDashComponent, 
+    FolderNavItemComponent, 
+    FolderItemComponent, 
+    FileItemComponent, 
+    FolderNavListComponent, 
+    FileManagerComponent, 
+    TagsComponent, 
+    TrashComponent, 
+    TagComponent, 
+    DashNavComponent, 
+    ChartListComponent, 
+    ChartListItemComponent, 
+    SearchContainerComponent, 
+    SearchInputComponent, 
+    NoteOptionsComponent, 
+    FolderCardListComponent, 
+    FolderCardComponent, 
+    FolderCardDetailsComponent
+  ],
   imports: [
     CommonModule,
     ClientDashRoutingModule,
@@ -42,7 +62,10 @@ import { ChartListItemComponent } from './components/chart-list/chart-list-item/
     MatIconModule,
     MatRippleModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSelectModule
   ]
 })
 export class ClientDashModule { }

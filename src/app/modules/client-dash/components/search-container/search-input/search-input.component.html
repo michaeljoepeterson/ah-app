@@ -1,0 +1,12 @@
+<div class="search-input-container">
+    <app-input-button-combo 
+    class="search-input"
+    (buttonClicked)="executeSearch($event)"
+    (inputChanged)="inputChange($event)"></app-input-button-combo>
+    <button 
+    class="primary-button"
+    mat-mini-fab  
+    aria-label="add">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

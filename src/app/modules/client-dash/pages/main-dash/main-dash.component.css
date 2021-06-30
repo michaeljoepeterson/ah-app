@@ -10,6 +10,9 @@
 .main-content{
     margin: 0 10px;
 }
+.folder-list-container > *{
+    margin-top: 10px;
+}
 
 @media (max-width: 1405px) {
     .folder-nav{  
