@@ -27,8 +27,4 @@ export class DateEvent implements IDateEvent{
             }
         });
     }
-
-    getStatuses(){
-        return [];
-    }
 }

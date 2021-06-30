@@ -10,10 +10,13 @@ import { FolderItem } from '../../../models/folder-item';
 })
 export class FolderCardComponent implements OnInit {
   @Input() item:(FolderItem|FileItem);
+  statuses:string[] = ['Scan Taken','Approved','Production'];
+  itemStatsues:string[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.itemStatsues = this.item.getStatuses();
   }
 
 }

@@ -30,6 +30,10 @@ import { FolderCardComponent } from './components/folder-card-list/folder-card/f
 import { FolderCardDetailsComponent } from './components/folder-card-details/folder-card-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
+import { GetCurrentStatusColorPipe, GetCurrentStatusPipe } from './pipes/folder-card.pipe';
+import { DashCommentsComponent } from './components/dash-comments/dash-comments.component';
+import { DashCommentComponent } from './components/dash-comments/dash-comment/dash-comment.component';
+import { DashCalendarComponent } from './components/dash-calendar/dash-calendar.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,12 @@ import {MatSelectModule} from '@angular/material/select';
     NoteOptionsComponent, 
     FolderCardListComponent, 
     FolderCardComponent, 
-    FolderCardDetailsComponent
+    FolderCardDetailsComponent, 
+    GetCurrentStatusPipe,
+    GetCurrentStatusColorPipe,
+    DashCommentsComponent,
+    DashCommentComponent,
+    DashCalendarComponent
   ],
   imports: [
     CommonModule,

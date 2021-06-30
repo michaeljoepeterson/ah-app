@@ -1,0 +1,70 @@
+.item-card{
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.item-name{
+    margin-bottom: 10px;
+}
+
+.item-details{
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.item-status{
+    display: flex;
+    justify-content: center;
+}
+
+.item-status > *{
+    margin-right: 20px;
+}
+
+.status{
+    padding: 6px;
+    font-size: 15px;
+    width: 110px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.status-indicator{
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.main-card-content{
+    display: flex;
+}
+
+.control-options{
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+ul li { 
+    list-style: none; 
+    display: inline; 
+}
+ul li:after { 
+    content: " \00b7"; 
+}
+ul li:last-child:after { 
+    content: none; 
+}
+
+.card-controls{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}

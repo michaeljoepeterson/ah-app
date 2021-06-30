@@ -47,3 +47,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .background-2{
   background-color: #2b343a;
 }
+
+.scan-taken{
+  background-color: #cbdb2a !important;
+}
+
+.approved{
+  background-color: #524fa1 !important;
+}
+
+.production{
+  background-color: #ed1c24 !important;
+}

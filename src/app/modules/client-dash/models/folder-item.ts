@@ -86,4 +86,10 @@ export class FolderItem implements IFolderItem{
 
         return combinedItems;
     }
+
+    getStatuses():string[]{
+        let statuses = this.dateEvents.map(event => event.status);
+        return statuses;
+    }
+
 }

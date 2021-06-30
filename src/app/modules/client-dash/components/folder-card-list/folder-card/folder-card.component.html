@@ -1,1 +1,54 @@
-<p>{{item.name}}</p>
+<div class="item-card background-2 color-1">
+    <div class="main-card-content">
+        <div [class]="'status-indicator ' + ((item.dateEvents|getCurrentStatus) | getStatusColor)">
+    
+        </div>
+        <div>
+            <div class="item-name">
+                <h6>
+                    {{item.name}}
+                </h6>
+            </div>
+            <div class="item-details">
+                <span>
+                    {{item.details}}
+                </span>
+            </div>
+            <div class="item-status">
+                <ng-container *ngFor="let status of statuses">
+                    <span [class]="(status | getStatusColor) + ' status' + (itemStatsues.includes(status) ? '' : ' hidden')">{{status}}</span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="card-controls color-2">
+        <ul class="control-options">
+            <li>
+                <button mat-button>
+                    See History
+                </button>
+            </li>
+            <li>
+                <button mat-button>
+                    Request Call
+                </button>
+            </li>
+            <li>
+                <button mat-button> 
+                    Revise
+                </button>
+            </li>
+        </ul>
+        <div>
+            <button mat-icon-button aria-label="action bar search">
+                <mat-icon class="material-icons-outlined" >share_outline</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="action bar mail">
+                <mat-icon class="material-icons-outlined" >favorite_outline</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="action bar notifications">
+                <mat-icon class="material-icons-outlined" >format_list_bulleted</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

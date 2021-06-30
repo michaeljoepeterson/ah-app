@@ -23,11 +23,36 @@ export class FolderNavService {
         files:[
           {
             name:'file 2',
-            id:'1-1'
+            id:'1-1',
+            dateEvents:[
+              {
+                date:new Date(),
+                status:'Scan Taken'
+              },
+              {
+                date:new Date(),
+                status:'Approved'
+              },
+              {
+                date:new Date(),
+                status:'Production'
+              }
+            ]
           },
           {
             name:'Couple files here',
-            id:'1-2'
+            id:'1-2',
+            details:'nothing on this file',
+            dateEvents:[
+              {
+                date:new Date(),
+                status:'Scan Taken'
+              },
+              {
+                date:new Date(),
+                status:'Approved'
+              }
+            ]
           }
         ],
         subFolders:[

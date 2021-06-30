@@ -41,4 +41,10 @@ export class FileItem implements IfileItem{
             }
         });
     }
+
+    getStatuses():string[]{
+        let statuses = this.dateEvents.map(event => event.status);
+        return statuses;
+    }
+
 }
