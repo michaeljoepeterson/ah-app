@@ -1,0 +1,11 @@
+.file-manager-list{
+    display: flex;
+}
+
+.file-manager-list > mat-icon{
+    margin-right: 10px;
+}
+
+.file-manager-header{
+    margin-bottom: 30px;
+}
