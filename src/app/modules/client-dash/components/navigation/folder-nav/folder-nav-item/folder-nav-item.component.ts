@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { fileType,FileItem } from '../../../../models/file-item';
 import { folderType,FolderItem } from '../../../../models/folder-item';
 
@@ -7,6 +7,7 @@ import { folderType,FolderItem } from '../../../../models/folder-item';
  */
 @Component({
   selector: 'app-folder-nav-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './folder-nav-item.component.html',
   styleUrls: ['./folder-nav-item.component.css']
 })
@@ -16,7 +17,9 @@ export class FolderNavItemComponent implements OnInit {
   fileType:string = fileType;
   foldertype:string = folderType;
 
-  constructor() { }
+  constructor(
+    private ref:ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
   }

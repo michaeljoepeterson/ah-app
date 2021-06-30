@@ -1,0 +1,8 @@
+.tag{
+    display: flex;
+    cursor: pointer;
+}
+
+.tag-icon{
+    margin-right: 10px;
+}

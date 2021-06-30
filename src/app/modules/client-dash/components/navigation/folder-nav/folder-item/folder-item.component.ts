@@ -1,10 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FileItem } from '../../../../models/file-item';
 import { FolderItem } from '../../../../models/folder-item';
 
 @Component({
   selector: 'app-folder-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './folder-item.component.html',
   styleUrls: ['./folder-item.component.css'],
   animations: [
@@ -51,7 +52,9 @@ export class FolderItemComponent implements OnInit {
   combinedItems:any[] = [];
   folderCount:number = 0;
 
-  constructor() { }
+  constructor(
+    private ref:ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {   
     if(this.folder.customSort){

@@ -20,6 +20,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileManagerComponent } from './components/navigation/file-manager/file-manager.component';
 import { TagsComponent } from './components/navigation/tags/tags.component';
 import { TrashComponent } from './components/navigation/trash/trash.component';
+import { MatButtonModule } from '@angular/material/button';
+import { TagComponent } from './components/navigation/tags/tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -29,14 +31,15 @@ import { TrashComponent } from './components/navigation/trash/trash.component';
     EventListComponent, 
     EventCardComponent, 
     EventDetailsComponent, 
-    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent, FileManagerComponent, TagsComponent, TrashComponent],
+    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent, FileManagerComponent, TagsComponent, TrashComponent, TagComponent],
   imports: [
     CommonModule,
     ClientDashRoutingModule,
     SharedModule,
     MatIconModule,
     MatRippleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonModule
   ]
 })
 export class ClientDashModule { }

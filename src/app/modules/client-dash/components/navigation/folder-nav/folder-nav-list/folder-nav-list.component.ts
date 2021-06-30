@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FolderItem } from '../../../../models/folder-item';
 
 /**
@@ -6,6 +6,7 @@ import { FolderItem } from '../../../../models/folder-item';
  */
 @Component({
   selector: 'app-folder-nav-list',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './folder-nav-list.component.html',
   styleUrls: ['./folder-nav-list.component.css']
 })
@@ -16,7 +17,9 @@ export class FolderNavListComponent implements OnInit {
    */
   @Input() leftSpacing:number = 0;
 
-  constructor() { }
+  constructor(
+    private ref:ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
   }
