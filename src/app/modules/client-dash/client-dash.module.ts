@@ -22,6 +22,7 @@ import { TagsComponent } from './components/navigation/tags/tags.component';
 import { TrashComponent } from './components/navigation/trash/trash.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TagComponent } from './components/navigation/tags/tag/tag.component';
+import { DashNavComponent } from './components/navigation/dash-nav/dash-nav.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { TagComponent } from './components/navigation/tags/tag/tag.component';
     EventListComponent, 
     EventCardComponent, 
     EventDetailsComponent, 
-    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent, FileManagerComponent, TagsComponent, TrashComponent, TagComponent],
+    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent, FileManagerComponent, TagsComponent, TrashComponent, TagComponent, DashNavComponent],
   imports: [
     CommonModule,
     ClientDashRoutingModule,
