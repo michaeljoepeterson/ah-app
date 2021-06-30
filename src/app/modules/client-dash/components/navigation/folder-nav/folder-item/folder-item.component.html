@@ -1,6 +1,9 @@
 <div 
 [ngStyle]="{'margin-left':folderSpace + 'px'}"
-class="folder">
+[ngClass]="{
+    'folder':true,
+    'selected':isSelected
+}">
     <div 
     matRipple 
     class="folder-header text-overflow-container"

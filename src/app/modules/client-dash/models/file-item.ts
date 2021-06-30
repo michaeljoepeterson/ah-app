@@ -1,9 +1,14 @@
+import { DateEvent, IDateEvent } from "./date-event";
+
 export const fileType = 'file';
 
 export interface IfileItem{
     name:string;
     event?:any;
     sortOrder?:number;
+    dateEvents?:IDateEvent[];
+    details?:string;
+    id?:string
 }
 
 export class FileItem implements IfileItem{
@@ -12,6 +17,9 @@ export class FileItem implements IfileItem{
     event?:any = null;
     type:string = fileType;
     sortOrder?:number = null;
+    dateEvents?:DateEvent[] = [];
+    details?:string = null;
+    id?:string = null;
     
     constructor(data?:any){
         if(data){
@@ -21,9 +29,15 @@ export class FileItem implements IfileItem{
 
     init(data:any){
         let keys = Object.keys(this);
+        let dates = "dateEvents";
+        if(data[dates] && data[dates].length > 0){
+            this.dateEvents = data[dates].map(date => new DateEvent(date));
+        }
         keys.forEach(key => {
-            if(data[key] || data[key] === 0){
-                this[key] = data[key];
+            if(key !== dates){
+                if(data[key] || data[key] === 0){
+                    this[key] = data[key];
+                }
             }
         });
     }

@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { FolderNavService } from '../../../../services/folder-nav.service';
 import { FileItem } from '../../../../models/file-item';
 import { FolderItem } from '../../../../models/folder-item';
 
@@ -51,12 +52,23 @@ export class FolderItemComponent implements OnInit {
   childAdjustedSpacing:number;
   combinedItems:any[] = [];
   folderCount:number = 0;
+  isSelected:boolean = false;
 
   constructor(
-    private ref:ChangeDetectorRef
+    private ref:ChangeDetectorRef,
+    private folderNavService:FolderNavService
   ) { }
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
+    this.folderNavService.selectedFolder.subscribe(folder => {
+      if(folder && folder.id === this.folder.id){
+        this.isSelected = true;
+      }
+      else{
+        this.isSelected = false;
+      }
+      this.ref.markForCheck();
+    })
     if(this.folder.customSort){
       this.initCustomOrder();
     }
@@ -91,5 +103,6 @@ export class FolderItemComponent implements OnInit {
   expandFolder(){
     console.log(this.folder);
     this.folderExpanded = !this.folderExpanded;
+    this.folderNavService.selectFolder(this.folder);
   }
 }

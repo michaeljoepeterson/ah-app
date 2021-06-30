@@ -1,5 +1,5 @@
 export interface ChartSummary{
     title:string;
-    state:string;
+    status:string;
     icon?:string;
 }

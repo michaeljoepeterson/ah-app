@@ -13,22 +13,22 @@ export class ChartDataService {
     let chartSummary:ChartSummary[] = [
       {
         title:'16 Devices',
-        state:'In Production',
+        status:'In Production',
         icon:'stacked_line_chart'
       },
       {
         title:'52 Patients',
-        state:'On File',
+        status:'On File',
         icon:'bar_chart'
       },
       {
         title:'3 Designs',
-        state:'In Development',
+        status:'In Development',
         icon:'stacked_line_chart'
       },
       {
         title:'2 Days',
-        state:'Until Next Shipment',
+        status:'Until Next Shipment',
         icon:'bar_chart'
       }
     ];

@@ -1,1 +1,4 @@
-<p>folder-card-list works!</p>
+<ng-container *ngFor="let item of folderItems">
+    <app-folder-card
+    [item]="item"></app-folder-card>
+</ng-container>
