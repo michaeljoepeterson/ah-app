@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { DateEvent } from '../models/date-event';
 import { FolderItem, IFolderItem } from '../models/folder-item';
 
 @Injectable({
@@ -26,15 +27,15 @@ export class FolderNavService {
             id:'1-1',
             dateEvents:[
               {
-                date:new Date(),
+                date:new Date("2021-06-10"),
                 status:'Scan Taken'
               },
               {
-                date:new Date(),
+                date:new Date("2021-06-11"),
                 status:'Approved'
               },
               {
-                date:new Date(),
+                date:new Date("2021-06-11"),
                 status:'Production'
               }
             ]
@@ -45,11 +46,11 @@ export class FolderNavService {
             details:'nothing on this file',
             dateEvents:[
               {
-                date:new Date(),
+                date:new Date("2021-07-10"),
                 status:'Scan Taken'
               },
               {
-                date:new Date(),
+                date:new Date("2021-07-15"),
                 status:'Approved'
               }
             ]
@@ -75,7 +76,7 @@ export class FolderNavService {
             details:'some details for this file',
             dateEvents:[
               {
-                date:new Date(),
+                date:new Date("2021-06-01"),
                 status:'Scan Taken'
               }
             ]
@@ -99,11 +100,11 @@ export class FolderNavService {
             details:'Really important folder',
             dateEvents:[
               {
-                date:new Date(),
+                date:new Date("2021-05-10"),
                 status:'Scan Taken'
               },
               {
-                date:new Date(),
+                date:new Date("2021-05-20"),
                 status:'Approved'
               }
             ],
@@ -123,15 +124,15 @@ export class FolderNavService {
                     details:'Remember to work on this later',
                     dateEvents:[
                       {
-                        date:new Date(),
+                        date:new Date("2021-06-20"),
                         status:'Scan Taken'
                       },
                       {
-                        date:new Date(),
+                        date:new Date("2021-06-22"),
                         status:'Approved'
                       },
                       {
-                        date:new Date(),
+                        date:new Date("2021-07-10"),
                         status:'Production'
                       }
                     ],
@@ -173,6 +174,26 @@ export class FolderNavService {
 
   selectFolder(folder:FolderItem){
     this._selectedFolder.next(folder);
+  }
+
+  getCalendarData(folder:FolderItem){
+    let items = folder.flattenItems();
+    let events:DateEvent[] = [];
+    items.forEach(item => {
+      events = [...events,...item.dateEvents];
+    });
+    let calendarEvents = events.map(event => {
+      let calEvent:any = {};
+      calEvent.title = event.status;
+      let day = ('0' + event.date.getDate()).slice(-2);
+      let month = ('0' + (event.date.getMonth()+1)).slice(-2);
+      let year = event.date.getFullYear()
+      let date = `${year}-${month}-${day}`;
+      calEvent.date = date;
+      return calEvent;
+    });
+
+    return calendarEvents;
   }
 
 }

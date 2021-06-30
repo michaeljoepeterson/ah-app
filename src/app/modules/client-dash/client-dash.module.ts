@@ -34,6 +34,16 @@ import { GetCurrentStatusColorPipe, GetCurrentStatusPipe } from './pipes/folder-
 import { DashCommentsComponent } from './components/dash-comments/dash-comments.component';
 import { DashCommentComponent } from './components/dash-comments/dash-comment/dash-comment.component';
 import { DashCalendarComponent } from './components/dash-calendar/dash-calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; 
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin,
+  timeGridPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -74,7 +84,8 @@ import { DashCalendarComponent } from './components/dash-calendar/dash-calendar.
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    FullCalendarModule
   ]
 })
 export class ClientDashModule { }
