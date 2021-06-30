@@ -1,0 +1,22 @@
+.chart-item{
+    display: flex;
+}
+
+
+.item-padding{
+    padding:10px
+}
+
+.chart-detail{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-right: 60px;
+    width: 250px;
+}
+mat-icon{
+    font-size: 60px;
+    height: auto;
+    width: auto;
+    color: white;
+}

@@ -27,3 +27,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .icon-spacing{
   margin-right: 10px;
 }
+
+.background-1{
+  background-color: #1e262b;
+}
+
+.background-2{
+  background-color: #2b343a;
+}
