@@ -17,6 +17,9 @@ import { FolderNavListComponent } from './components/navigation/folder-nav/folde
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FileManagerComponent } from './components/navigation/file-manager/file-manager.component';
+import { TagsComponent } from './components/navigation/tags/tags.component';
+import { TrashComponent } from './components/navigation/trash/trash.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     EventListComponent, 
     EventCardComponent, 
     EventDetailsComponent, 
-    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent],
+    MainDashComponent, FolderNavItemComponent, FolderItemComponent, FileItemComponent, FolderNavListComponent, FileManagerComponent, TagsComponent, TrashComponent],
   imports: [
     CommonModule,
     ClientDashRoutingModule,
