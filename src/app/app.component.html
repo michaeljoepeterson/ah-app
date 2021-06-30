@@ -2,7 +2,9 @@
   <ng-container *ngIf="!isDash && !routeLoading">
     <app-navbar></app-navbar>
   </ng-container>
-  <div class="page-content">
+  <div [ngClass]="{
+    'page-content':!isDash && !routeLoading
+  }">
     <router-outlet></router-outlet>
   </div>
 </div>

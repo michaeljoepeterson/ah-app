@@ -1,0 +1,17 @@
+.action-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+
+.action-items-container{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.action-items > *{
+    margin-right: 15px;
+}

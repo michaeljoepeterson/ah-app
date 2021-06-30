@@ -3,6 +3,10 @@
     width: 12%;
 }
 
+.main-content{
+    margin: 0 10px;
+}
+
 @media (max-width: 1405px) {
     .folder-nav{  
         width: 16%;
