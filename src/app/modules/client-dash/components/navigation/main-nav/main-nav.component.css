@@ -1,0 +1,10 @@
+.main-nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-nav-button{
+    padding: 0;
+    font-size: 16px;
+    text-decoration: none;
+}
