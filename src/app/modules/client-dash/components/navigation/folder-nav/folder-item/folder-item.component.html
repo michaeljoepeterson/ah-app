@@ -4,11 +4,24 @@ class="folder">
     <div 
     matRipple 
     class="folder-header text-overflow-container"
-    (click)="expandFolder()">
-        <mat-icon aria-hidden="false" aria-label="expand folder">chevron_right</mat-icon>
-        <mat-icon class="material-icons-outlined" aria-hidden="false" aria-label="expand folder">folder_outline</mat-icon>
+    (click)="expandFolder()"
+    [matTooltip]="folder.name">
+        <mat-icon 
+        [ngClass]="{
+            'open-icon':true,
+            'close-icon':folderExpanded
+        }"
+        aria-hidden="false" 
+        aria-label="expand folder">chevron_right</mat-icon>
+        <mat-icon 
+        class="material-icons-outlined" 
+        aria-hidden="false" 
+        aria-label="expand folder">folder_outline</mat-icon>
         <span class="folder-name text-overflow-element">
             {{folder.name}}
+        </span>
+        <span class="folder-total">
+            {{folderCount}}
         </span>
     </div>
     <div class="folder-items">

@@ -1,3 +1,22 @@
 .folder-nav{
     transition: all 500ms;
+    width: 12%;
+}
+
+@media (max-width: 1405px) {
+    .folder-nav{  
+        width: 16%;
+    }
+}
+
+@media (max-width: 990px) {
+    .folder-nav{  
+        width: 30%;
+    }
+}
+
+@media (max-width: 767px) {
+    .folder-nav{  
+        width: 100%;
+    }
 }

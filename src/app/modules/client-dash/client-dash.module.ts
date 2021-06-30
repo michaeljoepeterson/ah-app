@@ -16,7 +16,7 @@ import { FileItemComponent } from './components/navigation/folder-nav/file-item/
 import { FolderNavListComponent } from './components/navigation/folder-nav/folder-nav-list/folder-nav-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ClientDashRoutingModule,
     SharedModule,
     MatIconModule,
-    MatRippleModule
+    MatRippleModule,
+    MatTooltipModule
   ]
 })
 export class ClientDashModule { }
