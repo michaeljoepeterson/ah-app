@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DashComment } from '../../../models/dash-comment';
 
 @Component({
   selector: 'app-dash-comment',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dash-comment.component.css']
 })
 export class DashCommentComponent implements OnInit {
+  @Input() comment:DashComment;
 
   constructor() { }
 

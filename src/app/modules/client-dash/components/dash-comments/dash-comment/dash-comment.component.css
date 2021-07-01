@@ -1,0 +1,18 @@
+.comment{
+    display: flex;
+}
+
+.image-container{
+    flex: 0.05;
+    margin-right: 15px;
+}
+
+.user-image{
+    width: 100%;
+    border-radius: 50%;
+}
+
+.user{
+    font-size: 16px;
+    display: block;
+}

@@ -1,1 +1,11 @@
-<p>dash-comment works!</p>
+<div class="comment">
+    <div class="image-container">
+        <img 
+        class="user-image" 
+        [src]="comment.userImage ? comment.userImage : 'assets/blank-profile.png'">
+    </div>
+    <div class="comment-content">
+        <h6>{{comment.user}}</h6>
+        <span>{{comment.content}}</span>
+    </div>
+</div>

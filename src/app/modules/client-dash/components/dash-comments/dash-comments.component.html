@@ -1,1 +1,21 @@
-<p>dash-comments works!</p>
+<div>
+    <div class="comment-controls">
+        <h6>Recent Posts</h6>
+        <div>
+            <button mat-icon-button>
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>download</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="comment-container">
+        <ng-container *ngFor="let comment of comments">
+            <app-dash-comment [comment]="comment"></app-dash-comment>
+        </ng-container>
+    </div>
+</div>
