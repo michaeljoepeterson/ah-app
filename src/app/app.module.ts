@@ -17,6 +17,7 @@ import { AuthModalComponent } from './components/auth-modal/auth-modal.component
 import { LoginComponent } from './components/login/login.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { GetCurrentStatusColorPipe } from './modules/client-dash/pipes/folder-card.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ReactiveFormsModule
   ],
   providers: [
-    
+    GetCurrentStatusColorPipe
   ],
   bootstrap: [AppComponent]
 })

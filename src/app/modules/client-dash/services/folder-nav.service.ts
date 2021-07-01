@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DateEvent } from '../models/date-event';
 import { FolderItem, IFolderItem } from '../models/folder-item';
+import {GetCurrentStatusColorPipe} from '../pipes/folder-card.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class FolderNavService {
   private _selectedFolder:BehaviorSubject<FolderItem> = new BehaviorSubject(null);
   selectedFolder:Observable<FolderItem> = this._selectedFolder.asObservable();
 
-  constructor() { }
+  constructor(
+    private statusColorPipe: GetCurrentStatusColorPipe
+  ) { }
 
   /**
    * get specifc folder data for a user
@@ -190,6 +193,7 @@ export class FolderNavService {
       let year = event.date.getFullYear()
       let date = `${year}-${month}-${day}`;
       calEvent.date = date;
+      calEvent.color = this.statusColorPipe.transform(event.status);
       return calEvent;
     });
 

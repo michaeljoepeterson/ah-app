@@ -16,9 +16,9 @@ export class GetCurrentStatusPipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'getStatusColor'
+  name: 'getStatusColorClass'
 })
-export class GetCurrentStatusColorPipe implements PipeTransform {
+export class GetCurrentStatusColorClassPipe implements PipeTransform {
   statusColors:any = {
     'Scan Taken':'scan-taken',
     'Approved':'approved',
@@ -31,3 +31,18 @@ export class GetCurrentStatusColorPipe implements PipeTransform {
 
 }
 
+@Pipe({
+  name: 'getStatusColor'
+})
+export class GetCurrentStatusColorPipe implements PipeTransform {
+  statusColors:any = {
+    'Scan Taken':'#cbdb2a',
+    'Approved':'#524fa1',
+    'Production':'#ed1c24'
+  }
+
+  transform(status:string): string {
+    return this.statusColors[status];
+  }
+
+}

@@ -1,6 +1,6 @@
 <div class="item-card background-2 color-1">
     <div class="main-card-content">
-        <div [class]="'status-indicator ' + ((item.dateEvents|getCurrentStatus) | getStatusColor)">
+        <div [class]="'status-indicator ' + ((item.dateEvents|getCurrentStatus) | getStatusColorClass)">
     
         </div>
         <div>
@@ -16,7 +16,7 @@
             </div>
             <div class="item-status">
                 <ng-container *ngFor="let status of statuses">
-                    <span [class]="(status | getStatusColor) + ' status' + (itemStatsues.includes(status) ? '' : ' hidden')">{{status}}</span>
+                    <span [class]="(status | getStatusColorClass) + ' status' + (itemStatsues.includes(status) ? '' : ' hidden')">{{status}}</span>
                 </ng-container>
             </div>
         </div>

@@ -37,6 +37,11 @@ export class DashCalendarComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(){
+    this.calendarComponent.getApi().setHeight(450);
+    this.calendarComponent.getApi().setOption('contentHeight',450);
+  }
+
   ngOnDestroy(){
     try{
       this.folderSub.unsubscribe();
@@ -47,12 +52,14 @@ export class DashCalendarComponent implements OnInit {
   }
 
   addFolderEvents(){
-    let calendarEvents = this.folderNavService.getCalendarData(this.folder);
-    this.calendarComponent.getApi().removeAllEvents();
-    console.log(calendarEvents);
-    calendarEvents.forEach((event:any) => {
-      this.calendarComponent.getApi().addEvent(event);
-    });
+    if(this.calendarComponent){
+      let calendarEvents = this.folderNavService.getCalendarData(this.folder);
+      this.calendarComponent.getApi().removeAllEvents();
+      console.log(calendarEvents);
+      calendarEvents.forEach((event:any) => {
+        this.calendarComponent.getApi().addEvent(event);
+      });
+    }
   }
 
   handleDateClick(event){

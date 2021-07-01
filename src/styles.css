@@ -28,11 +28,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-right: 10px;
 }
 
-.color-1{
+.color-1,.fc-col-header-cell-cushion{
   color: white;
 }
 
-.color-2{
+.color-2,.fc-daygrid-day-number{
   color: lightgray;
 }
 
@@ -44,7 +44,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #1e262b;
 }
 
-.background-2{
+.background-2,.fc-daygrid{
   background-color: #2b343a;
 }
 

@@ -30,7 +30,7 @@ import { FolderCardComponent } from './components/folder-card-list/folder-card/f
 import { FolderCardDetailsComponent } from './components/folder-card-details/folder-card-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
-import { GetCurrentStatusColorPipe, GetCurrentStatusPipe } from './pipes/folder-card.pipe';
+import { GetCurrentStatusColorPipe, GetCurrentStatusPipe, GetCurrentStatusColorClassPipe } from './pipes/folder-card.pipe';
 import { DashCommentsComponent } from './components/dash-comments/dash-comments.component';
 import { DashCommentComponent } from './components/dash-comments/dash-comment/dash-comment.component';
 import { DashCalendarComponent } from './components/dash-calendar/dash-calendar.component';
@@ -72,7 +72,8 @@ FullCalendarModule.registerPlugins([
     GetCurrentStatusColorPipe,
     DashCommentsComponent,
     DashCommentComponent,
-    DashCalendarComponent
+    DashCalendarComponent,
+    GetCurrentStatusColorClassPipe
   ],
   imports: [
     CommonModule,
