@@ -36,7 +36,7 @@ export class GetCurrentStatusColorClassPipe implements PipeTransform {
 })
 export class GetCurrentStatusColorPipe implements PipeTransform {
   statusColors:any = {
-    'Scan Taken':'#cbdb2a',
+    'Scan Taken':'rgb(117,192,67)',
     'Approved':'#524fa1',
     'Production':'#ed1c24'
   }

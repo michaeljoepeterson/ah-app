@@ -26,5 +26,9 @@
 }
 
 .selected{
-    font-weight: bold;
+    background-color: rgba(129,135,150,0.5);
+}
+
+.folder{
+    padding: 5px;
 }

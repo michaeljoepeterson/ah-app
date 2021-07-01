@@ -28,7 +28,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-right: 10px;
 }
 
-.color-1,.fc-col-header-cell-cushion{
+.color-1,.fc-col-header-cell-cushion,.fc-toolbar-title{
   color: white;
 }
 
@@ -48,8 +48,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #2b343a;
 }
 
+.background-3{
+  background-color: rgb(30,43,49);
+}
+
+.background-4{
+  background-color: rgb(26,36,41);
+}
+
+.background-5{
+  background-color: rgb(41,51,58);
+}
+
+.background-6{
+  background-color: rgb(48,51,58);
+}
+
 .scan-taken{
-  background-color: #cbdb2a !important;
+  background-color: rgb(117,192,67) !important;
 }
 
 .approved{
@@ -58,4 +74,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .production{
   background-color: #ed1c24 !important;
+}
+
+.base-padding{
+  padding: 10px;
+}
+
+.sub-padding{
+  padding: 5px;
 }
