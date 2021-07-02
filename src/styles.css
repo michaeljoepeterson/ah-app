@@ -83,3 +83,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .sub-padding{
   padding: 5px;
 }
+
+.app-container{
+  height: 100%;
+}

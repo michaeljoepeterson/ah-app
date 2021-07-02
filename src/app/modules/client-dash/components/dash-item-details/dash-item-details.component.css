@@ -1,0 +1,16 @@
+.device-image{
+    width: 100%;
+}
+
+.details-list{
+    list-style: none;
+    padding: 0;
+}
+
+.device-image-container{
+    text-align: center;
+}
+
+.product-link{
+    margin-bottom: 10px;
+}

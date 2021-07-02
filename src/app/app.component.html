@@ -1,9 +1,10 @@
-<div>
+<div class="app-container">
   <ng-container *ngIf="!isDash && !routeLoading">
     <app-navbar></app-navbar>
   </ng-container>
   <div [ngClass]="{
-    'page-content':!isDash && !routeLoading
+    'page-content':!isDash && !routeLoading,
+    'app-container':true
   }">
     <router-outlet></router-outlet>
   </div>

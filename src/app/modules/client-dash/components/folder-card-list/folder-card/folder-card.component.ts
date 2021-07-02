@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FileItem } from '../../../models/file-item';
 import { FolderItem } from '../../../models/folder-item';
+import { FolderNavService } from '../../../services/folder-nav.service';
 
 @Component({
   selector: 'app-folder-card',
@@ -13,10 +14,15 @@ export class FolderCardComponent implements OnInit {
   statuses:string[] = ['Scan Taken','Approved','Production'];
   itemStatsues:string[] = [];
 
-  constructor() { }
+  constructor(
+    private folderNavService:FolderNavService
+  ) { }
 
   ngOnInit(): void {
     this.itemStatsues = this.item.getStatuses();
   }
 
+  selectItem(){
+    this.folderNavService.selectItem(this.item);
+  }
 }

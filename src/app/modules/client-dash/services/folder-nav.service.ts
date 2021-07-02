@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DateEvent } from '../models/date-event';
+import { FileItem } from '../models/file-item';
 import { FolderItem, IFolderItem } from '../models/folder-item';
 import {GetCurrentStatusColorPipe} from '../pipes/folder-card.pipe';
 
@@ -10,6 +11,9 @@ import {GetCurrentStatusColorPipe} from '../pipes/folder-card.pipe';
 export class FolderNavService {
   private _selectedFolder:BehaviorSubject<FolderItem> = new BehaviorSubject(null);
   selectedFolder:Observable<FolderItem> = this._selectedFolder.asObservable();
+
+  private _selectedItem:BehaviorSubject<(FolderItem|FileItem)> = new BehaviorSubject(null);
+  selectedItem:Observable<(FolderItem|FileItem)> = this._selectedItem.asObservable();
 
   constructor(
     private statusColorPipe: GetCurrentStatusColorPipe
@@ -23,10 +27,10 @@ export class FolderNavService {
   getUserFolders(user:string):Observable<FolderItem[]>{
     let folderData:IFolderItem[] = [
       {
-        name:'First folder',
+        name:'Current Patients',
         files:[
           {
-            name:'file 2',
+            name:'Patient 123-555',
             id:'1-1',
             dateEvents:[
               {
@@ -44,7 +48,7 @@ export class FolderNavService {
             ]
           },
           {
-            name:'Couple files here',
+            name:'Patient 113-532',
             id:'1-2',
             details:'nothing on this file',
             dateEvents:[
@@ -61,7 +65,7 @@ export class FolderNavService {
         ],
         subFolders:[
           {
-            name:'my new sub folder',
+            name:'Patients 2021',
             id:'1-3'
           }
         ],
@@ -69,11 +73,11 @@ export class FolderNavService {
         details:'This is my first folder details'
       },
       {
-        name:'Second folder',
+        name:'Previous Patients',
         customSort:true,
         files:[
           {
-            name:'My file',
+            name:'Patient 222-513',
             sortOrder:0,
             id:'2-1',
             details:'some details for this file',
@@ -85,19 +89,19 @@ export class FolderNavService {
             ]
           },
           {
-            name:'My file 2',
+            name:'Patient 454-555',
             sortOrder:3,
             id:'2-2'
           }
         ],
         subFolders:[
           {
-            name:'Folder with no children',
+            name:'Patient Work in Progress',
             sortOrder:1,
             id:'2-3'
           },
           {
-            name:'Folder with children',
+            name:'Patients Completed',
             sortOrder:2,
             id:'3',
             details:'Really important folder',
@@ -113,16 +117,16 @@ export class FolderNavService {
             ],
             subFolders:[
               {
-                name:'A folder here',
+                name:'Patients 2019',
                 id:'3-1',
                 details:'Also important folder',
                 files:[
                   {
-                    name:'Some file',
+                    name:'Patient 456-123',
                     id:'3-2'
                   },
                   {
-                    name:'Some file 2',
+                    name:'Patient 111-525',
                     id:'3-3',
                     details:'Remember to work on this later',
                     dateEvents:[
@@ -143,15 +147,15 @@ export class FolderNavService {
                 ],
                 subFolders:[
                   {
-                    name:'Got a new sub folder here',
+                    name:'Patients 2021',
                     id:'3-4',
                     files:[
                       {
-                        name:'Some file copy',
+                        name:'Patient 222-565',
                         id:'3-5'
                       },
                       {
-                        name:'Some file 2 copy',
+                        name:'Patient 959-678',
                         id:'3-6'
                       }
                     ]
@@ -161,7 +165,7 @@ export class FolderNavService {
             ],
             files:[
               {
-                name:'Just one file here',
+                name:'Patient 123-988',
                 id:'3-7'
               }
             ]
@@ -177,6 +181,11 @@ export class FolderNavService {
 
   selectFolder(folder:FolderItem){
     this._selectedFolder.next(folder);
+    this._selectedItem.next(null);
+  }
+
+  selectItem(item:(FolderItem|FileItem)){
+    this._selectedItem.next(item);
   }
 
   getCalendarData(folder:FolderItem){

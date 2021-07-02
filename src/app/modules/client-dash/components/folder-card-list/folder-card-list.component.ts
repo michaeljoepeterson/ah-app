@@ -25,7 +25,6 @@ export class FolderCardListComponent implements OnInit {
       if(folder){
         this.folder = folder;
         this.folderItems = this.folder.flattenItems();
-        console.log('combined:',this.folderItems);
         this.ref.markForCheck();
       }
     });

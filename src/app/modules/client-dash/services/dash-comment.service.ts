@@ -12,16 +12,16 @@ export class DashCommentService {
   getComments():Observable<DashComment[]>{
     let commentData = [
       {
-        user:'user 1',
-        content:'Here is my first comment'
+        user:'Bill Johnson',
+        content:'Please look over the files for our first patient.'
       },
       {
-        user:'user 2',
-        content:'Here is my second comment'
+        user:'Amber Smith',
+        content:'Looks good!'
       },
       {
-        user:'user 3',
-        content:'Here is my third comment'
+        user:'Sam Stevenson',
+        content:'I think we need to go over the first drafts again.'
       }
     ];
     let comments = commentData.map(comment => new DashComment(comment));

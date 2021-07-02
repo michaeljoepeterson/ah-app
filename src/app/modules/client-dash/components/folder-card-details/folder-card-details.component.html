@@ -1,1 +1,6 @@
-<app-dash-calendar></app-dash-calendar>
+<ng-container *ngIf="!selectedItem">
+    <app-dash-calendar></app-dash-calendar>
+</ng-container>
+<ng-container *ngIf="selectedItem">
+    <app-dash-item-details [item]="selectedItem"></app-dash-item-details>
+</ng-container>

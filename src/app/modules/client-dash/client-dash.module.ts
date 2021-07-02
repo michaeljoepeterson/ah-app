@@ -38,6 +38,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { DashItemDetailsComponent } from './components/dash-item-details/dash-item-details.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -73,7 +74,8 @@ FullCalendarModule.registerPlugins([
     DashCommentsComponent,
     DashCommentComponent,
     DashCalendarComponent,
-    GetCurrentStatusColorClassPipe
+    GetCurrentStatusColorClassPipe,
+    DashItemDetailsComponent
   ],
   imports: [
     CommonModule,

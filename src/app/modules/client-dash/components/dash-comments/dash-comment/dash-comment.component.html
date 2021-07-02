@@ -1,9 +1,7 @@
 <div class="comment">
-    <div class="image-container">
-        <img 
-        class="user-image" 
-        [src]="comment.userImage ? comment.userImage : 'assets/blank-profile.png'">
-    </div>
+    <img 
+    class="user-image" 
+    [src]="comment.userImage ? comment.userImage : 'assets/blank-profile.png'">
     <div class="comment-content">
         <h6 class="color-1">{{comment.user}}</h6>
         <span class="color-2">{{comment.content}}</span>
