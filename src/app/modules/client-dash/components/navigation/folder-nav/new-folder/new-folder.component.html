@@ -1,1 +1,24 @@
-<p>new-folder works!</p>
+<div>
+    <button 
+    mat-icon-button 
+    aria-label="create new folder"
+    matTooltip="Create a New Folder"
+    (click)="createFolder()">
+        <mat-icon 
+        >create_new_folder</mat-icon>
+    </button>
+    <button mat-icon-button 
+    aria-label="create new file"
+    matTooltip="Create a New Patient File"
+    (click)="createPatientFile()">
+        <mat-icon 
+        >post_add</mat-icon>
+    </button>
+    <button mat-icon-button 
+    aria-label="delete selected item"
+    matTooltip="Delete the selected item"
+    (click)="deleteItem()">
+        <mat-icon 
+        >delete_forever</mat-icon>
+    </button>
+</div>

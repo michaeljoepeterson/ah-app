@@ -24,6 +24,8 @@ export class FolderItem implements IFolderItem{
     dateEvents?:DateEvent[] = [];
     details?:string = null;
     id?:string = null;
+    ancestors?:string[] = [];
+    parent?:string = null;
 
     constructor(data?:any){
         if(data){

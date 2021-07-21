@@ -15,10 +15,28 @@ import { map } from 'rxjs/operators';
 })
 export class FolderNavService {
   private _selectedFolder:BehaviorSubject<FolderItem> = new BehaviorSubject(null);
+  /**
+   * currently selectd folder
+   */
   selectedFolder:Observable<FolderItem> = this._selectedFolder.asObservable();
 
   private _selectedItem:BehaviorSubject<(FolderItem|FileItem)> = new BehaviorSubject(null);
+  /**
+   * currently selected item to populate details section
+   */
   selectedItem:Observable<(FolderItem|FileItem)> = this._selectedItem.asObservable();
+
+  private _currentFolders:BehaviorSubject<FolderItem[]> = new BehaviorSubject(null);
+  /**
+   * currently loaded folders
+   */
+  currentFolders:Observable<FolderItem[]> = this._currentFolders.asObservable();
+
+  private _editFolder:BehaviorSubject<FolderItem> = new BehaviorSubject(null);
+  /**
+   * folder for editing
+   */
+  editFolder:Observable<FolderItem> = this._editFolder.asObservable();
 
   endpoint:string = 'folders';
 
@@ -235,5 +253,33 @@ export class FolderNavService {
         return folders;
       })
     );
+  }
+
+  setEditFolder(folder:FolderItem){
+    this._editFolder.next(folder);
+  }
+
+  /**
+   * set the current folders
+   * @param folders 
+   */
+  setFolders(folders:FolderItem[]){
+    this._currentFolders.next(folders);
+  }
+
+  /**
+   * create a root folder and update front end with new folder
+   * @param folder 
+   */
+  createRootFolder(folder:FolderItem){
+    
+  }
+
+  /**
+   * create a root folder and update front end with new folder
+   * @param folder 
+   */
+   createSubFolder(folder:FolderItem){
+    
   }
 }

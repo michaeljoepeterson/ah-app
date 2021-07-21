@@ -20,6 +20,8 @@ export class FileItem implements IfileItem{
     dateEvents?:DateEvent[] = [];
     details?:string = null;
     id?:string = null;
+    ancestors?:string[] = [];
+    parent?:string = null;
     
     constructor(data?:any){
         if(data){

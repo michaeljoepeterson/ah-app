@@ -12,4 +12,10 @@ export class AddFolderItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * handle when input loses focus and stop editing folder
+   */
+  focusRemoved(){
+
+  }
 }

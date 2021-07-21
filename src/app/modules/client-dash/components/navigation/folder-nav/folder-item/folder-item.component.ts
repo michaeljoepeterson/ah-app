@@ -3,7 +3,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, S
 import { FolderNavService } from '../../../../services/folder-nav.service';
 import { FileItem } from '../../../../models/file-item';
 import { FolderItem } from '../../../../models/folder-item';
+import { Subscription } from 'rxjs';
 
+/**
+ * represent a folder nav item
+ */
 @Component({
   selector: 'app-folder-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,6 +57,8 @@ export class FolderItemComponent implements OnInit {
   combinedItems:any[] = [];
   folderCount:number = 0;
   isSelected:boolean = false;
+  editFolder:FolderItem;
+  subscriptions:Subscription[] = [];
 
   constructor(
     private ref:ChangeDetectorRef,
@@ -60,7 +66,7 @@ export class FolderItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.folderNavService.selectedFolder.subscribe(folder => {
+    let sub = this.folderNavService.selectedFolder.subscribe(folder => {
       if(folder && folder.id === this.folder.id){
         this.isSelected = true;
       }
@@ -68,10 +74,15 @@ export class FolderItemComponent implements OnInit {
         this.isSelected = false;
       }
       this.ref.markForCheck();
-    })
+    });
+    let editSub = this.folderNavService.editFolder.subscribe(folder => {
+      this.editFolder = folder;
+    });
+
     if(this.folder.customSort){
       this.initCustomOrder();
     }
+    this.subscriptions = [sub,editSub];
   }
 
   ngOnChanges(changes:SimpleChanges){
@@ -81,10 +92,26 @@ export class FolderItemComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(){
+    try{
+      this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+    catch(e){
+      console.warn(e);
+    }
+  }
+
+  /**
+   * get folder count for right numbers
+   */
   getFolderCount(){
     this.folderCount = this.folder.files.length + this.folder.subFolders.length;
   }
 
+  /**
+   * handle custom ordering for items
+   * not fully implemented
+   */
   initCustomOrder(){
     let length = this.folder.files.length + this.folder.subFolders.length;
     for(let i = 0;i < length;i++){
@@ -100,9 +127,13 @@ export class FolderItemComponent implements OnInit {
     });
   }
 
+  /**
+   * expand a selected folder
+   */
   expandFolder(){
     console.log(this.folder);
     this.folderExpanded = !this.folderExpanded;
     this.folderNavService.selectFolder(this.folder);
+    this.folderNavService.setEditFolder(null);
   }
 }
