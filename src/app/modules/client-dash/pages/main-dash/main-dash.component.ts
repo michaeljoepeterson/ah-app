@@ -19,7 +19,6 @@ export class MainDashComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    console.log('dash destroy');
     //this.authService.setDashboardView(false);
   }
 

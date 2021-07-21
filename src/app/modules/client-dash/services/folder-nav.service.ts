@@ -1,9 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 import { DateEvent } from '../models/date-event';
 import { FileItem } from '../models/file-item';
 import { FolderItem, IFolderItem } from '../models/folder-item';
 import {GetCurrentStatusColorPipe} from '../pipes/folder-card.pipe';
+import { environment } from '../../../../environments/environment';
+import { User } from '../../../models/users/user';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +20,12 @@ export class FolderNavService {
   private _selectedItem:BehaviorSubject<(FolderItem|FileItem)> = new BehaviorSubject(null);
   selectedItem:Observable<(FolderItem|FileItem)> = this._selectedItem.asObservable();
 
+  endpoint:string = 'folders';
+
   constructor(
-    private statusColorPipe: GetCurrentStatusColorPipe
+    private statusColorPipe: GetCurrentStatusColorPipe,
+    private authService:AuthService,
+    private http: HttpClient
   ) { }
 
   /**
@@ -24,7 +33,7 @@ export class FolderNavService {
    * @param user 
    * @returns 
    */
-  getUserFolders(user:string):Observable<FolderItem[]>{
+  getUserFolders():Observable<FolderItem[]>{
     let folderData:IFolderItem[] = [
       {
         name:'Current Patients',
@@ -209,4 +218,22 @@ export class FolderNavService {
     return calendarEvents;
   }
 
+  /**
+   * get folder data from the provided id
+   * @param id 
+   */
+  getFolderData(id:string):Observable<FolderItem[]>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/${id}`;
+    let options = {
+      headers
+    };
+    return this.http.get(url,options).pipe(
+      map((response:any) => {
+        console.log('folders for user',response);
+        let folders = response.folders.map(folder => new FolderItem(folder));
+        return folders;
+      })
+    );
+  }
 }

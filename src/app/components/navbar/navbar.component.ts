@@ -118,6 +118,5 @@ export class NavbarComponent implements OnInit {
 
   setActiveRoute(name:string){
     this.activeRoute = name;
-    console.log(this.activeRoute);
   }
 }

@@ -39,6 +39,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { DashItemDetailsComponent } from './components/dash-item-details/dash-item-details.component';
+import { AddFolderItemComponent } from './components/navigation/folder-nav/add-folder-item/add-folder-item.component';
+import { NewFolderComponent } from './components/navigation/folder-nav/new-folder/new-folder.component';
+import { HttpClientModule } from '@angular/common/http';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -75,7 +78,9 @@ FullCalendarModule.registerPlugins([
     DashCommentComponent,
     DashCalendarComponent,
     GetCurrentStatusColorClassPipe,
-    DashItemDetailsComponent
+    DashItemDetailsComponent,
+    AddFolderItemComponent,
+    NewFolderComponent
   ],
   imports: [
     CommonModule,
@@ -88,7 +93,8 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     FormsModule,
     MatSelectModule,
-    FullCalendarModule
+    FullCalendarModule,
+    HttpClientModule
   ]
 })
 export class ClientDashModule { }

@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../services/auth.service';
 import { FolderItem, folderType } from '../../../models/folder-item';
 import { FolderNavService } from '../../../services/folder-nav.service';
 import { MenuItem } from 'primeng/api';
+import { User } from '../../../../../models/users/user';
 
 /**
  * wrapper to handle the side navbar component 
@@ -17,7 +18,7 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./folder-nav.component.css']
 })
 export class FolderNavComponent implements OnInit {
-  user:string;
+  user:User;
   folders:FolderItem[];
   subscriptions:Subscription[] = [];
   generalSub:Subscription;
@@ -32,9 +33,9 @@ export class FolderNavComponent implements OnInit {
 
   ngOnInit(): void {
     let sub = this.authService.authInfo.subscribe(auth => {
-      let email = auth ? auth.email : null;
-      if(email){
-        this.user = email;
+      let user = auth ? auth.email : null;
+      if(user){
+        this.user = auth.user;
         this.getUserFolders();
       }
     });
@@ -47,15 +48,10 @@ export class FolderNavComponent implements OnInit {
       if(this.generalSub){
         this.generalSub.unsubscribe();
       }
-      this.generalSub = this.folderService.getUserFolders(this.user).subscribe({
+      this.generalSub = this.folderService.getFolderData(this.user.id).subscribe({
         next:response => {
           this.folders = response;
           console.log('folder',this.folders);
-          /*
-          if(this.usePrime){
-            this.initPrimeMenue();
-          }
-          */
           this.ref.markForCheck();
         },
         error:err => {
@@ -78,24 +74,4 @@ export class FolderNavComponent implements OnInit {
     }
   }
   
-  /*
-  initPrimeMenue(){
-
-  }
-
-  getFolderMenuItems(folder:FolderItem,items:MenuItem[] = []){
-    if(folder.files && folder.files.length){
-      folder.files.forEach(file => {
-        let item:MenuItem = {};
-        item.label = file.name;
-        item.icon = 'pi-file'        
-      });
-    }
-    if(folder.subFolders && folder.subFolders.length > 0){
-      this.getFolderMenuItems(folder.subFolders,items);
-    }
-    
-    return items;
-  }
-  */
 }

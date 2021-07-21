@@ -28,7 +28,6 @@ export class AppComponent {
       filter(e => e instanceof NavigationEnd)
     )
     .subscribe((navEnd:NavigationEnd) => {
-      console.log(navEnd.urlAfterRedirects);
       if(navEnd.urlAfterRedirects.toLowerCase().includes(this.dashIdentifier)){
         this.isDash = true;
       }

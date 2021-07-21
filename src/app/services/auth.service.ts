@@ -49,10 +49,9 @@ export class AuthService {
         }
       })
     ).subscribe(response => {
-      let auth:AuthInfo = {
-        token:authInfo.token,
-        email:authInfo.email
-      };
+      let auth = this._authInfo.value;
+      auth.token = authInfo.token;
+      auth.email = authInfo.email;
       let isLoggedIn = false;
       if(authInfo.token && authInfo.email){
         isLoggedIn = true;
