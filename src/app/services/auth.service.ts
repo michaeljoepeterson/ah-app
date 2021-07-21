@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthInfo } from '../models/users/authinfo';
 import { switchMap,map, concatMap, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { User } from '../models/users/user';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class AuthService {
   ) { 
     this.googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     this.facebookProvider = new firebase.auth.FacebookAuthProvider();
+    let authInfo:AuthInfo = null;
     this.afAuth.authState.pipe(
       mergeMap(async (user) => {
         let token = null;
@@ -36,16 +38,24 @@ export class AuthService {
           token = await user.getIdToken();
         }
         return {token,email};
+      }),
+      switchMap(auth => {
+        authInfo = auth;
+        if(authInfo.token && authInfo.email){
+          return this.checkAppUser(authInfo.email,authInfo.token);
+        }
+        else{
+          return of(null);
+        }
       })
     ).subscribe(response => {
       let auth:AuthInfo = {
-        token:response.token,
-        email:response.email
+        token:authInfo.token,
+        email:authInfo.email
       };
       let isLoggedIn = false;
-      if(response.token && response.email){
+      if(authInfo.token && authInfo.email){
         isLoggedIn = true;
-              
       }
       this._authInfo.next(auth);
       this._isLoggedIn.next(isLoggedIn);
@@ -113,11 +123,12 @@ export class AuthService {
     return this.http.post(url,user,options);
   }
 
-  checkAppUser(email:string,token?:string):Observable<any>{
+  checkAppUser(email:string,token:string):Observable<any>{
     return this.getAppUser(email,token).pipe(
       switchMap(response => {
-        console.log(response);
         if(response && response.user){
+          let user = new User(response.user);
+          this.setAppUser(user);
           return of(null);
         }
         else{
@@ -144,4 +155,9 @@ export class AuthService {
     return this.http.get(url,options);
   }
 
+  setAppUser(user:User){
+    let auth = this._authInfo.value;
+    auth.user = user;
+    this._authInfo.next(auth);
+  }
 }
