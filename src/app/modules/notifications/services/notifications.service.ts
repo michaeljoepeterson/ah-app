@@ -64,4 +64,18 @@ export class NotificationsService {
     });
     return formModal;
   }
+
+  /**
+   * display generic snack bar message
+   * @param message string message
+   * @param action optional action for button
+   * @param duration optional duration
+   */
+  displaySnackBar(message:string, action?:string, duration?:number){
+    action = action ? action : this.defaultAction;
+    duration = duration ? duration : this.defaultDuration;
+    this._snackBar.open(message, action, {
+      duration: duration,
+    });
+  }
 }

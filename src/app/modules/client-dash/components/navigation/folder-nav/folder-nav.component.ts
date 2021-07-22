@@ -40,7 +40,17 @@ export class FolderNavComponent implements OnInit {
       }
     });
 
-    this.subscriptions.push(sub);
+    let folderSub = this.folderService.currentFolders.subscribe(folders => {
+      if(folders){
+        this.folders = [...folders];
+      }
+      else{
+        this.folders = [];
+      }
+      this.ref.markForCheck();
+    })
+
+    this.subscriptions = [sub,folderSub];
   }
 
   getUserFolders(){
@@ -50,9 +60,8 @@ export class FolderNavComponent implements OnInit {
       }
       this.generalSub = this.folderService.getFolderData(this.user.id).subscribe({
         next:response => {
-          this.folders = response;
+          //this.folders = response;
           console.log('folder',this.folders);
-          this.ref.markForCheck();
         },
         error:err => {
           let message = 'Error getting folders';

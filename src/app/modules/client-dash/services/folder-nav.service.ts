@@ -8,7 +8,8 @@ import { FolderItem, IFolderItem } from '../models/folder-item';
 import {GetCurrentStatusColorPipe} from '../pipes/folder-card.pipe';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../../models/users/user';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { NotificationsService } from '../../notifications/services/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,8 @@ export class FolderNavService {
   constructor(
     private statusColorPipe: GetCurrentStatusColorPipe,
     private authService:AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private notificationService:NotificationsService
   ) { }
 
   /**
@@ -250,6 +252,7 @@ export class FolderNavService {
       map((response:any) => {
         console.log('folders for user',response);
         let folders = response.folders.map(folder => new FolderItem(folder));
+        this.setFolders(folders);
         return folders;
       })
     );
@@ -272,7 +275,28 @@ export class FolderNavService {
    * @param folder 
    */
   createRootFolder(folder:FolderItem){
-    
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/folder`;
+    let body ={
+      folder
+    };
+
+    let options = {
+      headers
+    };
+    return this.http.post(url,body,options).pipe(
+      map(response => {
+        this.notificationService.displaySnackBar('Folder Created!');
+        let currentFolders = this._currentFolders.value;
+        currentFolders.push(folder);
+        this.setFolders(currentFolders);
+        return response;
+      }),
+      catchError(err => {
+        this.notificationService.displayErrorSnackBar('Error creating folder',err);
+        throw err;
+      })
+    )
   }
 
   /**

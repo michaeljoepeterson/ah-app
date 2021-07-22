@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { NotificationsService } from '../../../../../notifications/services/notifications.service';
 import { FolderItem } from '../../../../../client-dash/models/folder-item';
 import { FolderNavService } from '../../../../../client-dash/services/folder-nav.service';
 import { DynamicFormData } from '../../../../../../modules/notifications/models/dynamic-form-models';
+import { switchMap } from 'rxjs/operators';
 
 /**
  * folder controls
@@ -49,8 +50,19 @@ export class NewFolderComponent implements OnInit {
   createFolder(){
     this.folderService.setEditFolder(this.selectedFolder);
     let formModal = this.notificationService.openDynamicFormModal(this.newFolderData);
-    let sub = formModal.componentInstance.formSubmit.subscribe(resp => {
-      console.log(resp);
+    let sub = formModal.componentInstance.formSubmit.pipe(
+      switchMap(response => {
+        if(response[0].value){
+          let folder = new FolderItem();
+          folder.name = response[0].value;
+          return this.folderService.createRootFolder(folder);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe(resp => {
+      formModal.close();
       try{
         sub.unsubscribe();
       }
