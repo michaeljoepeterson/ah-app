@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { NotificationsService } from '../../../../../notifications/services/notifications.service';
 import { FolderItem } from '../../../../../client-dash/models/folder-item';
 import { FolderNavService } from '../../../../../client-dash/services/folder-nav.service';
+import { DynamicFormData } from '../../../../../../modules/notifications/models/dynamic-form-models';
 
 /**
  * folder controls
@@ -15,6 +16,14 @@ import { FolderNavService } from '../../../../../client-dash/services/folder-nav
 export class NewFolderComponent implements OnInit {
   subscriptions:Subscription[] = [];
   selectedFolder:FolderItem;
+  newFolderData:DynamicFormData = {
+    formTitle:'Create a New Folder',
+    fields:[
+      {
+        label:'Folder Name'
+      }
+    ]
+  };
 
   constructor(
     private folderService:FolderNavService,
@@ -39,6 +48,16 @@ export class NewFolderComponent implements OnInit {
 
   createFolder(){
     this.folderService.setEditFolder(this.selectedFolder);
+    let formModal = this.notificationService.openDynamicFormModal(this.newFolderData);
+    let sub = formModal.componentInstance.formSubmit.subscribe(resp => {
+      console.log(resp);
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
+    });
   }
 
   createPatientFile(){

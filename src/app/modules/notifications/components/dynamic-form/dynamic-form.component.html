@@ -1,0 +1,54 @@
+<form (submit)="submitForm()" #modalForm="ngForm" class="form-container">
+    <h4 *ngIf="data.formTitle">{{data.formTitle}}</h4>
+    <ng-container *ngFor="let field of data.fields; let i = index">
+        <ng-container *ngIf="field.type === type.dropdown">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>{{field.label}}</mat-label>
+                    <mat-select 
+                    [required]="field.required" 
+                    [(ngModel)]="responses[i].value" 
+                    [name]="field.label">
+                        <mat-option 
+                        *ngFor="let option of field.options" 
+                        [value]="option.value" >
+                            {{option.display}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="field.type === type.editor">
+            <div>
+                <p>{{field.label}}:</p>
+                <ckeditor 
+                [name]="field.label" 
+                [(ngModel)]="responses[i].value" 
+                [editor]="editor" 
+                (ready)="onEditorReady($event)" 
+                [config]="editorConfig"></ckeditor>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!type[field.type]">
+            <div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>{{field.label}}</mat-label>
+                    <input 
+                    [name]="field.label" 
+                    [(ngModel)]="responses[i].value"
+                    matInput [type]="field.type" 
+                    [required]="field.required" 
+                    [min]="field.type === 'number' ? '0' : ''">
+                </mat-form-field>
+            </div>
+        </ng-container>
+    </ng-container>
+    <div class="button-container">
+        <button mat-raised-button type="button" (click)="cancelForm()">
+            Cancel
+        </button>
+        <button type="submit" mat-raised-button [disabled]="!modalForm.form.valid">
+            Submit
+        </button>
+    </div>
+</form>

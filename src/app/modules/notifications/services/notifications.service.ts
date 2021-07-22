@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DynamicFormComponent } from '../components/dynamic-form/dynamic-form.component';
+import { DynamicFormData } from '../models/dynamic-form-models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export class NotificationsService {
       width,
       height
     });
+    
     return modal;
   }
 
@@ -40,5 +43,25 @@ export class NotificationsService {
     this._snackBar.open(errorMessage, action, {
       duration: duration,
     });
+  }
+
+  /**
+   * display a dynamic form within a modal
+   */
+  openDynamicFormModal(data:DynamicFormData,width?:string):MatDialogRef<DynamicFormComponent>{
+    let formModal = this.dialog.open(DynamicFormComponent,{
+      width
+    });
+    formModal.componentInstance.data = data;
+    let sub = formModal.componentInstance.formCancelled.subscribe(resp => {
+      formModal.close();
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
+    });
+    return formModal;
   }
 }

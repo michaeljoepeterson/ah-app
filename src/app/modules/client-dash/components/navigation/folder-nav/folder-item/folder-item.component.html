@@ -29,9 +29,9 @@
     </div>
     <div class="folder-items">
         <div *ngIf="folderExpanded" [@enterAnimation]>
-            <ng-container *ngIf="editFolder && editFolder.id === folder.id">
+            <!-- <ng-container *ngIf="editFolder && editFolder.id === folder.id">
                 <app-add-folder-item></app-add-folder-item>
-            </ng-container>
+            </ng-container> -->
             <ng-container *ngIf="!folder.customSort">
                 <ng-container *ngIf="folder.subFolders">
                     <ng-container *ngFor="let folder of folder.subFolders">
