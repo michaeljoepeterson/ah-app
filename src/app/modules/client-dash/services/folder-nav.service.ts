@@ -270,11 +270,28 @@ export class FolderNavService {
     this._currentFolders.next(folders);
   }
 
+  findFolder(folders:FolderItem[],targetFolderId:string):FolderItem{
+    for(let folder of folders){
+      if(folder.id === targetFolderId){
+        return folder;
+      }
+
+      if(folder.subFolders.length > 0){
+        let foundFolder = this.findFolder(folder.subFolders,targetFolderId);
+        if(foundFolder){
+          return foundFolder;
+        } 
+      }
+    }
+
+    return null;
+  }
+
   /**
    * create a root folder and update front end with new folder
    * @param folder 
    */
-  createRootFolder(folder:FolderItem){
+  createRootFolder(folder:FolderItem):Observable<any>{
     let headers = this.authService.getAuthHeaders();
     let url = `${environment.apiUrl}${this.endpoint}/folder`;
     let body ={
@@ -296,14 +313,44 @@ export class FolderNavService {
         this.notificationService.displayErrorSnackBar('Error creating folder',err);
         throw err;
       })
-    )
+    );
   }
 
   /**
    * create a root folder and update front end with new folder
    * @param folder 
    */
-   createSubFolder(folder:FolderItem){
+   createSubFolder(folder:FolderItem,parentFolder:FolderItem):Observable<any>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/subfolder`;
+    folder.ancestors = [...parentFolder.ancestors];
+    folder.ancestors.push(parentFolder.id);
+    folder.parent = parentFolder.id;
+
+    let body ={
+      folder
+    };
+
+    let options = {
+      headers
+    };
+    
+    return this.http.post(url,body,options).pipe(
+      map((response:any) => {
+        let newFolder:FolderItem = response.folder;
+        this.notificationService.displaySnackBar('Sub Folder Created!');
+        let currentFolders = this._currentFolders.value;
+        folder.id = newFolder.id;
+        let foundFolder = this.findFolder(currentFolders,parentFolder.id);
+        foundFolder.subFolders.push(folder);
+        this.setFolders(currentFolders);
+        return response;
+      }),
+      catchError(err => {
+        this.notificationService.displayErrorSnackBar('Error creating folder',err);
+        throw err;
+      })
+    );
     
   }
 }

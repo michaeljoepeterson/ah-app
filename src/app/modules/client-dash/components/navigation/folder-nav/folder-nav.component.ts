@@ -13,7 +13,7 @@ import { User } from '../../../../../models/users/user';
  */
 @Component({
   selector: 'app-folder-nav',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './folder-nav.component.html',
   styleUrls: ['./folder-nav.component.css']
 })

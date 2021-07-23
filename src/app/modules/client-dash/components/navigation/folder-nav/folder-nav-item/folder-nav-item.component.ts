@@ -1,4 +1,6 @@
 import { Component, OnInit,Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FolderNavService } from 'src/app/modules/client-dash/services/folder-nav.service';
 import { fileType,FileItem } from '../../../../models/file-item';
 import { folderType,FolderItem } from '../../../../models/folder-item';
 
@@ -16,12 +18,17 @@ export class FolderNavItemComponent implements OnInit {
   @Input() folderSpace:number = 0;
   fileType:string = fileType;
   foldertype:string = folderType;
+  folderSub:Subscription;
 
   constructor(
-    private ref:ChangeDetectorRef
+    private ref:ChangeDetectorRef,
+    private folderService:FolderNavService
   ) { }
 
   ngOnInit(): void {
+    this.folderSub = this.folderService.currentFolders.subscribe(resp =>{
+      this.ref.markForCheck();
+    });
   }
 
 }

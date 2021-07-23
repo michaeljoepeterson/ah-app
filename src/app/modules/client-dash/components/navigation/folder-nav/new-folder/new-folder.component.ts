@@ -55,7 +55,12 @@ export class NewFolderComponent implements OnInit {
         if(response[0].value){
           let folder = new FolderItem();
           folder.name = response[0].value;
-          return this.folderService.createRootFolder(folder);
+          if(!this.selectedFolder){
+            return this.folderService.createRootFolder(folder);
+          }
+          else{
+            return this.folderService.createSubFolder(folder,this.selectedFolder);
+          }
         }
         else{
           return of(null);

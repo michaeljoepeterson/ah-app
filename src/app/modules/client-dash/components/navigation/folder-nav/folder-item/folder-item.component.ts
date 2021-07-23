@@ -52,7 +52,7 @@ export class FolderItemComponent implements OnInit {
    * increment child spacing to imply folder structure
    */
   @Input() folderExpanded:boolean = false;
-  baseChildIncrement:number = 6;
+  baseChildIncrement:number = 2;
   childAdjustedSpacing:number;
   combinedItems:any[] = [];
   folderCount:number = 0;
@@ -79,10 +79,15 @@ export class FolderItemComponent implements OnInit {
       this.editFolder = folder;
     });
 
+    let currentFolderSub = this.folderNavService.currentFolders.subscribe(folders => {
+      this.getFolderCount();
+      this.ref.markForCheck();
+    })
+
     if(this.folder.customSort){
       this.initCustomOrder();
     }
-    this.subscriptions = [sub,editSub];
+    this.subscriptions = [sub,editSub,currentFolderSub];
   }
 
   ngOnChanges(changes:SimpleChanges){
@@ -106,6 +111,8 @@ export class FolderItemComponent implements OnInit {
    */
   getFolderCount(){
     this.folderCount = this.folder.files.length + this.folder.subFolders.length;
+    console.log('folder count',this.folderCount);
+    console.log('folder',this.folder);
   }
 
   /**
@@ -131,7 +138,6 @@ export class FolderItemComponent implements OnInit {
    * expand a selected folder
    */
   expandFolder(){
-    console.log(this.folder);
     this.folderExpanded = !this.folderExpanded;
     this.folderNavService.selectFolder(this.folder);
     this.folderNavService.setEditFolder(null);
