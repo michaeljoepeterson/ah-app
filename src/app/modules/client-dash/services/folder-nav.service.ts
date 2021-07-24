@@ -391,4 +391,12 @@ export class FolderNavService {
       })
     );
   }
+
+  deleteFolder(){
+
+  }
+
+  deleteFile(){
+    
+  }
 }

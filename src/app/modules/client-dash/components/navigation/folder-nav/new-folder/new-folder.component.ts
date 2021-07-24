@@ -102,6 +102,16 @@ export class NewFolderComponent implements OnInit {
   }
 
   deleteItem(){
+    this.notificationService.openConfirmModal({
+      message:'Are you sure you want to delete this'
+    });
+  }
+
+  deleteFolder(){
+
+  }
+
+  deleteFile(){
 
   }
 }

@@ -1,0 +1,13 @@
+<div class="confirm-container">
+   <div class="confirm-header">
+       <h6>{{data.message}}</h6>
+   </div>
+   <div class="confirm-buttons">
+       <button 
+       mat-raised-button 
+       (click)="cancel()">{{data.cancelText ? data.cancelText : defaultCancelText}}</button>
+       <button
+       mat-raised-button
+       (click)="confirm()">{{data.confirmText ? data.confirmText : defaultConfirmText}}</button>
+   </div>
+</div>

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmModalComponent } from '../components/confirm-modal/confirm-modal.component';
 import { DynamicFormComponent } from '../components/dynamic-form/dynamic-form.component';
+import { ConfirmModalData } from '../models/confirm-modal-data';
 import { DynamicFormData } from '../models/dynamic-form-models';
 
 @Injectable({
@@ -10,6 +12,7 @@ import { DynamicFormData } from '../models/dynamic-form-models';
 export class NotificationsService {
   defaultDuration:number = 6000;
   defaultAction:string = 'Close';
+  defaultWidth:string = '500px';
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -21,6 +24,7 @@ export class NotificationsService {
    * @returns 
    */
   openModal(component:any,height?:string,width?:string):MatDialogRef<any>{
+    width = width ? width : this.defaultWidth;
     const modal = this.dialog.open(component,{
       width,
       height
@@ -49,6 +53,7 @@ export class NotificationsService {
    * display a dynamic form within a modal
    */
   openDynamicFormModal(data:DynamicFormData,width?:string):MatDialogRef<DynamicFormComponent>{
+    width = width ? width : this.defaultWidth;
     let formModal = this.dialog.open(DynamicFormComponent,{
       width
     });
@@ -77,5 +82,15 @@ export class NotificationsService {
     this._snackBar.open(message, action, {
       duration: duration,
     });
+  }
+
+  openConfirmModal(confirmData:ConfirmModalData,width?:string):MatDialogRef<ConfirmModalComponent>{
+    width = width ? width : this.defaultWidth;
+    let confirmModal = this.dialog.open(ConfirmModalComponent,{
+      width,
+      data:confirmData
+    });
+
+    return confirmModal;
   }
 }

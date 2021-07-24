@@ -8,9 +8,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 @NgModule({
-  declarations: [DynamicFormComponent],
+  declarations: [DynamicFormComponent, ConfirmModalComponent],
   imports: [
     CommonModule,
     MatDialogModule,
