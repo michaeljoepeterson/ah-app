@@ -270,6 +270,12 @@ export class FolderNavService {
     this._currentFolders.next(folders);
   }
 
+  /**
+   * find a specific folder from a list of folders
+   * @param folders 
+   * @param targetFolderId 
+   * @returns 
+   */
   findFolder(folders:FolderItem[],targetFolderId:string):FolderItem{
     for(let folder of folders){
       if(folder.id === targetFolderId){
@@ -351,6 +357,38 @@ export class FolderNavService {
         throw err;
       })
     );
-    
+  }
+
+  createFile(file:FileItem,parentFolder:FolderItem):Observable<any>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/file`;
+    file.ancestors = [...parentFolder.ancestors];
+    file.ancestors.push(parentFolder.id);
+    file.parent = parentFolder.id;
+
+    let body ={
+      file
+    };
+
+    let options = {
+      headers
+    };
+
+    return this.http.post(url,body,options).pipe(
+      map((response:any) => {
+        let newFile:FileItem = response.file;
+        this.notificationService.displaySnackBar('File Created!');
+        let currentFolders = this._currentFolders.value;
+        file.id = newFile.id;
+        let foundFolder = this.findFolder(currentFolders,parentFolder.id);
+        foundFolder.files.push(file);
+        this.setFolders(currentFolders);
+        return response;
+      }),
+      catchError(err => {
+        this.notificationService.displayErrorSnackBar('Error creating file',err);
+        throw err;
+      })
+    );
   }
 }

@@ -1,5 +1,6 @@
 import { FileItem, IfileItem } from "./file-item";
 import { DateEvent, IDateEvent } from "./date-event"; 
+import { DynamicFormData } from "../../notifications/models/dynamic-form-models";
 
 export const folderType = 'folder';
 
@@ -94,4 +95,13 @@ export class FolderItem implements IFolderItem{
         return statuses;
     }
 
+}
+
+export let baseFolderFormData:DynamicFormData ={
+    formTitle:'Create a New Folder',
+    fields:[
+      {
+        label:'Folder Name'
+      }
+    ]
 }

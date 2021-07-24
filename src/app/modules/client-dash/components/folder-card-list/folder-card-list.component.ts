@@ -11,7 +11,7 @@ import { FolderNavService } from '../../services/folder-nav.service';
   styleUrls: ['./folder-card-list.component.css']
 })
 export class FolderCardListComponent implements OnInit {
-  folderSub:Subscription;
+  subscriptions:Subscription[];
   @Input() folder:FolderItem;
   folderItems:(FolderItem|FileItem)[] = [];
 
@@ -21,13 +21,30 @@ export class FolderCardListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.folderSub = this.folderNavService.selectedFolder.subscribe(folder => {
+    let folderSub = this.folderNavService.selectedFolder.subscribe(folder => {
       if(folder){
         this.folder = folder;
         this.folderItems = this.folder.flattenItems();
         this.ref.markForCheck();
       }
     });
+
+    let foldersSub = this.folderNavService.currentFolders.subscribe(folders =>{
+      if(folders && this.folder){
+        this.folder = this.folderNavService.findFolder(folders,this.folder.id);
+        this.folderItems = this.folder ? this.folder.flattenItems() : [];
+      }
+      this.ref.markForCheck();
+    });
+    this.subscriptions = [folderSub,foldersSub];
   }
 
+  ngOnDestroy(){
+    try{
+      this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+    catch(e){
+      console.warn(e);
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import { DynamicFormData } from "../../notifications/models/dynamic-form-models";
 import { DateEvent, IDateEvent } from "./date-event";
 
 export const fileType = 'file';
@@ -49,4 +50,13 @@ export class FileItem implements IfileItem{
         return statuses;
     }
 
+}
+
+export let baseFileFormData:DynamicFormData ={
+    formTitle:'Create a New Patient File',
+    fields:[
+      {
+        label:'Patient File Name'
+      }
+    ]
 }

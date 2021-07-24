@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { NotificationsService } from '../../../../../notifications/services/notifications.service';
-import { FolderItem } from '../../../../../client-dash/models/folder-item';
-import { FolderNavService } from '../../../../../client-dash/services/folder-nav.service';
-import { DynamicFormData } from '../../../../../../modules/notifications/models/dynamic-form-models';
+import { FolderItem,baseFolderFormData } from '../../../../models/folder-item';
+import { FolderNavService } from '../../../../services/folder-nav.service';
+import { DynamicFormData } from '../../../../../notifications/models/dynamic-form-models';
 import { switchMap } from 'rxjs/operators';
+import { baseFileFormData, FileItem } from '../../../../models/file-item';
 
 /**
  * folder controls
@@ -17,14 +18,9 @@ import { switchMap } from 'rxjs/operators';
 export class NewFolderComponent implements OnInit {
   subscriptions:Subscription[] = [];
   selectedFolder:FolderItem;
-  newFolderData:DynamicFormData = {
-    formTitle:'Create a New Folder',
-    fields:[
-      {
-        label:'Folder Name'
-      }
-    ]
-  };
+  newFolderData:DynamicFormData = baseFolderFormData;
+  newFileData:DynamicFormData = baseFileFormData;
+  formWidth:string = '30%';
 
   constructor(
     private folderService:FolderNavService,
@@ -49,7 +45,7 @@ export class NewFolderComponent implements OnInit {
 
   createFolder(){
     this.folderService.setEditFolder(this.selectedFolder);
-    let formModal = this.notificationService.openDynamicFormModal(this.newFolderData);
+    let formModal = this.notificationService.openDynamicFormModal(this.newFolderData,this.formWidth);
     let sub = formModal.componentInstance.formSubmit.pipe(
       switchMap(response => {
         if(response[0].value){
@@ -78,7 +74,31 @@ export class NewFolderComponent implements OnInit {
   }
 
   createPatientFile(){
-
+    if(!this.selectedFolder){
+      this.notificationService.displaySnackBar('Please select a folder before creating a file');
+      return;
+    }
+    let formModal = this.notificationService.openDynamicFormModal(this.newFileData,this.formWidth);
+    let sub = formModal.componentInstance.formSubmit.pipe(
+      switchMap(response => {
+        if(response[0].value){
+          let file = new FileItem();
+          file.name = response[0].value;
+          return this.folderService.createFile(file,this.selectedFolder);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe(resp => {
+      formModal.close();
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
+    });
   }
 
   deleteItem(){

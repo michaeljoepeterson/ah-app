@@ -111,8 +111,6 @@ export class FolderItemComponent implements OnInit {
    */
   getFolderCount(){
     this.folderCount = this.folder.files.length + this.folder.subFolders.length;
-    console.log('folder count',this.folderCount);
-    console.log('folder',this.folder);
   }
 
   /**
