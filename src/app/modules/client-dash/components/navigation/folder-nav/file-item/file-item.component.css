@@ -7,3 +7,7 @@
 .file-header:hover{
     cursor: pointer;
 }
+
+.selected-file{
+    background-color: rgba(129,135,150,0.8);
+}

@@ -21,6 +21,7 @@ export class NewFolderComponent implements OnInit {
   newFolderData:DynamicFormData = baseFolderFormData;
   newFileData:DynamicFormData = baseFileFormData;
   formWidth:string = '30%';
+  selectedItem:(FolderItem|FileItem);
 
   constructor(
     private folderService:FolderNavService,
@@ -31,7 +32,10 @@ export class NewFolderComponent implements OnInit {
     let sub = this.folderService.selectedFolder.subscribe(folder => {
       this.selectedFolder = folder;
     });
-    this.subscriptions.push(sub);
+    let itemSub = this.folderService.selectedItem.subscribe(item => {
+      this.selectedItem = item;
+    })
+    this.subscriptions = [sub,itemSub];
   }
 
   ngOnDestroy(){
@@ -102,16 +106,64 @@ export class NewFolderComponent implements OnInit {
   }
 
   deleteItem(){
-    this.notificationService.openConfirmModal({
-      message:'Are you sure you want to delete this'
+    if(this.selectedItem instanceof FolderItem){
+      this.deleteFolder(this.selectedItem);
+    }
+    else if(this.selectedItem instanceof FileItem){
+      this.deleteFile(this.selectedItem);
+    }
+    else{
+      return;
+    }
+  }
+
+  deleteFolder(folder:FolderItem){
+    let message = 'Are you sure you want to delete this folder? This will delete the folder and all patient files within it.';
+    let confirmation = this.notificationService.openConfirmModal({
+      message
+    });
+
+    let sub = confirmation.afterClosed().pipe(
+      switchMap(response => {
+        if(response){
+          return this.folderService.deleteFolder(folder);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe(resp => {
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
     });
   }
 
-  deleteFolder(){
+  deleteFile(file:FileItem){
+    let message = 'Are you sure you want to delete this file?';
+    let confirmation = this.notificationService.openConfirmModal({
+      message
+    });
 
-  }
-
-  deleteFile(){
-
+    let sub = confirmation.afterClosed().pipe(
+      switchMap(response => {
+        if(response){
+          return this.folderService.deleteFile(file);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe(resp => {
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
+    });
   }
 }

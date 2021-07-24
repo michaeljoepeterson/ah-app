@@ -23,10 +23,13 @@ export class FolderNavService {
 
   private _selectedItem:BehaviorSubject<(FolderItem|FileItem)> = new BehaviorSubject(null);
   /**
-   * currently selected item to populate details section
+   * currently selected item to populate details section, selected item from the folder nav
    */
   selectedItem:Observable<(FolderItem|FileItem)> = this._selectedItem.asObservable();
 
+  /**
+   * current user folders
+   */
   private _currentFolders:BehaviorSubject<FolderItem[]> = new BehaviorSubject(null);
   /**
    * currently loaded folders
@@ -210,7 +213,7 @@ export class FolderNavService {
 
   selectFolder(folder:FolderItem){
     this._selectedFolder.next(folder);
-    this._selectedItem.next(null);
+    //this._selectedItem.next(folder);
   }
 
   selectItem(item:(FolderItem|FileItem)){
@@ -392,11 +395,97 @@ export class FolderNavService {
     );
   }
 
-  deleteFolder(){
-
+  /**
+   * remove the target folder from the passed folders sub folder lists 
+   * @param folders 
+   * @param targetFolderId 
+   */
+  removeFolder(folders:FolderItem[],targetFolderId:string){
+    for(let folder of folders){
+      let hasFolder = folder.subFolders.find(f => f.id === targetFolderId);
+      if(hasFolder){
+        folder.subFolders = folder.subFolders.filter(f => f.id !== targetFolderId);
+        return;
+      }
+      else{
+        this.removeFolder(folder.subFolders,targetFolderId);
+      }
+    }
   }
 
-  deleteFile(){
-    
+  /**
+   * remove the target file from the folder tree
+   * @param folders 
+   * @param targetFileId 
+   * @returns 
+   */
+  removeFile(folders:FolderItem[],targetFileId:string){
+    for(let folder of folders){
+      let hasFile = folder.files.find(f => f.id === targetFileId);
+      if(hasFile){
+        folder.files = folder.files.filter(f => f.id !== targetFileId);
+        return;
+      }
+      else{
+        this.removeFile(folder.subFolders,targetFileId);
+      }
+    }
+  }
+
+  /**
+   * remove a root folder
+   * @param folders 
+   * @param targetFolderId 
+   */
+  removeRootFolder(folders:FolderItem[],targetFolderId:string):FolderItem[]{
+    return folders.filter(f => f.id !== targetFolderId);
+  }
+
+  deleteFolder(folder:FolderItem):Observable<any>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/folder/${folder.id}`;
+    let options = {
+      headers
+    };
+
+    return this.http.delete(url,options).pipe(
+      map((response:any) => {
+        this.notificationService.displaySnackBar('Folder Deleted!');
+        let currentFolders = [...this._currentFolders.value];
+        currentFolders = this.removeRootFolder(currentFolders,folder.id);
+        //if root folder not removed then search tree for sub folder to remove
+        if(currentFolders.length === this._currentFolders.value.length){
+          this.removeFolder(currentFolders,folder.id);
+        }
+        this.setFolders(currentFolders);
+        return response;
+      }),
+      catchError(err => {
+        this.notificationService.displayErrorSnackBar('Error deleting folder',err);
+        throw err;
+      })
+    );
+  }
+
+  deleteFile(file:FileItem):Observable<any>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/file/${file.id}`;
+    let options = {
+      headers
+    };
+
+    return this.http.delete(url,options).pipe(
+      map((response:any) => {
+        this.notificationService.displaySnackBar('Folder Deleted!');
+        let currentFolders = [...this._currentFolders.value];
+        this.removeFile(currentFolders,file.id);
+        this.setFolders(currentFolders);
+        return response;
+      }),
+      catchError(err => {
+        this.notificationService.displayErrorSnackBar('Error deleting folder',err);
+        throw err;
+      })
+    );
   }
 }

@@ -1,7 +1,13 @@
 <div 
 [ngStyle]="{'margin-left':folderSpace + 'px'}" 
-class="file-header text-overflow-container"
-[matTooltip]="file.name">
+[ngClass]="{
+    'file-header':true,
+    'text-overflow-container':true,
+    'selected-file':isSelected
+}"
+[matTooltip]="file.name"
+matRipple
+(click)="selectFile()">
     <mat-icon 
     class="material-icons-outlined" 
     aria-hidden="false" 

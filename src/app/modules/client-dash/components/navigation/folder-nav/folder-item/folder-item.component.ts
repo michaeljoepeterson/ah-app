@@ -138,6 +138,7 @@ export class FolderItemComponent implements OnInit {
   expandFolder(){
     this.folderExpanded = !this.folderExpanded;
     this.folderNavService.selectFolder(this.folder);
+    this.folderNavService.selectItem(this.folder);
     this.folderNavService.setEditFolder(null);
   }
 }
