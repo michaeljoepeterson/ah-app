@@ -50,6 +50,7 @@ export class NewFolderComponent implements OnInit {
   createFolder(){
     this.folderService.setEditFolder(this.selectedFolder);
     let formModal = this.notificationService.openDynamicFormModal(this.newFolderData,this.formWidth);
+    console.log(this.selectedFolder);
     let sub = formModal.componentInstance.formSubmit.pipe(
       switchMap(response => {
         if(response[0].value){
@@ -133,6 +134,8 @@ export class NewFolderComponent implements OnInit {
         }
       })
     ).subscribe(resp => {
+      this.folderService.selectFolder(null);
+      this.folderService.selectItem(null);
       try{
         sub.unsubscribe();
       }
@@ -158,6 +161,70 @@ export class NewFolderComponent implements OnInit {
         }
       })
     ).subscribe(resp => {
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
+    });
+  }
+
+  editFolder(){
+    if(this.selectedItem instanceof FolderItem){
+      this.updateFolder(this.selectedItem);
+    }
+    else if(this.selectedItem instanceof FileItem){
+      this.updateFile(this.selectedItem);
+    }
+    else{
+      return;
+    }
+  }
+
+  updateFolder(newFolder:FolderItem){
+    let formData = {...this.newFolderData};
+    formData.formTitle = 'Update Folder';
+    let formModal = this.notificationService.openDynamicFormModal(formData,this.formWidth);
+    let sub = formModal.componentInstance.formSubmit.pipe(
+      switchMap(response => {
+        if(response[0].value){
+          let folder = new FolderItem(newFolder);
+          folder.name = response[0].value;
+          return this.folderService.updateFolder(folder);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe(resp => {
+      formModal.close();
+      try{
+        sub.unsubscribe();
+      }
+      catch(e){
+        console.warn(e);
+      }
+    });
+  }
+
+  updateFile(newFile:FileItem){
+    let fileFormData = {...this.newFileData};
+    fileFormData.formTitle = 'Update Patient File'
+    let formModal = this.notificationService.openDynamicFormModal(fileFormData,this.formWidth);
+    let sub = formModal.componentInstance.formSubmit.pipe(
+      switchMap(response => {
+        if(response[0].value){
+          let file = new FileItem(newFile);
+          file.name = response[0].value;
+          return this.folderService.updateFile(file);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe(resp => {
+      formModal.close();
       try{
         sub.unsubscribe();
       }

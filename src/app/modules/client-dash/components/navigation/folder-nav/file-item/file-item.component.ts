@@ -31,7 +31,11 @@ export class FileItemComponent implements OnInit {
       this.ref.markForCheck();
     });
 
-    this.subscriptions.push(sub);
+    let currentFolderSub = this.folderService.currentFolders.subscribe(folders => {
+      this.ref.markForCheck();
+    })
+
+    this.subscriptions = [sub,currentFolderSub];
   }
 
   /**

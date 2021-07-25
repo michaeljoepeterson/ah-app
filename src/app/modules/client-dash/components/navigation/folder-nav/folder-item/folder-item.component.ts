@@ -82,7 +82,7 @@ export class FolderItemComponent implements OnInit {
     let currentFolderSub = this.folderNavService.currentFolders.subscribe(folders => {
       this.getFolderCount();
       this.ref.markForCheck();
-    })
+    });
 
     if(this.folder.customSort){
       this.initCustomOrder();

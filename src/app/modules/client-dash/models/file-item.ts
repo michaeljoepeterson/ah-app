@@ -12,6 +12,13 @@ export interface IfileItem{
     id?:string
 }
 
+export interface IFileRequest{
+    name:string;
+    ancestors?:string[];
+    parent?:string;
+}
+
+
 export class FileItem implements IfileItem{
     name:string = null;
     //to do event type
@@ -50,6 +57,18 @@ export class FileItem implements IfileItem{
         return statuses;
     }
 
+    /**
+     * convert object to post object for sending to server
+     */
+     serialize():IFileRequest{
+        let obj:IFileRequest = {
+            name:this.name,
+            ancestors:this.ancestors,
+            parent:this.parent
+        }
+        
+        return obj;
+    }
 }
 
 export let baseFileFormData:DynamicFormData ={

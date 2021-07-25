@@ -15,6 +15,12 @@ export interface IFolderItem{
     id?:string;
 }
 
+export interface IFolderRequest{
+    name:string;
+    ancestors?:string[];
+    parent?:string;
+}
+
 export class FolderItem implements IFolderItem{
     name:string = null;
     files?:FileItem[] = [];
@@ -93,6 +99,19 @@ export class FolderItem implements IFolderItem{
     getStatuses():string[]{
         let statuses = this.dateEvents.map(event => event.status);
         return statuses;
+    }
+
+    /**
+     * convert object to post object for sending to server
+     */
+    serialize():IFolderRequest{
+        let obj:IFolderRequest = {
+            name:this.name,
+            ancestors:this.ancestors,
+            parent:this.parent
+        }
+        
+        return obj;
     }
 
 }
