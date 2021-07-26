@@ -587,7 +587,6 @@ export class FolderNavService {
         let currentFolders = this._currentFolders.value;
         let foundFile = this.findFile(currentFolders,file.id);
         foundFile.init(newFile);
-        debugger;
         this.setFolders(currentFolders);
         return response;
       }),
