@@ -163,4 +163,8 @@ export class AuthService {
     auth.user = user;
     this._authInfo.next(auth);
   }
+
+  getAuthInfo():AuthInfo{
+    return this._authInfo.value;
+  }
 }

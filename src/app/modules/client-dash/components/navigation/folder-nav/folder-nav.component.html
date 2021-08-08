@@ -1,8 +1,11 @@
 <div class="base-padding background-6">
-    <div class="folder-header">
-        <h6>Folders</h6>
-        <app-new-folder></app-new-folder>
-    </div>
-    <app-folder-nav-list 
-    [folders]="folders"></app-folder-nav-list>
+    <ng-container *ngIf="isLoggedIn">
+        <div class="folder-header">
+            <h6>Folders</h6>
+            <app-new-folder></app-new-folder>
+        </div>
+        <app-folder-nav-list 
+        [folders]="folders"></app-folder-nav-list>
+        <app-form-selector></app-form-selector>
+    </ng-container>
 </div>

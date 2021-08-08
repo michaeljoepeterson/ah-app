@@ -23,6 +23,7 @@ export class FolderNavComponent implements OnInit {
   subscriptions:Subscription[] = [];
   generalSub:Subscription;
   menuItems:MenuItem[] = [];
+  isLoggedIn:boolean = false;
 
   constructor(
     private authService:AuthService,
@@ -32,6 +33,7 @@ export class FolderNavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    /*
     let sub = this.authService.authInfo.subscribe(auth => {
       let user = auth ? auth.email : null;
       if(user){
@@ -39,6 +41,16 @@ export class FolderNavComponent implements OnInit {
         this.getUserFolders();
       }
     });
+    */
+
+    let sub = this.authService.isLoggedIn.subscribe(loggedIn => {
+      if(loggedIn){
+        this.isLoggedIn = true;
+        let {user} = this.authService.getAuthInfo();
+        this.user = user;
+        this.getUserFolders();
+      }
+    })
 
     let folderSub = this.folderService.currentFolders.subscribe(folders => {
       if(folders){
@@ -48,7 +60,7 @@ export class FolderNavComponent implements OnInit {
         this.folders = [];
       }
       this.ref.markForCheck();
-    })
+    });
 
     this.subscriptions = [sub,folderSub];
   }

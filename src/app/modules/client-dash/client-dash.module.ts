@@ -42,6 +42,7 @@ import { DashItemDetailsComponent } from './components/dash-item-details/dash-it
 import { AddFolderItemComponent } from './components/navigation/folder-nav/add-folder-item/add-folder-item.component';
 import { NewFolderComponent } from './components/navigation/folder-nav/new-folder/new-folder.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CustomFormsModule } from '../custom-forms/custom-forms.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -94,7 +95,8 @@ FullCalendarModule.registerPlugins([
     FormsModule,
     MatSelectModule,
     FullCalendarModule,
-    HttpClientModule
+    HttpClientModule,
+    CustomFormsModule
   ]
 })
 export class ClientDashModule { }
