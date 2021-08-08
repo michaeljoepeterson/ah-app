@@ -107,16 +107,20 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email,pass);
   }
 
-  createAppUser():Observable<any>{
+  createAppUser(email:string,token:string):Observable<any>{
     let url = `${environment.apiUrl}users`;
-    let headers = this.getAuthHeaders();
+    //let headers = this.getAuthHeaders();
+    let headers = new HttpHeaders();
+    headers = headers.append('authtoken',token);
+    
     let options = {
       headers
     };
+    
     //to do add model
     let user = {
       user:{
-        email:this._authInfo.value.email
+        email:email
       }
     };
     return this.http.post(url,user,options);
@@ -131,7 +135,7 @@ export class AuthService {
           return of(null);
         }
         else{
-          return this.createAppUser();
+          return this.createAppUser(email,token);
         }
       })
     )
