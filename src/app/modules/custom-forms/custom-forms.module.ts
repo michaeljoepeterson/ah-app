@@ -5,7 +5,9 @@ import { CustomFormComponent } from './components/custom-form/custom-form.compon
 import { CustomFormSectionComponent } from './components/custom-form-section/custom-form-section.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormSelectorComponent } from './components/form-selector/form-selector.component';
-
+import { CreateCustomFormComponent } from './components/create-custom-form/create-custom-form.component';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,14 +15,18 @@ import { FormSelectorComponent } from './components/form-selector/form-selector.
     CustomFieldComponent, 
     CustomFormComponent, 
     CustomFormSectionComponent, 
-    FormSelectorComponent
+    FormSelectorComponent, 
+    CreateCustomFormComponent
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
+    FormsModule
   ],
   exports:[
-    FormSelectorComponent
+    FormSelectorComponent,
+    CreateCustomFormComponent,
   ]
 })
 export class CustomFormsModule { }

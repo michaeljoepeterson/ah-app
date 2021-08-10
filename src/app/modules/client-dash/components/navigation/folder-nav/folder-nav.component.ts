@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NotificationsService } from '../../../../notifications/services/notifications.service';
 import { AuthService } from '../../../../../services/auth.service';
-import { FolderItem, folderType } from '../../../models/folder-item';
+import { FolderItem } from '../../../models/folder-item';
 import { FolderNavService } from '../../../services/folder-nav.service';
 import { MenuItem } from 'primeng/api';
 import { User } from '../../../../../models/users/user';
+import { CreateCustomFormComponent } from 'src/app/modules/custom-forms/components/create-custom-form/create-custom-form.component';
 
 /**
  * wrapper to handle the side navbar component 
@@ -95,4 +96,7 @@ export class FolderNavComponent implements OnInit {
     }
   }
   
+  onCreateCustomFormClicked(){
+    this.notificationService.openModal(CreateCustomFormComponent);
+  }
 }

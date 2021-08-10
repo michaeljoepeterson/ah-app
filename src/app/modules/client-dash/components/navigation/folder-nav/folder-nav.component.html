@@ -1,11 +1,19 @@
 <div class="base-padding background-6">
     <ng-container *ngIf="isLoggedIn">
+        <div>
+            <button 
+            class="create-form-button"
+            mat-button 
+            (click)="onCreateCustomFormClicked()">
+                Create Custom Form
+                <mat-icon>insert_drive_file</mat-icon>
+            </button>
+        </div>
         <div class="folder-header">
             <h6>Folders</h6>
             <app-new-folder></app-new-folder>
         </div>
         <app-folder-nav-list 
         [folders]="folders"></app-folder-nav-list>
-        <app-form-selector></app-form-selector>
     </ng-container>
 </div>

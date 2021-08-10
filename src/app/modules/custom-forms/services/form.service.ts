@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
+import { NotificationsService } from '../../notifications/services/notifications.service';
 import { CustomForm } from '../models/custom-form';
 
 @Injectable({
@@ -18,7 +19,8 @@ export class FormService {
 
   constructor(
     private authService:AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private notificationService:NotificationsService
   ) { }
 
   setForms(forms:CustomForm[]){
@@ -68,6 +70,11 @@ export class FormService {
         let form = new CustomForm(response.form);
         this.updateForm(form);
         return form;
+      }),
+      catchError(err => {
+        let message = 'Error getting forms';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
       })
     );
   }

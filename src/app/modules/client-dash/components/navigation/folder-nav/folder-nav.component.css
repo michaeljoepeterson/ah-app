@@ -4,3 +4,9 @@
     justify-content: space-between;
     align-items: baseline;
 }
+
+.create-form-button{
+    width: 100%;
+    text-align: end;
+    padding: 0;
+}

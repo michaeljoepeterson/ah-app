@@ -1,1 +1,14 @@
-<p>form-selector works!</p>
+<div>
+    <mat-form-field>
+        <mat-label>{{formSelectLabel}}</mat-label>
+        <mat-select 
+        (selectionChange)="onFormSelected()"
+        [(ngModel)]="selectedFormId" 
+        name="form-select">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let form of forms" [value]="form.id">
+            {{form.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>        
+</div>
