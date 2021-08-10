@@ -87,3 +87,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .app-container{
   height: 100%;
 }
+
+.full-input{
+  width: 100%;
+}

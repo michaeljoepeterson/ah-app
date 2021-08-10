@@ -10,6 +10,7 @@ import { FormService } from '../../services/form.service';
 })
 export class CreateCustomFormComponent implements OnInit {
   customForms:CustomForm[] = [];
+  formHeader:string = 'Create a custom form';
   private _sub:Subscription;
   get sub():Subscription{
     return this._sub;
