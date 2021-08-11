@@ -14,6 +14,7 @@ export class CustomField extends BaseModel{
     fieldOptions:string[] = null;
     min:string = null;
     max:string = null;
+    type:string = 'field';
 
     constructor(data?:any){
         super();

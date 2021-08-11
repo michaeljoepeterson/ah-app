@@ -8,6 +8,7 @@ import { FormSelectorComponent } from './components/form-selector/form-selector.
 import { CreateCustomFormComponent } from './components/create-custom-form/create-custom-form.component';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { FormChildComponent } from './components/form-child/form-child.component';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { FormsModule } from '@angular/forms';
     CustomFormComponent, 
     CustomFormSectionComponent, 
     FormSelectorComponent, 
-    CreateCustomFormComponent
+    CreateCustomFormComponent, FormChildComponent
   ],
   imports: [
     CommonModule,

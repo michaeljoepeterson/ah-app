@@ -13,6 +13,8 @@ export class CustomSection extends BaseModel{
     sortOrder:number = 0;
     sections:CustomSection[] = [];
     fields:CustomField[] = [];
+    type:string = 'section';
+    combinedChildren:(CustomSection|CustomField)[] = [];
 
     constructor(data?:any){
         super();
@@ -35,5 +37,26 @@ export class CustomSection extends BaseModel{
         if(data.fields){
             this.fields = data.fields.map(field => new CustomField(field));
         }
+
+        this.combineChildren();
+    }
+
+     /**
+     * combine fields and sections for rendering and sort by sortorder
+     */
+      combineChildren(){
+        let combinedChildren = [...this.fields,...this.sections];
+        combinedChildren = combinedChildren.sort((fieldA, fieldB) => {
+            if(fieldA.sortOrder < fieldB.sortOrder){
+                return -1;
+            }
+            else if(fieldA.sortOrder > fieldB.sortOrder){
+                return  1;
+            }
+            else{
+                return 0;
+            }
+        });
+        this.combinedChildren = combinedChildren;
     }
 }

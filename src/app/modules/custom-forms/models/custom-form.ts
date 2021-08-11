@@ -1,6 +1,7 @@
 import { User } from "../../../models/users/user";
 import { BaseModel } from "../../../models/baseModel";
 import { CustomSection } from "./custom-section";
+import { CustomField } from "./custom-field";
 
 export class CustomForm extends BaseModel{
     name:string = null;
@@ -8,6 +9,8 @@ export class CustomForm extends BaseModel{
     id:string = null;
     createdAt:Date = null;
     sections:CustomSection[] = [];
+    fields:CustomField[] = [];
+    combinedChildren:(CustomSection|CustomField)[] = [];
 
     constructor(data?:any){
         super();
@@ -27,5 +30,26 @@ export class CustomForm extends BaseModel{
         if(data.owner){
             this.owner = new User(data.owner);
         }
+        
+        this.combineChildren();
+    }
+
+    /**
+     * combine fields and sections for rendering and sort by sortorder
+     */
+    combineChildren(){
+        let combinedChildren = [...this.fields,...this.sections];
+        combinedChildren = combinedChildren.sort((fieldA, fieldB) => {
+            if(fieldA.sortOrder < fieldB.sortOrder){
+                return -1;
+            }
+            else if(fieldA.sortOrder > fieldB.sortOrder){
+                return  1;
+            }
+            else{
+                return 0;
+            }
+        });
+        this.combinedChildren = combinedChildren;
     }
 }

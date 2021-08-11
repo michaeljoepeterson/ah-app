@@ -1,0 +1,10 @@
+<ng-container *ngFor="let child of combinedChildren">
+    <ng-container *ngIf="child.type === sectionType">
+        <app-custom-form-section
+        [section]="child"></app-custom-form-section>
+    </ng-container>
+    <ng-container *ngIf="child.type === fieldType">
+        <app-custom-field
+        [field]="child"></app-custom-field>
+    </ng-container>
+</ng-container>

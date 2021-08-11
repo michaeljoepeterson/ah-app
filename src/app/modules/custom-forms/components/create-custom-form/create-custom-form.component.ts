@@ -23,6 +23,8 @@ export class CreateCustomFormComponent implements OnInit {
     this._sub = subscription;
   }
 
+  form:CustomForm;
+
   constructor(
     private formService:FormService
   ) { }
@@ -30,4 +32,7 @@ export class CreateCustomFormComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  formSelected(form:CustomForm){
+    this.form = form;
+  }
 }
