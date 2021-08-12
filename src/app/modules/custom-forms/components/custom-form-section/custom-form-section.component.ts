@@ -49,6 +49,7 @@ export class CustomFormSectionComponent implements OnInit {
 
   formSub:Subscription;
   childSpacing:number;
+  overSection:boolean = false;
 
   constructor(
     private formService:FormService
@@ -73,5 +74,13 @@ export class CustomFormSectionComponent implements OnInit {
 
   expandSection(){
     this.sectionExpanded = !this.sectionExpanded;
+  }
+
+  mouseOverSection(){
+    this.overSection = true;
+  }
+
+  mouseLeaveSection(){
+    this.overSection = false;
   }
 }

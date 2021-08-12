@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { FormChildComponent } from './components/form-child/form-child.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { MatRippleModule } from '@angular/material/core';
     CustomFormComponent, 
     CustomFormSectionComponent, 
     FormSelectorComponent, 
-    CreateCustomFormComponent, FormChildComponent
+    CreateCustomFormComponent, 
+    FormChildComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,9 @@ import { MatRippleModule } from '@angular/material/core';
     MatSelectModule,
     FormsModule,
     MatIconModule,
-    MatRippleModule
+    MatRippleModule,
+    MatButtonModule,
+    MatTooltipModule
   ],
   exports:[
     FormSelectorComponent,

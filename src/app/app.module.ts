@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { GetCurrentStatusColorPipe } from './modules/client-dash/pipes/folder-card.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { GetCurrentStatusColorPipe } from './modules/client-dash/pipes/folder-ca
     AngularFireModule.initializeApp(fbConfig),
     NotificationsModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule
   ],
   providers: [
     GetCurrentStatusColorPipe

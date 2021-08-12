@@ -1,8 +1,10 @@
 <div [ngStyle]="{'margin-left':sectionSpace + 'px'}">
     <div 
-    class="flex-vertical-center"
+    class="flex-vertical-center section"
     matRipple
-    (click)="expandSection()">
+    (click)="expandSection()"
+    (mouseenter)="mouseOverSection()"
+    (mouseleave)="mouseLeaveSection()">
         <mat-icon 
         [ngClass]="{
             'open-icon':true,
@@ -11,8 +13,36 @@
         aria-hidden="false" 
         aria-label="expand folder">chevron_right</mat-icon>
         <span>
-            {{section.name}}
+            <h6 class="section-header">
+                {{section.name}}
+            </h6>
         </span>
+        <ng-container *ngIf="isEditing && overSection">
+            <button
+            class="blank-button edit-button"
+            (click)="$event.stopPropagation()"
+            matRipple
+            matTooltip="Edit Section Name">
+                <mat-icon [inline]="true">
+                    edit
+                </mat-icon>
+            </button>
+            <ng-container *ngIf="overSection">
+                <div [ngClass]="{
+                    'add-buttons':true
+                }">
+                    <button
+                        class="blank-button add-button"
+                        (click)="$event.stopPropagation()"
+                        matRipple
+                        matTooltip="Add Section">
+                            <mat-icon [inline]="true">
+                                add_circle_outline
+                            </mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+        </ng-container>
     </div>
     <div *ngIf="sectionExpanded" [@enterAnimation]>
         <app-form-child 

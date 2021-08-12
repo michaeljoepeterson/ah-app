@@ -119,3 +119,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: flex;
   align-items: center;
 }
+
+.blank-button{
+  background-color: inherit;
+  border: none;
+}
+
+.hidden{
+  visibility: hidden;
+}
