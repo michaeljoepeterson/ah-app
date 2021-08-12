@@ -91,3 +91,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-input{
   width: 100%;
 }
+
+.open-icon{
+  transition: 500ms all;
+}
+
+.close-icon{
+  transform: rotate(90deg);
+}
+
+.flex{
+  display: flex;
+}
+
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-horizontal-center{
+  display: flex;
+  justify-content: center;
+}
+
+.flex-vertical-center{
+  display: flex;
+  align-items: center;
+}

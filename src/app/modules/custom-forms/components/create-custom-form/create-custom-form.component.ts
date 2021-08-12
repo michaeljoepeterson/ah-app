@@ -30,9 +30,20 @@ export class CreateCustomFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.formService.setEditing(true);
+  }
+
+  ngOnDestroy(){
+    this.formService.setEditing(false);
   }
   
   formSelected(form:CustomForm){
     this.form = form;
+    if(this.form){
+      this.formHeader = `Editing: ${this.form.name}`;
+    }
+    else{
+      this.formHeader = 'Create a Custom Form';
+    }
   }
 }

@@ -61,13 +61,16 @@ export class FormSelectorComponent implements OnInit {
         next:response => {
           console.log('form',response);
           this.formSelected.emit(response);
+          this.formService.setSelectedForm(response);
           this.ref.markForCheck();
         }
       })
     }
     else{
       this.formSelected.emit(null);
+      this.formService.setSelectedForm(null);
     }
+
   }
 
   /**

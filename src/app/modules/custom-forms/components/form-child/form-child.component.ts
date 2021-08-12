@@ -9,6 +9,7 @@ import { CustomSection } from '../../models/custom-section';
 })
 export class FormChildComponent implements OnInit {
   @Input() combinedChildren:(CustomSection|CustomField)[] = [];
+  @Input() sectionSpace:number = 0;
   fieldType:string = 'field';
   sectionType:string = 'section';
 

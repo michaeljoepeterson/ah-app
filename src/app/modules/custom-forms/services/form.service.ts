@@ -12,7 +12,23 @@ import { CustomForm } from '../models/custom-form';
 })
 export class FormService {
 
+    
+  private _selectedForm:BehaviorSubject<CustomForm> = new BehaviorSubject(null);
+  /**
+   * currently selected form
+   */
+  selectedForm:Observable<CustomForm> = this._selectedForm.asObservable();
+
+  private _isEditing:BehaviorSubject<boolean> = new BehaviorSubject(null);
+  /**
+   * track if form is in editing mode
+   */
+  isEditing:Observable<boolean> = this._isEditing.asObservable();
+
   private _forms:BehaviorSubject<CustomForm[]> = new BehaviorSubject(null);
+  /**
+   * forms for the project
+   */
   forms:Observable<CustomForm[]> = this._forms.asObservable();
 
   endpoint:string = 'form';
@@ -77,5 +93,13 @@ export class FormService {
         throw err;
       })
     );
+  }
+
+  setSelectedForm(form:CustomForm){
+    this._selectedForm.next(form);
+  }
+
+  setEditing(isEditing:boolean){
+    this._isEditing.next(isEditing);
   }
 }

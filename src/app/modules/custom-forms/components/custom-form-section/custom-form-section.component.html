@@ -1,5 +1,22 @@
-<div>
-    {{section.name}}
-    <app-form-child 
-    [combinedChildren]="section.combinedChildren"></app-form-child>
+<div [ngStyle]="{'margin-left':sectionSpace + 'px'}">
+    <div 
+    class="flex-vertical-center"
+    matRipple
+    (click)="expandSection()">
+        <mat-icon 
+        [ngClass]="{
+            'open-icon':true,
+            'close-icon':sectionExpanded
+        }"
+        aria-hidden="false" 
+        aria-label="expand folder">chevron_right</mat-icon>
+        <span>
+            {{section.name}}
+        </span>
+    </div>
+    <div *ngIf="sectionExpanded" [@enterAnimation]>
+        <app-form-child 
+        [combinedChildren]="section.combinedChildren"
+        [sectionSpace]="childSpacing"></app-form-child>
+    </div>
 </div>

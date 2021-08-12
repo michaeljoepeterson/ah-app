@@ -97,6 +97,6 @@ export class FolderNavComponent implements OnInit {
   }
   
   onCreateCustomFormClicked(){
-    this.notificationService.openModal(CreateCustomFormComponent);
+    this.notificationService.openModal(CreateCustomFormComponent,null,'80%');
   }
 }

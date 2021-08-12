@@ -9,6 +9,8 @@ import { CreateCustomFormComponent } from './components/create-custom-form/creat
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { FormChildComponent } from './components/form-child/form-child.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { FormChildComponent } from './components/form-child/form-child.component
     CommonModule,
     HttpClientModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatIconModule,
+    MatRippleModule
   ],
   exports:[
     FormSelectorComponent,
