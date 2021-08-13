@@ -13,6 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EditFieldComponent } from './components/edit-field/edit-field.component';
+import { EditFormSectionComponent } from './components/edit-form-section/edit-form-section.component';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -22,7 +25,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CustomFormSectionComponent, 
     FormSelectorComponent, 
     CreateCustomFormComponent, 
-    FormChildComponent
+    FormChildComponent,
+    EditFieldComponent,
+    EditFormSectionComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +37,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatRippleModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatInputModule
   ],
   exports:[
     FormSelectorComponent,

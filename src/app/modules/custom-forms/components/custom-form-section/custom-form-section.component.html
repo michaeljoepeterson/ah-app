@@ -1,6 +1,8 @@
-<div [ngStyle]="{'margin-left':sectionSpace + 'px'}">
+<div
+class="form-section"
+[ngStyle]="{'margin-left':sectionSpace + 'px'}">
     <div 
-    class="flex-vertical-center section"
+    class="flex-vertical-center section form-section-header"
     matRipple
     (click)="expandSection()"
     (mouseenter)="mouseOverSection()"
@@ -12,36 +14,45 @@
         }"
         aria-hidden="false" 
         aria-label="expand folder">chevron_right</mat-icon>
-        <span>
-            <h6 class="section-header">
-                {{section.name}}
-            </h6>
+        <span class="section-header-container">
+            <ng-container *ngIf="!editMode">
+                <h5 class="section-header">
+                    {{section.name}}
+                </h5>
+            </ng-container>
+            <ng-container *ngIf="editMode">
+                <app-edit-form-section 
+                [section]="section"
+                (cancelClicked)="setEditMode(false)"></app-edit-form-section>
+            </ng-container>
         </span>
         <ng-container *ngIf="isEditing && overSection">
-            <button
-            class="blank-button edit-button"
-            (click)="$event.stopPropagation()"
-            matRipple
-            matTooltip="Edit Section Name">
-                <mat-icon [inline]="true">
-                    edit
-                </mat-icon>
-            </button>
-            <ng-container *ngIf="overSection">
-                <div [ngClass]="{
-                    'add-buttons':true
-                }">
-                    <button
-                        class="blank-button add-button"
-                        (click)="$event.stopPropagation()"
-                        matRipple
-                        matTooltip="Add Section">
-                            <mat-icon [inline]="true">
-                                add_circle_outline
-                            </mat-icon>
-                    </button>
-                </div>
+            <ng-container *ngIf="!editMode">
+                <button
+                class="blank-button edit-button"
+                (click)="$event.stopPropagation(); setEditMode(true)"
+                matRipple
+                matTooltip="Edit Section Name">
+                    <mat-icon [inline]="true">
+                        edit
+                    </mat-icon>
+                </button>
             </ng-container>
+        </ng-container>
+        <ng-container *ngIf="(overSection || editMode) && isEditing">
+            <div [ngClass]="{
+                'add-buttons':true
+            }">
+                <button
+                    class="blank-button add-button"
+                    (click)="$event.stopPropagation()"
+                    matRipple
+                    matTooltip="Add Section">
+                        <mat-icon [inline]="true">
+                            add_circle_outline
+                        </mat-icon>
+                </button>
+            </div>
         </ng-container>
     </div>
     <div *ngIf="sectionExpanded" [@enterAnimation]>

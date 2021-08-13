@@ -50,6 +50,7 @@ export class CustomFormSectionComponent implements OnInit {
   formSub:Subscription;
   childSpacing:number;
   overSection:boolean = false;
+  editMode:boolean = false;
 
   constructor(
     private formService:FormService
@@ -82,5 +83,9 @@ export class CustomFormSectionComponent implements OnInit {
 
   mouseLeaveSection(){
     this.overSection = false;
+  }
+
+  setEditMode(edit:boolean){
+    this.editMode = edit;
   }
 }

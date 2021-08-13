@@ -1,0 +1,26 @@
+<form class="flex section-form">
+    <mat-form-field 
+    class="example-full-width" 
+    (click)="$event.stopPropagation()">
+      <mat-label>Section Name</mat-label>
+      <input [(ngModel)]="sectionName" matInput name="section-name">
+    </mat-form-field>
+    <button
+    class="blank-button icon-button-sizing"
+    (click)="$event.stopPropagation(); onConfirmClicked();"
+    matRipple
+    matTooltip="Edit Section Name">
+        <mat-icon [inline]="true">
+            check
+        </mat-icon>
+    </button>
+    <button
+    class="blank-button icon-button-sizing"
+    (click)="$event.stopPropagation(); onCancelClicked()"
+    matRipple
+    matTooltip="Edit Section Name">
+        <mat-icon [inline]="true">
+            close
+        </mat-icon>
+    </button>
+</form>

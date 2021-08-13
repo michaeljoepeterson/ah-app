@@ -4,7 +4,7 @@
 }
 
 .section{
-    height: 35px;
+    height: 45px;
 }
 
 .section:hover{
@@ -13,4 +13,14 @@
 
 .edit-button,.add-button{
     font-size: 21px;
+}
+
+.form-section-header{
+    border-bottom: 1px solid black;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.section-header-container{
+    width: 100%;
 }

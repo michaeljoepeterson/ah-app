@@ -1,0 +1,7 @@
+.section-form{
+    width: 100%;
+}
+
+.section-form > mat-form-field{
+    width: 100%;
+}
