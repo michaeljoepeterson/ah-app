@@ -4,7 +4,7 @@
 }
 
 .section{
-    height: 45px;
+    height: 70px;
 }
 
 .section:hover{
@@ -17,7 +17,6 @@
 
 .form-section-header{
     border-bottom: 1px solid black;
-    margin-top: 1em;
     margin-bottom: 1em;
 }
 

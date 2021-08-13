@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditFieldComponent } from './components/edit-field/edit-field.component';
 import { EditFormSectionComponent } from './components/edit-form-section/edit-form-section.component';
 import { MatInputModule } from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatInputModule } from '@angular/material/input';
     MatRippleModule,
     MatButtonModule,
     MatTooltipModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ],
   exports:[
     FormSelectorComponent,

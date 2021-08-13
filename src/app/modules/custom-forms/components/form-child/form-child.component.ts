@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CustomField } from '../../models/custom-field';
 import { CustomSection } from '../../models/custom-section';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-form-child',
@@ -12,10 +14,24 @@ export class FormChildComponent implements OnInit {
   @Input() sectionSpace:number = 0;
   fieldType:string = 'field';
   sectionType:string = 'section';
+  isEditing:boolean = false;
+  editSub:Subscription;
 
-  constructor() { }
+  constructor(
+    private formService:FormService
+  ) { }
 
   ngOnInit(): void {
+    this.editSub = this.formService.isEditing.subscribe(isEditing => this.isEditing = isEditing);
+  }
+
+  ngOnDestroy(){
+    try{
+      this.editSub.unsubscribe();
+    }
+    catch(e){
+      console.warn(e);
+    }
   }
 
 }

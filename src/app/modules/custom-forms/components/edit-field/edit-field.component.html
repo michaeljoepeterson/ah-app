@@ -1,1 +1,27 @@
-<p>edit-field works!</p>
+<mat-card 
+(mouseenter)="mouseOverField()"
+(mouseleave)="mouseLeaveField()">
+    <mat-card-header>
+        <mat-card-title>
+            <span>
+                Edit {{field.name}}
+            </span>
+            <button
+            [ngClass]="{
+                'blank-button':true, 
+                'icon-button-sizing':true,
+                'hidden':!mouseOver
+            }"
+            (click)="$event.stopPropagation();"
+            matRipple
+            matTooltip="Edit Section Name">
+                <mat-icon [inline]="true">
+                    edit
+                </mat-icon>
+            </button>
+        </mat-card-title>
+    </mat-card-header>
+    <div>
+        Field Type: {{field.fieldType}}
+    </div>
+</mat-card>

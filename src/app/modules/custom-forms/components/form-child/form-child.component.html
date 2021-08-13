@@ -6,8 +6,14 @@
             [sectionSpace]="sectionSpace"></app-custom-form-section>
         </ng-container>
         <ng-container *ngIf="child.type === fieldType">
-            <app-custom-field
-            [field]="child"></app-custom-field>
+            <ng-container *ngIf="!isEditing">
+                <app-custom-field
+                [field]="child"></app-custom-field>
+            </ng-container>
+            <ng-container *ngIf="isEditing">
+                <app-edit-field
+                [field]="child"></app-edit-field>
+            </ng-container>
         </ng-container>
     </div>
 </ng-container>

@@ -1,3 +1,7 @@
 .page-content{
     padding: 1.5em 3em;
 }
+
+::ng-deep .mat-card-header-text{
+    margin: 0 !important;
+}

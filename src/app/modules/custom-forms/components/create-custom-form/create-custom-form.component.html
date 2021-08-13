@@ -2,5 +2,7 @@
     <h4>{{formHeader}}</h4>
     <app-form-selector
     (formSelected)="formSelected($event)"></app-form-selector>
-    <app-custom-form [form]="form"></app-custom-form>
+    <div class="custom-form">
+        <app-custom-form [form]="form"></app-custom-form>
+    </div>
 </div>
