@@ -132,3 +132,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .icon-button-sizing{
   font-size: 21px;
 }
+
+.header{
+  margin-bottom: 0;
+}

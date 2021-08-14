@@ -29,4 +29,8 @@ export class CustomField extends BaseModel{
             this.createdAt = new Date(data.createdAt);
         }
     }
+
+    updateField(field:CustomField){
+        this.init(field);
+    }
 }

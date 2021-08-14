@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { CustomField } from '../../models/custom-field';
+import { FieldTypes, fieldTypes } from '../../constants';
 
 @Component({
   selector: 'app-edit-field',
@@ -10,12 +11,16 @@ import { CustomField } from '../../models/custom-field';
 export class EditFieldComponent implements OnInit {
   @Input() field:CustomField;
 
+  fieldTypes:FieldTypes = fieldTypes;
   mouseOver:boolean = false;
   editMode:boolean = false;
+  currentField:CustomField;
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(fieldTypes);
+    this.currentField = new CustomField(this.field);
   }
 
   mouseOverField(){
@@ -28,5 +33,18 @@ export class EditFieldComponent implements OnInit {
 
   setEditing(edit:boolean){
     this.editMode = edit;
+  }
+
+  typeChange(){
+
+  }
+
+  onCancelClicked(){
+    this.setEditing(false);
+    this.currentField.updateField(this.field);
+  }
+
+  onConfirmClicked(){
+    this.field.updateField(this.currentField);
   }
 }
