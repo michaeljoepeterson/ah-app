@@ -99,4 +99,44 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
     </ng-container>
+    <ng-container *ngIf="fieldType === fieldTypes.file">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Upload File</span>
+            </div>
+            <div class="custom-file">
+                <input 
+                (change)="onFileSelected($event)" 
+                type="file" 
+                class="custom-file-input" 
+                id="inputGroupFile01">
+                <label 
+                class="custom-file-label" 
+                for="inputGroupFile01"
+                >
+                    {{field.name}}
+                </label>
+            </div>
+          </div>
+    </ng-container>
+    <ng-container *ngIf="fieldType === fieldTypes.image">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Upload Image</span>
+            </div>
+            <div class="custom-file">
+                <input 
+                (change)="onFileSelected($event)" 
+                type="file" 
+                class="custom-file-input" 
+                id="inputGroupFile01">
+                <label 
+                class="custom-file-label" 
+                for="inputGroupFile01"
+                >
+                    {{field.name}}
+                </label>
+            </div>
+          </div>
+    </ng-container>
 </div>

@@ -50,7 +50,10 @@ export class CustomFieldComponent implements OnInit {
 
     if(this.fieldType === this.fieldTypes.date){
       this.fieldValue.initDate();
-      console.log(this.fieldValue);
     }
+  }
+
+  onFileSelected(event:any){
+    console.log(event);
   }
 }
