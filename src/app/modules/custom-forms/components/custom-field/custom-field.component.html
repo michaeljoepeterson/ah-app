@@ -1,5 +1,5 @@
 <div class="custom-field">
-    <ng-container *ngIf="field.fieldType === fieldTypes.text">
+    <ng-container *ngIf="fieldType === fieldTypes.text">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span 
@@ -17,7 +17,7 @@
             (click)="$event.stopPropagation()">
         </div> 
     </ng-container>
-    <ng-container *ngIf="field.fieldType === fieldTypes.number">
+    <ng-container *ngIf="fieldType === fieldTypes.number">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span 
@@ -35,7 +35,7 @@
             (click)="$event.stopPropagation()">
         </div> 
     </ng-container>
-    <ng-container *ngIf="field.fieldType === fieldTypes.dropdown">
+    <ng-container *ngIf="fieldType === fieldTypes.dropdown">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <label 
@@ -60,5 +60,32 @@
             </select>
         </div>
     </ng-container>
-    {{fieldValue.value}}
+    <ng-container *ngIf="fieldType === fieldTypes.radio">
+        <div class="flex-col">
+            <label id="custom-radio">{{field.name}}</label>
+            <mat-radio-group
+            class="flex-col"
+            aria-labelledby="custom-radio" 
+            aria-label="Select an option"
+            [(ngModel)]="fieldValue.value">
+                <mat-radio-button 
+                *ngFor="let option of field.fieldOptions"
+                [value]="option"
+                value="1">
+                    {{option}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="fieldType === fieldTypes.checkbox">
+        <div class="flex-col">
+            <label>{{field.name}}</label>
+            <mat-checkbox 
+            class="example-margin"
+            *ngFor="let option of field.fieldOptions;let i = index;"
+            [ngModel]="fieldValue.value[i]">
+                {{option}}
+            </mat-checkbox>
+        </div>
+    </ng-container>
 </div>

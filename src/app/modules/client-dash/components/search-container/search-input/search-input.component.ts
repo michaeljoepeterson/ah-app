@@ -14,10 +14,10 @@ export class SearchInputComponent implements OnInit {
   }
 
   executeSearch(event:any){
-    console.log(event);
+    
   }
 
   inputChange(event:any){
-    console.log(event);
+    
   }
 }

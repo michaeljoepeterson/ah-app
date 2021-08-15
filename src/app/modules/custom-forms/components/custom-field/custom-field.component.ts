@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { FieldTypes,fieldTypes } from '../../constants';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { FieldTypes } from '../../constants';
 import { CustomField } from '../../models/custom-field';
 import { CustomFieldValue } from '../../models/custom-field-value';
 import { FormService } from '../../services/form.service';
@@ -13,6 +13,7 @@ import { FormService } from '../../services/form.service';
 export class CustomFieldComponent implements OnInit {
   @Input() field:CustomField;
   @Input() fieldValue:CustomFieldValue;
+  @Input() fieldType:string;
 
   fieldTypes:FieldTypes;
 
@@ -25,11 +26,23 @@ export class CustomFieldComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.fieldValue){
-      this.fieldValue = new CustomFieldValue({
-        customFieldId:this.field.id,
-        customField:this.field
-      });
+      this.initValue();
     }
   }
 
+  ngOnChanges(changes:SimpleChanges){
+    if(changes?.fieldType?.currentValue){
+      this.initValue();
+    }
+  }
+
+  initValue(){
+    this.fieldValue = new CustomFieldValue({
+      customFieldId:this.field.id,
+      customField:this.field
+    });
+    if(this.fieldType === this.fieldTypes.checkbox){
+      this.fieldValue.initCheckboxValues();
+    }
+  }
 }

@@ -63,7 +63,6 @@ export class FormService {
     };
     return this.http.get(url,options).pipe(
       map((response:any) => {
-        console.log('forms',response);
         let forms = response.forms.map(form => new CustomForm(form));
         this.setForms(forms);
         return forms;
@@ -84,7 +83,6 @@ export class FormService {
     };
     return this.http.get(url,options).pipe(
       map((response:any) => {
-        console.log('form',response);
         let form = new CustomForm(response.form);
         this.updateForm(form);
         return form;

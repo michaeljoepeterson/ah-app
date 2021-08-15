@@ -17,6 +17,8 @@ import { EditFieldComponent } from './components/edit-field/edit-field.component
 import { EditFormSectionComponent } from './components/edit-form-section/edit-form-section.component';
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import {MatCardModule} from '@angular/material/card';
     MatButtonModule,
     MatTooltipModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   exports:[
     FormSelectorComponent,

@@ -74,7 +74,6 @@ export class FolderNavComponent implements OnInit {
       this.generalSub = this.folderService.getFolderData(this.user.id).subscribe({
         next:response => {
           //this.folders = response;
-          console.log('folder',this.folders);
         },
         error:err => {
           let message = 'Error getting folders';

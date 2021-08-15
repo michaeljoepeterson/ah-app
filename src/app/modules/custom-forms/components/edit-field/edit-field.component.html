@@ -181,7 +181,9 @@
             </div>
             <div class="preview">
                 <h6>Field Preview:</h6>
-                <app-custom-field [field]="currentField"></app-custom-field>
+                <app-custom-field 
+                [field]="currentField"
+                [fieldType]="currentField.fieldType"></app-custom-field>
             </div>
         </div>
     </div>

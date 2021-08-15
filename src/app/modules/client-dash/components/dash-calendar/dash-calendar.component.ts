@@ -55,7 +55,6 @@ export class DashCalendarComponent implements OnInit {
     if(this.calendarComponent){
       let calendarEvents = this.folderNavService.getCalendarData(this.folder);
       this.calendarComponent.getApi().removeAllEvents();
-      console.log(calendarEvents);
       calendarEvents.forEach((event:any) => {
         this.calendarComponent.getApi().addEvent(event);
       });
@@ -63,7 +62,6 @@ export class DashCalendarComponent implements OnInit {
   }
 
   handleDateClick(event){
-    console.log(event);
     //change view using this
     //this.calendarComponent.getApi().changeView('timeGridWeek');
   }

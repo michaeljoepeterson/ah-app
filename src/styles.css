@@ -120,6 +120,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   align-items: center;
 }
 
+.flex-col{
+  display: flex;
+  flex-direction: column;
+}
+
 .blank-button{
   background-color: inherit;
   border: none;

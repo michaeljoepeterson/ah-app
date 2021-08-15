@@ -22,5 +22,14 @@ export class CustomFieldValue extends BaseModel{
         if(data.value && this.customField.fieldType === fieldTypes.date){
             this.value = new Date(data.value);
         }
+        //init empty field checkbox vals
+        if(this.customField?.fieldOptions?.length > 0 && this.customField?.fieldType === fieldTypes.checkbox && !this.value){
+            this.initCheckboxValues()
+        }
+    }
+    
+    initCheckboxValues(){
+        this.value = [];
+        this.customField.fieldOptions.forEach(option => this.value.push(false));
     }
 }

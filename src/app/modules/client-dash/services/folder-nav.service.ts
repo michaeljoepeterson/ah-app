@@ -253,7 +253,6 @@ export class FolderNavService {
     };
     return this.http.get(url,options).pipe(
       map((response:any) => {
-        console.log('folders for user',response);
         let folders = response.folders.map(folder => new FolderItem(folder));
         this.setFolders(folders);
         return folders;

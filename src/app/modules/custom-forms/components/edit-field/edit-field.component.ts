@@ -26,7 +26,6 @@ export class EditFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(fieldTypes);
     this.currentField = new CustomField(this.field);
   }
 
