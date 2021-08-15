@@ -1,10 +1,11 @@
 <form class="flex section-form">
-    <mat-form-field 
-    class="example-full-width" 
+    <input 
+    class="form-control"
+    [(ngModel)]="sectionName"
+    required
+    type="text"
+    name="section-name"
     (click)="$event.stopPropagation()">
-      <mat-label>Section Name</mat-label>
-      <input [(ngModel)]="sectionName" matInput name="section-name">
-    </mat-form-field>
     <button
     class="blank-button icon-button-sizing"
     (click)="$event.stopPropagation(); onConfirmClicked();"

@@ -14,14 +14,19 @@ export class FieldTypes{
     file:string = 'file';
     date:string = 'date';
     image:string = 'image';
+    text:string = 'text'
     types:FieldType[] = [
         {
-            name:this.dropdown,
-            displayName:'Dropdown'
+            name:this.text,
+            displayName:'Text'
         },
         {
             name:this.number,
             displayName:'Number'
+        },
+        {
+            name:this.dropdown,
+            displayName:'Dropdown'
         },
         {
             name:this.radio,

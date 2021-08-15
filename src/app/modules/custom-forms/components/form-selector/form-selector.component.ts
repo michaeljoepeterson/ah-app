@@ -15,7 +15,7 @@ export class FormSelectorComponent implements OnInit {
   @Output() formSelected = new EventEmitter();
   
   forms:CustomForm[] = [];
-  formSelectLabel:string = 'Select a custom form';
+  formSelectLabel:string = 'Select a Form';
   selectedFormId:string = null;
 
   private _sub:Subscription;

@@ -1,4 +1,4 @@
-<mat-form-field class="full-input">
+<!-- <mat-form-field class="full-input">
     <mat-label>{{formSelectLabel}}</mat-label>
     <mat-select 
     (selectionChange)="onFormSelected()"
@@ -9,4 +9,25 @@
         {{form.name}}
         </mat-option>
     </mat-select>
-</mat-form-field>        
+</mat-form-field> -->
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <label 
+        class="input-group-text" 
+        for="forms">
+            {{formSelectLabel}}
+        </label>
+    </div>
+    <select 
+    class="custom-select" 
+    id="forms"
+    [(ngModel)]="selectedFormId"
+    (change)="onFormSelected()">
+        <option value="null">New Form</option>
+        <option 
+        *ngFor="let form of forms"
+        [value]="form.id">
+            {{form.name}}
+        </option>
+    </select>
+</div>

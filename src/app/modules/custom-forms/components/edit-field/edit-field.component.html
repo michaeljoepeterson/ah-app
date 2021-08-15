@@ -15,11 +15,13 @@
                 </ng-container>
                 <ng-container *ngIf="editMode">
                     <span>
-                        <mat-form-field 
-                        class="example-full-width" 
+                        <input 
+                        class="form-control"
+                        [(ngModel)]="currentField.name"
+                        required
+                        type="text"
+                        name="field-name"
                         (click)="$event.stopPropagation()">
-                            <input [(ngModel)]="currentField.name" matInput name="field-name">
-                        </mat-form-field>
                     </span>
                 </ng-container>
                 <ng-container *ngIf="!editMode">
@@ -42,7 +44,7 @@
                     class="blank-button icon-button-sizing"
                     (click)="$event.stopPropagation(); onConfirmClicked();"
                     matRipple
-                    matTooltip="Edit Section Name">
+                    matTooltip="Save Edits">
                         <mat-icon [inline]="true">
                             check
                         </mat-icon>
@@ -71,7 +73,26 @@
                 </h6> -->
             </ng-container>
             <ng-container *ngIf="editMode">
-                <mat-form-field class="full-input">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label 
+                        class="input-group-text" 
+                        for="field-types">
+                            Type
+                        </label>
+                    </div>
+                    <select 
+                    class="custom-select" 
+                    id="field-types"
+                    [(ngModel)]="currentField.fieldType">
+                        <option 
+                        *ngFor="let type of fieldTypes.types"
+                        [value]="type.name">
+                            {{type.displayName}}
+                        </option>
+                    </select>
+                </div>
+                <!-- <mat-form-field class="full-input">
                     <mat-select 
                     (selectionChange)="typeChange()"
                     [(ngModel)]="currentField.fieldType" 
@@ -82,7 +103,7 @@
                             {{type.displayName}}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
             </ng-container>
         </div>
         <div class="preview-container">
