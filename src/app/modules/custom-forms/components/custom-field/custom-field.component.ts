@@ -26,23 +26,31 @@ export class CustomFieldComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.fieldValue){
-      this.initValue();
+      this.handleTypeChange();
     }
   }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes?.fieldType?.currentValue){
-      this.initValue();
+      this.handleTypeChange();
     }
   }
 
-  initValue(){
+  /**
+   * handle type changes when editing fields
+   */
+  handleTypeChange(){
     this.fieldValue = new CustomFieldValue({
       customFieldId:this.field.id,
       customField:this.field
     });
     if(this.fieldType === this.fieldTypes.checkbox){
       this.fieldValue.initCheckboxValues();
+    }
+
+    if(this.fieldType === this.fieldTypes.date){
+      this.fieldValue.initDate();
+      console.log(this.fieldValue);
     }
   }
 }

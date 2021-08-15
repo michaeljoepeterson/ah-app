@@ -19,6 +19,8 @@ import { CreateAccountComponent } from './components/create-account/create-accou
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { GetCurrentStatusColorPipe } from './modules/client-dash/pipes/folder-card.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NotificationsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     GetCurrentStatusColorPipe

@@ -32,4 +32,8 @@ export class CustomFieldValue extends BaseModel{
         this.value = [];
         this.customField.fieldOptions.forEach(option => this.value.push(false));
     }
+
+    initDate(value?:any){
+        this.value = !value ? new Date() : new Date(value);
+    }
 }
