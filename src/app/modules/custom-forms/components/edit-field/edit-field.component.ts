@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CustomField } from '../../models/custom-field';
 import { FieldTypes, fieldTypes } from '../../constants';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-edit-field',
@@ -11,12 +12,18 @@ import { FieldTypes, fieldTypes } from '../../constants';
 export class EditFieldComponent implements OnInit {
   @Input() field:CustomField;
 
-  fieldTypes:FieldTypes = fieldTypes;
+  fieldTypes:FieldTypes;
   mouseOver:boolean = false;
   editMode:boolean = false;
   currentField:CustomField;
+  newOption:string;
 
-  constructor() { }
+  constructor(
+    private formService:FormService,
+    private ref:ChangeDetectorRef
+  ) { 
+    this.fieldTypes = this.formService.fieldTypes;
+  }
 
   ngOnInit(): void {
     console.log(fieldTypes);
@@ -40,11 +47,23 @@ export class EditFieldComponent implements OnInit {
   }
 
   onCancelClicked(){
-    this.setEditing(false);
     this.currentField.updateField(this.field);
+    this.newOption = '';
+    this.setEditing(false);
   }
 
   onConfirmClicked(){
     this.field.updateField(this.currentField);
+    this.newOption = '';
+    this.setEditing(false);
+  }
+
+  removeOption(option:string){
+    this.currentField.fieldOptions = this.currentField.fieldOptions.filter(optionValue => option !== optionValue);
+    this.ref.detectChanges();
+  }
+
+  addOption(){
+    this.currentField.fieldOptions.push(this.newOption);
   }
 }

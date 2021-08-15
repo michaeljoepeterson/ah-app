@@ -1,3 +1,64 @@
 <div class="custom-field">
-    {{field.name}}
+    <ng-container *ngIf="field.fieldType === fieldTypes.text">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span 
+                class="input-group-text"
+                (click)="$event.stopPropagation()">
+                    {{field.name}}
+                </span>
+            </div>
+            <input 
+            class="form-control"
+            [(ngModel)]="fieldValue.value"
+            required
+            type="text"
+            name="field-value"
+            (click)="$event.stopPropagation()">
+        </div> 
+    </ng-container>
+    <ng-container *ngIf="field.fieldType === fieldTypes.number">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span 
+                class="input-group-text"
+                (click)="$event.stopPropagation()">
+                    {{field.name}}
+                </span>
+            </div>
+            <input 
+            class="form-control"
+            [(ngModel)]="fieldValue.value"
+            required
+            type="number"
+            name="field-value"
+            (click)="$event.stopPropagation()">
+        </div> 
+    </ng-container>
+    <ng-container *ngIf="field.fieldType === fieldTypes.dropdown">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label 
+                class="input-group-text" 
+                for="field-types"
+                (click)="$event.stopPropagation()">
+                    {{field.name}}
+                </label>
+            </div>
+            <select 
+            class="custom-select" 
+            id="field-types"
+            [(ngModel)]="fieldValue.value"
+            (change)="typeChange()"
+            name="field-value">
+                <option value="null">None</option>
+                <option 
+                *ngFor="let option of field.fieldOptions"
+                [value]="option">
+                    {{option}}
+                </option>
+            </select>
+        </div>
+    </ng-container>
+    {{fieldValue.value}}
 </div>

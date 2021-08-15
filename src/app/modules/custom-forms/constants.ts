@@ -37,12 +37,12 @@ export class FieldTypes{
             displayName:'Checkboxes'
         },
         {
-            name:this.file,
-            displayName:'File'
-        },
-        {
             name:this.date,
             displayName:'Date'
+        },
+        {
+            name:this.file,
+            displayName:'File'
         },
         {
             name:this.image,

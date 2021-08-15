@@ -10,18 +10,27 @@
             <div class="field-header flex-vertical-center">
                 <ng-container *ngIf="!editMode">
                     <span class="field-name-header">
-                        Edit {{currentField.name}}
+                        {{currentField.name}}
                     </span>
                 </ng-container>
                 <ng-container *ngIf="editMode">
                     <span>
-                        <input 
-                        class="form-control"
-                        [(ngModel)]="currentField.name"
-                        required
-                        type="text"
-                        name="field-name"
-                        (click)="$event.stopPropagation()">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span 
+                                class="input-group-text"
+                                (click)="$event.stopPropagation()">
+                                    Field Name
+                                </span>
+                            </div>
+                            <input 
+                            class="form-control"
+                            [(ngModel)]="currentField.name"
+                            required
+                            type="text"
+                            name="field-name"
+                            (click)="$event.stopPropagation()">
+                        </div>     
                     </span>
                 </ng-container>
                 <ng-container *ngIf="!editMode">
@@ -36,6 +45,19 @@
                     matTooltip="Edit Field">
                         <mat-icon [inline]="true">
                             edit
+                        </mat-icon>
+                    </button>
+                    <button
+                    [ngClass]="{
+                        'blank-button':true, 
+                        'add-button':true,
+                        'hidden':!mouseOver
+                    }"
+                    (click)="$event.stopPropagation()"
+                    matRipple
+                    matTooltip="Add Section">
+                        <mat-icon [inline]="true">
+                            add_circle_outline
                         </mat-icon>
                     </button>
                 </ng-container>
@@ -77,14 +99,16 @@
                     <div class="input-group-prepend">
                         <label 
                         class="input-group-text" 
-                        for="field-types">
+                        for="field-types"
+                        (click)="$event.stopPropagation()">
                             Type
                         </label>
                     </div>
                     <select 
                     class="custom-select" 
                     id="field-types"
-                    [(ngModel)]="currentField.fieldType">
+                    [(ngModel)]="currentField.fieldType"
+                    (change)="typeChange()">
                         <option 
                         *ngFor="let type of fieldTypes.types"
                         [value]="type.name">
@@ -92,27 +116,72 @@
                         </option>
                     </select>
                 </div>
-                <!-- <mat-form-field class="full-input">
-                    <mat-select 
-                    (selectionChange)="typeChange()"
-                    [(ngModel)]="currentField.fieldType" 
-                    name="field-select">
-                        <mat-option 
-                        *ngFor="let type of fieldTypes.types"
-                        [value]="type.name">
-                            {{type.displayName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field> -->
+                <ng-container *ngIf="currentField.fieldType === fieldTypes.dropdown || currentField.fieldType === fieldTypes.radio || currentField.fieldType === fieldTypes.checkbox">
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span 
+                                class="input-group-text"
+                                (click)="$event.stopPropagation()">
+                                    New Option
+                                </span>
+                                <button 
+                                class="btn btn-outline-secondary dropdown-toggle" type="button" 
+                                data-toggle="dropdown" 
+                                aria-haspopup="true" 
+                                aria-expanded="false">All Options</button>
+                                <div class="dropdown-menu">
+                                    <ng-container *ngFor="let option of currentField.fieldOptions">
+                                        <div 
+                                        class="flex-center" 
+                                        (click)="$event.stopPropagation()">
+                                            <span
+                                            class="option-name">
+                                                {{option}}
+                                            </span>
+                                            <span>
+                                                <button
+                                                class="blank-button icon-button-sizing"
+                                                (click)="$event.stopPropagation();removeOption(option);"
+                                                matRipple
+                                                matTooltip="Remove Option">
+                                                    <mat-icon [inline]="true">
+                                                        close
+                                                    </mat-icon>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <input 
+                            class="form-control"
+                            [(ngModel)]="newOption"
+                            required
+                            type="text"
+                            name="option-name"
+                            (click)="$event.stopPropagation()">
+                            <div class="input-group-append">
+                                <button
+                                class="btn btn-outline-secondary"
+                                (click)="$event.stopPropagation(); addOption();"
+                                matRipple
+                                matTooltip="Save Edits">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
             </ng-container>
         </div>
         <div class="preview-container">
             <div>
-                <h6 class="header">Field Preview:</h6>
                 <hr>
             </div>
-            <div>
-                <app-custom-field [field]="field"></app-custom-field>
+            <div class="preview">
+                <h6>Field Preview:</h6>
+                <app-custom-field [field]="currentField"></app-custom-field>
             </div>
         </div>
     </div>

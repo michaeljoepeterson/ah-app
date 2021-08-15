@@ -1,11 +1,20 @@
 <form class="flex section-form">
-    <input 
-    class="form-control"
-    [(ngModel)]="sectionName"
-    required
-    type="text"
-    name="section-name"
-    (click)="$event.stopPropagation()">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span 
+            class="input-group-text"
+            (click)="$event.stopPropagation()">
+                Section Name
+            </span>
+        </div>
+        <input 
+        class="form-control"
+        [(ngModel)]="sectionName"
+        required
+        type="text"
+        name="section-name"
+        (click)="$event.stopPropagation()">
+    </div>    
     <button
     class="blank-button icon-button-sizing"
     (click)="$event.stopPropagation(); onConfirmClicked();"

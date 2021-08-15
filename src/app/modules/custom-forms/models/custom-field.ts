@@ -28,6 +28,9 @@ export class CustomField extends BaseModel{
         if(data.createdAt){
             this.createdAt = new Date(data.createdAt);
         }
+        if(data.fieldOptions){
+            this.fieldOptions = [...data.fieldOptions];
+        }
     }
 
     updateField(field:CustomField){

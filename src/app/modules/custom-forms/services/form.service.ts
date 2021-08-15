@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 import { NotificationsService } from '../../notifications/services/notifications.service';
+import { fieldTypes, FieldTypes } from '../constants';
 import { CustomForm } from '../models/custom-form';
 
 @Injectable({
@@ -32,6 +33,7 @@ export class FormService {
   forms:Observable<CustomForm[]> = this._forms.asObservable();
 
   endpoint:string = 'form';
+  fieldTypes:FieldTypes = fieldTypes;
 
   constructor(
     private authService:AuthService,
