@@ -10,7 +10,8 @@ export class FormEditControlsComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger:MatMenuTrigger
   @Input() hidden:boolean = true;
   @Input() editTooltip:string = 'Edit Field';
-  @Input() addTooltip:string = 'Add a New Section or Field'
+  @Input() addTooltip:string = 'Add a New Section or Field';
+  @Input() hideAddButton:boolean = false;
 
   @Output() editModeUpdated = new EventEmitter();
   @Output() addNewSection = new EventEmitter();

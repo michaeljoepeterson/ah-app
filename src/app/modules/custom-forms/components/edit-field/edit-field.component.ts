@@ -17,6 +17,7 @@ export class EditFieldComponent implements OnInit {
   editMode:boolean = false;
   currentField:CustomField;
   newOption:string;
+  isNew:boolean = false;
 
   constructor(
     private formService:FormService,
@@ -27,6 +28,10 @@ export class EditFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentField = new CustomField(this.field);
+    if(!this.field.id){
+      this.editMode = true;
+      this.isNew = true;
+    }
   }
 
   mouseOverField(){
@@ -49,12 +54,20 @@ export class EditFieldComponent implements OnInit {
     this.currentField.updateField(this.field);
     this.newOption = '';
     this.setEditing(false);
+    if(this.isNew){
+      this.formService.updateNewField(false);
+    }
   }
 
   onConfirmClicked(){
     this.field.updateField(this.currentField);
     this.newOption = '';
     this.setEditing(false);
+    if(this.isNew){
+      this.formService.updateNewField(true);
+      //temp until new id from server
+      this.field.id = 'test' + new Date().valueOf();
+    }
   }
 
   removeOption(option:string){
@@ -64,5 +77,6 @@ export class EditFieldComponent implements OnInit {
 
   addOption(){
     this.currentField.fieldOptions.push(this.newOption);
+    this.newOption = '';
   }
 }

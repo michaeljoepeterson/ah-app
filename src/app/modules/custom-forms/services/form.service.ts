@@ -31,6 +31,11 @@ export class FormService {
    * forms for the project
    */
   forms:Observable<CustomForm[]> = this._forms.asObservable();
+  private _newFieldUpdated:BehaviorSubject<boolean> = new BehaviorSubject(null);
+  /**
+   * emit changes when new section updated
+   */
+  newFieldUpdated:Observable<boolean> = this._newFieldUpdated.asObservable();
 
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
@@ -101,5 +106,9 @@ export class FormService {
 
   setEditing(isEditing:boolean){
     this._isEditing.next(isEditing);
+  }
+
+  updateNewField(confirmField:boolean){
+    this._newFieldUpdated.next(confirmField);
   }
 }

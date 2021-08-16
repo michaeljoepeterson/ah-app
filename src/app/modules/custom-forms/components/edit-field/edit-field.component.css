@@ -4,6 +4,7 @@
 
 .field-card{
     transition: all 500ms;
+    margin-top: 1em;
 }
 
 .editing-card{

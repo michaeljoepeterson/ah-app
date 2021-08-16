@@ -11,7 +11,7 @@ export class CustomField extends BaseModel{
     parentForm:string = null;
     sortOrder:number = 0;
     fieldType:string = null;
-    fieldOptions:string[] = null;
+    fieldOptions:string[] = [];
     min:string = null;
     max:string = null;
     type:string = 'field';

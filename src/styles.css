@@ -138,6 +138,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 21px;
 }
 
-.header{
+.header,.flex-header{
   margin-bottom: 0;
+}
+
+.flex-header{
+  flex: 1;
 }

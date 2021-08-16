@@ -44,7 +44,7 @@ export class CustomSection extends BaseModel{
      /**
      * combine fields and sections for rendering and sort by sortorder
      */
-      combineChildren(){
+    combineChildren(){
         let combinedChildren = [...this.fields,...this.sections];
         combinedChildren = combinedChildren.sort((fieldA, fieldB) => {
             if(fieldA.sortOrder < fieldB.sortOrder){
@@ -58,5 +58,14 @@ export class CustomSection extends BaseModel{
             }
         });
         this.combinedChildren = combinedChildren;
+    }
+
+    addNewSection(index:number){
+        this.combinedChildren.splice(index,0,new CustomSection());
+        
+    }
+
+    addNewField(){
+
     }
 }

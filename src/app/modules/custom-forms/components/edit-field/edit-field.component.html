@@ -36,33 +36,8 @@
                 <ng-container *ngIf="!editMode">
                     <app-form-edit-controls 
                     [hidden]="!mouseOver"
+                    [hideAddButton]="true"
                     (editModeUpdated)="setEditing($event)"></app-form-edit-controls>
-                    <!-- <button
-                    [ngClass]="{
-                        'blank-button':true, 
-                        'icon-button-sizing':true,
-                        'hidden':!mouseOver
-                    }"
-                    (click)="$event.stopPropagation();setEditing(true);"
-                    matRipple
-                    matTooltip="Edit Field">
-                        <mat-icon [inline]="true">
-                            edit
-                        </mat-icon>
-                    </button>
-                    <button
-                    [ngClass]="{
-                        'blank-button':true, 
-                        'add-button':true,
-                        'hidden':!mouseOver
-                    }"
-                    (click)="$event.stopPropagation()"
-                    matRipple
-                    matTooltip="Add Section">
-                        <mat-icon [inline]="true">
-                            add_circle_outline
-                        </mat-icon>
-                    </button> -->
                 </ng-container>
                 <ng-container *ngIf="editMode">
                     <button

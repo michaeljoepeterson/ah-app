@@ -23,40 +23,17 @@ class="form-section"
             <ng-container *ngIf="editMode">
                 <app-edit-form-section 
                 [section]="section"
-                (cancelClicked)="setEditMode(false)"></app-edit-form-section>
+                (confirmClicked)="confirmClicked()"
+                (cancelClicked)="cancelClicked()"></app-edit-form-section>
             </ng-container>
         </span>
         <ng-container *ngIf="isEditing && !editMode">
             <app-form-edit-controls 
             [hidden]="!overSection"
-            (editModeUpdated)="setEditMode($event)"></app-form-edit-controls>
-            <!-- <ng-container *ngIf="!editMode">
-                <button
-                class="blank-button edit-button"
-                (click)="$event.stopPropagation(); setEditMode(true)"
-                matRipple
-                matTooltip="Edit Section Name">
-                    <mat-icon [inline]="true">
-                        edit
-                    </mat-icon>
-                </button>
-            </ng-container> -->
+            (editModeUpdated)="setEditMode($event)"
+            (addNewSection)="sectionAdded()"
+            (addNewField)="fieldAdded()"></app-form-edit-controls>
         </ng-container>
-        <!-- <ng-container *ngIf="(overSection || editMode) && isEditing">
-            <div [ngClass]="{
-                'add-buttons':true
-            }">
-                <button
-                    class="blank-button add-button"
-                    (click)="$event.stopPropagation()"
-                    matRipple
-                    matTooltip="Add Section">
-                        <mat-icon [inline]="true">
-                            add_circle_outline
-                        </mat-icon>
-                </button>
-            </div>
-        </ng-container> -->
     </div>
     <div *ngIf="sectionExpanded" [@enterAnimation]>
         <app-form-child 
