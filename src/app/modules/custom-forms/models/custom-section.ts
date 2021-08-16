@@ -1,6 +1,7 @@
 import { User } from "../../../models/users/user";
 import { BaseModel } from "../../../models/baseModel"
 import { CustomField } from "./custom-field";
+import { fieldTypes } from "../constants";
 
 export class CustomSection extends BaseModel{
     name:string = null;
@@ -60,12 +61,24 @@ export class CustomSection extends BaseModel{
         this.combinedChildren = combinedChildren;
     }
 
-    addNewSection(index:number){
-        this.combinedChildren.splice(index,0,new CustomSection());
-        
+    addNewSection(){
+        let newCombinedSections = [...this.combinedChildren];
+        let newField = new CustomSection();
+        newField.name = 'New Section';
+        newCombinedSections.push(newField);
+        this.combinedChildren = newCombinedSections;
     }
 
     addNewField(){
+        let newCombinedSections = [...this.combinedChildren];
+        let newField = new CustomField();
+        newField.name = 'New Field';
+        newField.fieldType = fieldTypes.text;
+        newCombinedSections.push(newField);
+        this.combinedChildren = newCombinedSections;
+    }
 
+    removeNewItems(){
+        this.combinedChildren = this.combinedChildren.filter(child => child.id);
     }
 }

@@ -74,7 +74,7 @@ export class CustomFormSectionComponent implements OnInit {
     let updateSectionSub = this.formService.newFieldUpdated.subscribe(confirmed => {
       if(this.isAdding){
         if(!confirmed){
-          this.section.combinedChildren = this.section.combinedChildren.filter(child => child.id);
+          this.section.removeNewItems();
           this.ref.markForCheck();
           this.isAdding = false;
         }
@@ -116,24 +116,13 @@ export class CustomFormSectionComponent implements OnInit {
 
   sectionAdded(){
     this.sectionExpanded = true;
-    let originalCombinedSections = [...this.section.combinedChildren];
-    let newCombinedSections = [...this.section.combinedChildren];
-    let newSeciton = new CustomSection();
-    newSeciton.name = 'New Section';
-    newCombinedSections.push(newSeciton);
-    this.section.combinedChildren = [...newCombinedSections];
+    this.section.addNewSection();
     this.isAdding = true;
   }
 
   fieldAdded(){
     this.sectionExpanded = true;
-    let originalCombinedSections = [...this.section.combinedChildren];
-    let newCombinedSections = [...this.section.combinedChildren];
-    let newField = new CustomField();
-    newField.name = 'New Field';
-    newField.fieldType = this.fieldTypes.text;
-    newCombinedSections.push(newField);
-    this.section.combinedChildren = [...newCombinedSections];
+    this.section.addNewField();
     this.isAdding = true;
   }
 

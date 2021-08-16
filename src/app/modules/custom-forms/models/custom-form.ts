@@ -2,6 +2,7 @@ import { User } from "../../../models/users/user";
 import { BaseModel } from "../../../models/baseModel";
 import { CustomSection } from "./custom-section";
 import { CustomField } from "./custom-field";
+import { fieldTypes } from "../constants";
 
 export class CustomForm extends BaseModel{
     name:string = null;

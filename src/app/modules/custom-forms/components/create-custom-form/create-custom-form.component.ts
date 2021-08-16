@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomForm } from '../../models/custom-form';
 import { FormService } from '../../services/form.service';
@@ -24,17 +24,38 @@ export class CreateCustomFormComponent implements OnInit {
   }
 
   form:CustomForm;
+  isAdding:boolean = false;
+  subs:Subscription[] = [];
 
   constructor(
-    private formService:FormService
+    private formService:FormService,
+    private ref:ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.formService.setEditing(true);
+    let updateSectionSub = this.formService.newFieldUpdated.subscribe(confirmed => {
+      if(this.isAdding){
+        if(!confirmed){
+          this.form.combinedChildren = this.form.combinedChildren.filter(child => child.id);
+          this.isAdding = false;
+          this.form.combinedChildren = this.formService.removeNewItems(this.form.combinedChildren);
+          this.ref.markForCheck()
+        }
+      }
+    });
+
+    this.subs = [updateSectionSub];
   }
 
   ngOnDestroy(){
     this.formService.setEditing(false);
+    try{
+      this.subs.forEach(sub => sub.unsubscribe());
+    }
+    catch(e){
+      console.warn(e);
+    }
   }
   
   formSelected(form:CustomForm){
@@ -45,5 +66,15 @@ export class CreateCustomFormComponent implements OnInit {
     else{
       this.formHeader = 'Create a Custom Form';
     }
+  }
+
+  sectionAdded(){
+    this.form.combinedChildren = this.formService.addNewSection(this.form.combinedChildren);
+    this.isAdding = true;
+  }
+
+  fieldAdded(){
+    this.form.combinedChildren = this.formService.addNewField(this.form.combinedChildren);
+    this.isAdding = true;
   }
 }

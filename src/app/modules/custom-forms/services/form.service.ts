@@ -6,7 +6,9 @@ import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 import { NotificationsService } from '../../notifications/services/notifications.service';
 import { fieldTypes, FieldTypes } from '../constants';
+import { CustomField } from '../models/custom-field';
 import { CustomForm } from '../models/custom-form';
+import { CustomSection } from '../models/custom-section';
 
 @Injectable({
   providedIn: 'root'
@@ -111,4 +113,25 @@ export class FormService {
   updateNewField(confirmField:boolean){
     this._newFieldUpdated.next(confirmField);
   }
+
+  addNewSection(combinedChildren:(CustomField|CustomSection)[]){
+    let newCombinedSections = [...combinedChildren];
+    let newField = new CustomSection();
+    newField.name = 'New Section';
+    newCombinedSections.push(newField);
+    return newCombinedSections;
+}
+
+addNewField(combinedChildren:(CustomField|CustomSection)[]){
+    let newCombinedSections = [...combinedChildren];
+    let newField = new CustomField();
+    newField.name = 'New Field';
+    newField.fieldType = fieldTypes.text;
+    newCombinedSections.push(newField);
+    return newCombinedSections;
+}
+
+removeNewItems(combinedChildren:(CustomField|CustomSection)[]){
+    return combinedChildren.filter(child => child.id);
+}
 }

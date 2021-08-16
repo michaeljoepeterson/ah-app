@@ -2,11 +2,15 @@
     <div class="flex-vertical-center">
         <h4 class="flex-header">{{formHeader}}</h4>
         <app-form-edit-controls 
-        [hidden]="false"></app-form-edit-controls>
+        [hidden]="false"
+        (addNewSection)="sectionAdded()"
+        (addNewField)="fieldAdded()"></app-form-edit-controls>
     </div>
     <app-form-selector
     (formSelected)="formSelected($event)"></app-form-selector>
     <div class="custom-form">
-        <app-custom-form [form]="form"></app-custom-form>
+        <app-custom-form 
+        [form]="form"
+        [children]="form?.combinedChildren"></app-custom-form>
     </div>
 </div>
