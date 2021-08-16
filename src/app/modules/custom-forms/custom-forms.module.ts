@@ -20,6 +20,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormEditControlsComponent } from './components/form-edit-controls/form-edit-controls.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     CreateCustomFormComponent, 
     FormChildComponent,
     EditFieldComponent,
-    EditFormSectionComponent
+    EditFormSectionComponent,
+    FormEditControlsComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatRadioModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule
   ],
   exports:[
     FormSelectorComponent,

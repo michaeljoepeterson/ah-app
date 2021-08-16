@@ -21,6 +21,7 @@ import { GetCurrentStatusColorPipe } from './modules/client-dash/pipes/folder-ca
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule
   ],
   providers: [
     GetCurrentStatusColorPipe

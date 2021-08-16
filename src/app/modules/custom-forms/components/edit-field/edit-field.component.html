@@ -34,7 +34,10 @@
                     </span>
                 </ng-container>
                 <ng-container *ngIf="!editMode">
-                    <button
+                    <app-form-edit-controls 
+                    [hidden]="!mouseOver"
+                    (editModeUpdated)="setEditing($event)"></app-form-edit-controls>
+                    <!-- <button
                     [ngClass]="{
                         'blank-button':true, 
                         'icon-button-sizing':true,
@@ -59,7 +62,7 @@
                         <mat-icon [inline]="true">
                             add_circle_outline
                         </mat-icon>
-                    </button>
+                    </button> -->
                 </ng-container>
                 <ng-container *ngIf="editMode">
                     <button
@@ -89,11 +92,6 @@
     </mat-card-header>
     <div>
         <div>
-            <ng-container *ngIf="!editMode">
-                <!-- <h6 class="header">
-                    Field Type: {{currentField.fieldType}}
-                </h6> -->
-            </ng-container>
             <ng-container *ngIf="editMode">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

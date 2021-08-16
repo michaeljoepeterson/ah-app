@@ -26,8 +26,11 @@ class="form-section"
                 (cancelClicked)="setEditMode(false)"></app-edit-form-section>
             </ng-container>
         </span>
-        <ng-container *ngIf="isEditing && overSection">
-            <ng-container *ngIf="!editMode">
+        <ng-container *ngIf="isEditing && !editMode">
+            <app-form-edit-controls 
+            [hidden]="!overSection"
+            (editModeUpdated)="setEditMode($event)"></app-form-edit-controls>
+            <!-- <ng-container *ngIf="!editMode">
                 <button
                 class="blank-button edit-button"
                 (click)="$event.stopPropagation(); setEditMode(true)"
@@ -37,9 +40,9 @@ class="form-section"
                         edit
                     </mat-icon>
                 </button>
-            </ng-container>
+            </ng-container> -->
         </ng-container>
-        <ng-container *ngIf="(overSection || editMode) && isEditing">
+        <!-- <ng-container *ngIf="(overSection || editMode) && isEditing">
             <div [ngClass]="{
                 'add-buttons':true
             }">
@@ -53,7 +56,7 @@ class="form-section"
                         </mat-icon>
                 </button>
             </div>
-        </ng-container>
+        </ng-container> -->
     </div>
     <div *ngIf="sectionExpanded" [@enterAnimation]>
         <app-form-child 

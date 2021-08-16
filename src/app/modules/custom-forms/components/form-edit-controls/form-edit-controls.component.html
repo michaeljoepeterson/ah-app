@@ -1,0 +1,42 @@
+<span class="flex">
+    <button
+    type="button"
+    [ngClass]="{
+        'blank-button':true, 
+        'icon-button-sizing':true,
+        'hidden':hidden && !menuOpen
+    }"
+    (click)="$event.stopPropagation();setEditing(true);"
+    matRipple
+    [matTooltip]="editTooltip">
+        <mat-icon [inline]="true">
+            edit
+        </mat-icon>
+    </button>
+    <button
+    type="button"
+    [ngClass]="{
+        'blank-button':true, 
+        'add-button':true,
+        'hidden':hidden && !menuOpen
+    }"
+    (click)="$event.stopPropagation();"
+    matRipple
+    [matTooltip]="addTooltip"
+    [matMenuTriggerFor]="menu"
+    #menuTrigger="matMenuTrigger"
+    (menuClosed)="menuOpened()"
+    (menuOpened)="menuClosed()">
+        <mat-icon [inline]="true">
+            add_circle_outline
+        </mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button 
+        mat-menu-item
+        (click)="onAddNewSection()">Add New Form Section</button>
+        <button 
+        mat-menu-item
+        (click)="onAddNewField()">Add New Form Field</button>
+    </mat-menu>
+</span>
