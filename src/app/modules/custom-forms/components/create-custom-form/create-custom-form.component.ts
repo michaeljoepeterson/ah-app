@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomForm } from '../../models/custom-form';
 import { FormService } from '../../services/form.service';
@@ -26,6 +26,8 @@ export class CreateCustomFormComponent implements OnInit {
   form:CustomForm;
   isAdding:boolean = false;
   subs:Subscription[] = [];
+  formName:string;
+  editMode:boolean = false;
 
   constructor(
     private formService:FormService,
@@ -44,7 +46,7 @@ export class CreateCustomFormComponent implements OnInit {
         }
       }
     });
-
+    this.formName = this.form?.name;
     this.subs = [updateSectionSub];
   }
 
@@ -62,9 +64,11 @@ export class CreateCustomFormComponent implements OnInit {
     this.form = form;
     if(this.form){
       this.formHeader = `Editing: ${this.form.name}`;
+      this.formName = this.form.name;
     }
     else{
       this.formHeader = 'Create a Custom Form';
+      this.formName = '';
     }
   }
 
@@ -76,5 +80,33 @@ export class CreateCustomFormComponent implements OnInit {
   fieldAdded(){
     this.form.combinedChildren = this.formService.addNewField(this.form.combinedChildren);
     this.isAdding = true;
+  }
+
+  setEditMode(editMode:boolean){
+    this.editMode = editMode;
+  }
+
+  onCancelClicked(){
+    this.formName = this.form.name;
+    this.setEditMode(false);
+  }
+
+  onConfirmClicked(){
+    if(this.formName && !this.form){
+      this.createNewForm();
+    }
+    else{
+      this.form.name = this.formName;
+    }
+    this.formHeader = `Editing: ${this.form.name}`;
+    this.setEditMode(false);
+  }
+
+  createNewForm(){
+    this.form = new CustomForm();
+    this.form.name = this.formName;
+    this.sub = this.formService.createNewForm(this.form).subscribe({
+      next:response => response
+    });
   }
 }

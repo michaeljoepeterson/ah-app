@@ -1,8 +1,41 @@
 <div>
-    <div class="flex-vertical-center">
-        <h4 class="flex-header">{{formHeader}}</h4>
+    <div class="flex-vertical-center header-container">
+        <ng-container *ngIf="!editMode">
+            <h4 class="flex-header">{{formHeader}}</h4>
+        </ng-container>
+        <ng-container *ngIf=editMode>
+            <input 
+            class="form-control"
+            [(ngModel)]="formName"
+            required
+            type="text"
+            name="section-name"
+            (click)="$event.stopPropagation()">
+            <button
+            class="blank-button icon-button-sizing"
+            (click)="$event.stopPropagation(); onConfirmClicked();"
+            matRipple
+            matTooltip="Save Edits">
+                <mat-icon [inline]="true">
+                    check
+                </mat-icon>
+            </button>
+            <button
+            [ngClass]="{
+                'blank-button':true, 
+                'icon-button-sizing':true
+            }"
+            (click)="$event.stopPropagation();onCancelClicked();"
+            matRipple
+            matTooltip="Cancel Field Edits">
+                <mat-icon [inline]="true">
+                    close
+                </mat-icon>
+            </button>
+        </ng-container>
         <app-form-edit-controls 
         [hidden]="false"
+        (editModeUpdated)="setEditMode($event)"
         (addNewSection)="sectionAdded()"
         (addNewField)="fieldAdded()"></app-form-edit-controls>
     </div>

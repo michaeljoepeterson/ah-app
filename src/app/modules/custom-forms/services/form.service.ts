@@ -38,6 +38,11 @@ export class FormService {
    * emit changes when new section updated
    */
   newFieldUpdated:Observable<boolean> = this._newFieldUpdated.asObservable();
+  private _onFormAdded:BehaviorSubject<CustomForm> = new BehaviorSubject(null);
+  /**
+   * forms for the project
+   */
+   onFormAdded:Observable<CustomForm> = this._onFormAdded.asObservable();
 
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
@@ -122,16 +127,43 @@ export class FormService {
     return newCombinedSections;
 }
 
-addNewField(combinedChildren:(CustomField|CustomSection)[]){
+  addNewField(combinedChildren:(CustomField|CustomSection)[]){
     let newCombinedSections = [...combinedChildren];
     let newField = new CustomField();
     newField.name = 'New Field';
     newField.fieldType = fieldTypes.text;
     newCombinedSections.push(newField);
     return newCombinedSections;
-}
+  }
 
-removeNewItems(combinedChildren:(CustomField|CustomSection)[]){
+  removeNewItems(combinedChildren:(CustomField|CustomSection)[]){
     return combinedChildren.filter(child => child.id);
-}
+  }
+
+  createNewForm(form:CustomForm):Observable<CustomForm>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}`;
+    let options = {
+      headers
+    };
+
+    let formData = form.serialize();
+    formData.createdAt = new Date();
+    let body = {
+      form:formData
+    };
+
+    return this.http.post(url,body,options).pipe(
+      map((response:any) => {
+        let newForm = new CustomForm(response.form);
+        this._onFormAdded.next(newForm);
+        return newForm;
+      }),
+      catchError(err => {
+        let message = 'Error creating form';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
+  }
 }

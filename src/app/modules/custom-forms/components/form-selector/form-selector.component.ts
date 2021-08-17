@@ -17,6 +17,7 @@ export class FormSelectorComponent implements OnInit {
   forms:CustomForm[] = [];
   formSelectLabel:string = 'Select a Form';
   selectedFormId:string = null;
+  subs:Subscription[];
 
   private _sub:Subscription;
   get sub():Subscription{
@@ -38,6 +39,11 @@ export class FormSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getForms();
+    let sub = this.formService.onFormAdded.subscribe(form => {
+      this.getForms();
+    });
+
+    this.subs = [sub];
   }
   
   ngOnDestroy(){
