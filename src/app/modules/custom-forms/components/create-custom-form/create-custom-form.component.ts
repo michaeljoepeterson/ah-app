@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomForm } from '../../models/custom-form';
+import { CustomSection } from '../../models/custom-section';
 import { FormService } from '../../services/form.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class CreateCustomFormComponent implements OnInit {
   subs:Subscription[] = [];
   formName:string;
   editMode:boolean = false;
+  newSection:CustomSection;
 
   constructor(
     private formService:FormService,
@@ -73,8 +75,10 @@ export class CreateCustomFormComponent implements OnInit {
   }
 
   sectionAdded(){
-    this.form.combinedChildren = this.formService.addNewSection(this.form.combinedChildren);
+    this.newSection = this.formService.generateNewSectionFromForm(this.form);
+    this.form.combinedChildren = [...this.form.combinedChildren,this.newSection];
     this.isAdding = true;
+    this.ref.detectChanges();
   }
 
   fieldAdded(){
@@ -106,7 +110,9 @@ export class CreateCustomFormComponent implements OnInit {
     this.form = new CustomForm();
     this.form.name = this.formName;
     this.sub = this.formService.createNewForm(this.form).subscribe({
-      next:response => response
+      next:response => {
+        this.form = new CustomForm(response);
+      }
     });
   }
 }

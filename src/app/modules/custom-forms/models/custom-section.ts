@@ -1,9 +1,8 @@
 import { User } from "../../../models/users/user";
-import { BaseModel } from "../../../models/baseModel"
 import { CustomField } from "./custom-field";
-import { fieldTypes } from "../constants";
+import { BaseFormModel } from "./base-form-model";
 
-export class CustomSection extends BaseModel{
+export class CustomSection extends BaseFormModel{
     name:string = null;
     id:string = null;
     owner:User = null;
@@ -42,43 +41,4 @@ export class CustomSection extends BaseModel{
         this.combineChildren();
     }
 
-     /**
-     * combine fields and sections for rendering and sort by sortorder
-     */
-    combineChildren(){
-        let combinedChildren = [...this.fields,...this.sections];
-        combinedChildren = combinedChildren.sort((fieldA, fieldB) => {
-            if(fieldA.sortOrder < fieldB.sortOrder){
-                return -1;
-            }
-            else if(fieldA.sortOrder > fieldB.sortOrder){
-                return  1;
-            }
-            else{
-                return 0;
-            }
-        });
-        this.combinedChildren = combinedChildren;
-    }
-
-    addNewSection(){
-        let newCombinedSections = [...this.combinedChildren];
-        let newField = new CustomSection();
-        newField.name = 'New Section';
-        newCombinedSections.push(newField);
-        this.combinedChildren = newCombinedSections;
-    }
-
-    addNewField(){
-        let newCombinedSections = [...this.combinedChildren];
-        let newField = new CustomField();
-        newField.name = 'New Field';
-        newField.fieldType = fieldTypes.text;
-        newCombinedSections.push(newField);
-        this.combinedChildren = newCombinedSections;
-    }
-
-    removeNewItems(){
-        this.combinedChildren = this.combinedChildren.filter(child => child.id);
-    }
 }

@@ -46,6 +46,18 @@ export class CustomFormSectionComponent implements OnInit {
    */
   @Input() isEditing:boolean = false;
 
+  private _sub:Subscription;
+  get sub():Subscription{
+    return this._sub;
+  }
+
+  set sub(subscription:Subscription){
+    if(this._sub){
+      this._sub.unsubscribe();
+    }
+    this._sub = subscription;
+  }
+
   baseChildIncrement:number = 4;
   sectionExpanded:boolean = false;
 
@@ -57,6 +69,7 @@ export class CustomFormSectionComponent implements OnInit {
   isAdding:boolean = false;
   isNew:boolean = false;
   subs:Subscription[];
+  newSection:CustomSection;
 
   constructor(
     private formService:FormService,
@@ -85,7 +98,7 @@ export class CustomFormSectionComponent implements OnInit {
       this.editMode = true;
       this.isNew = true;
     }
-
+    console.log(this.section);
     this.subs = [formSub,updateSectionSub]
   }
 
@@ -116,7 +129,8 @@ export class CustomFormSectionComponent implements OnInit {
 
   sectionAdded(){
     this.sectionExpanded = true;
-    this.section.addNewSection();
+    this.newSection = this.formService.generateNewSection(this.section);
+    this.section.addSection(this.newSection);
     this.isAdding = true;
   }
 
@@ -131,6 +145,7 @@ export class CustomFormSectionComponent implements OnInit {
     if(this.isNew){
       this.formService.updateNewField(true);
       //temp until new id from server
+      this.createNewSection();
       this.section.id = 'test' + new Date().valueOf();
     }
   }
@@ -140,5 +155,22 @@ export class CustomFormSectionComponent implements OnInit {
     if(this.isNew){
       this.formService.updateNewField(false);
     }
+  }
+
+  createNewSection(){
+    let section = this.section.id ? this.newSection : this.section;
+    this.sub = this.formService.createNewSection(section).subscribe({
+      next:res => {
+        if(!this.section.id){
+          this.section.id = res.id;
+        }
+        else{
+          this.newSection.id = res.id;
+          this.section.removeNewItems();
+          this.section.addSection(this.newSection);
+        }
+        this.ref.markForCheck();
+      }
+    })
   }
 }

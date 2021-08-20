@@ -40,6 +40,7 @@ export class FormSelectorComponent implements OnInit {
   ngOnInit(): void {
     this.getForms();
     let sub = this.formService.onFormAdded.subscribe(form => {
+      this.selectedFormId = form ? form.id : null;
       this.getForms();
     });
 

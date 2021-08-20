@@ -42,7 +42,7 @@ export class FormService {
   /**
    * forms for the project
    */
-   onFormAdded:Observable<CustomForm> = this._onFormAdded.asObservable();
+  onFormAdded:Observable<CustomForm> = this._onFormAdded.asObservable();
 
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
@@ -165,5 +165,59 @@ export class FormService {
         throw err;
       })
     )
+  }
+
+  createNewSection(section:CustomSection):Observable<CustomSection>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/section`;
+    let options = {
+      headers
+    };
+    let sectionData = section.serialize();
+    sectionData.createdAt = new Date();
+    let body = {
+      section:sectionData
+    };
+
+    return this.http.post(url,body,options).pipe(
+      map((response:any) => {
+        let newSection = new CustomSection(response.section);
+        return newSection;
+      }),
+      catchError(err => {
+        let message = 'Error creating section';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
+  }
+
+  /**
+   * generate generic empty section
+   * @returns 
+   */
+  generateNewSection(parentSection:CustomSection):CustomSection{
+    let newSection = new CustomSection();
+    newSection.name = 'New Section';
+    newSection.createdAt = new Date();
+    newSection.ancestorSections = parentSection.ancestorSections;
+    newSection.ancestorSections.push(parentSection.id);
+    newSection.parentSection = parentSection.id;
+    newSection.parentForm = newSection.parentForm;
+
+    return newSection;
+  }
+
+  /**
+   * generate generic empty section
+   * @returns 
+   */
+  generateNewSectionFromForm(form:CustomForm):CustomSection{
+    let newSection = new CustomSection();
+    newSection.name = 'New Section';
+    newSection.createdAt = new Date();
+    newSection.parentForm = form.id;
+
+    return newSection;
   }
 }
