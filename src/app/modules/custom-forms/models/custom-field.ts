@@ -8,7 +8,7 @@ export class CustomField extends BaseModel{
     createdAt:Date = null;
     ancestorSections:string[] = [];
     parentSection:string = null;
-    parentForm:string = null;
+    parentForm:any = null;
     sortOrder:number = 0;
     fieldType:string = null;
     fieldOptions:string[] = [];
@@ -31,9 +31,18 @@ export class CustomField extends BaseModel{
         if(data.fieldOptions){
             this.fieldOptions = [...data.fieldOptions];
         }
+        if(data.parentForm){
+            this.parentForm = {...data.parentForm};
+        }
     }
 
     updateField(field:CustomField){
         this.init(field);
+    }
+
+    serialize():any{
+        let data = super.serialize();
+        data.parentForm = this.parentForm?.id;
+        return data;
     }
 }

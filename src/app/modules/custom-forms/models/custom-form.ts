@@ -30,6 +30,9 @@ export class CustomForm extends BaseFormModel{
         if(data.owner){
             this.owner = new User(data.owner);
         }
+        if(data.fields){
+            this.fields = data.fields.map(field => new CustomField(field));
+        }
         
         this.combineChildren();
     }

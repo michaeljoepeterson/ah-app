@@ -94,12 +94,28 @@ export class CustomFormSectionComponent implements OnInit {
       }
     });
 
+    //update with new section when section added
+    let newSectionSub = this.formService.onSectionAdded.subscribe(section => {
+      if(this.section.id && section?.parentSection === this.section.id){
+        this.section.removeNewItems();
+        this.section.addSection(section);
+        debugger;
+      }
+    });
+
+    let newFieldSub = this.formService.onFieldAdded.subscribe(field => {
+      if(field?.parentSection === this.section.id){
+        this.section.removeNewItems();
+        this.section.addField(field);
+      }
+    });
+
     if(!this.section.id){
       this.editMode = true;
       this.isNew = true;
     }
-    console.log(this.section);
-    this.subs = [formSub,updateSectionSub]
+
+    this.subs = [formSub,updateSectionSub,newFieldSub,newSectionSub]
   }
 
   ngOnDestroy(){
@@ -136,7 +152,8 @@ export class CustomFormSectionComponent implements OnInit {
 
   fieldAdded(){
     this.sectionExpanded = true;
-    this.section.addNewField();
+    let field = this.formService.generateNewField(this.section);
+    this.section.addField(field);
     this.isAdding = true;
   }
 
@@ -146,7 +163,6 @@ export class CustomFormSectionComponent implements OnInit {
       this.formService.updateNewField(true);
       //temp until new id from server
       this.createNewSection();
-      this.section.id = 'test' + new Date().valueOf();
     }
   }
 
@@ -158,16 +174,11 @@ export class CustomFormSectionComponent implements OnInit {
   }
 
   createNewSection(){
-    let section = this.section.id ? this.newSection : this.section;
+    let section =  this.section;
     this.sub = this.formService.createNewSection(section).subscribe({
       next:res => {
         if(!this.section.id){
           this.section.id = res.id;
-        }
-        else{
-          this.newSection.id = res.id;
-          this.section.removeNewItems();
-          this.section.addSection(this.newSection);
         }
         this.ref.markForCheck();
       }

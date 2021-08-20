@@ -1,10 +1,8 @@
 import { BaseModel } from "../../../models/baseModel";
-import { fieldTypes } from "../constants";
-import { CustomField } from "./custom-field";
 
 export class BaseFormModel extends BaseModel{
     sections:any[] = [];
-    fields:CustomField[] = [];
+    fields:any[] = [];
     combinedChildren:any[] = [];
     
     combineChildren(){
@@ -23,20 +21,17 @@ export class BaseFormModel extends BaseModel{
         this.combinedChildren = combinedChildren;
     }
 
-    addNewField(){
-        let newCombinedSections = [...this.combinedChildren];
-        let newField = new CustomField();
-        newField.name = 'New Field';
-        newField.fieldType = fieldTypes.text;
-        newCombinedSections.push(newField);
-        this.combinedChildren = newCombinedSections;
-    }
-
     removeNewItems(){
         this.combinedChildren = this.combinedChildren.filter(child => child.id);
     }
 
     addSection(section:any){
+        this.sections.push(section);
         this.combinedChildren.push(section);
+    }
+
+    addField(field:any){
+        this.fields.push(field);
+        this.combinedChildren.push(field);
     }
 }

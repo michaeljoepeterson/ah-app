@@ -1,7 +1,6 @@
 import { User } from "../../../models/users/user";
 import { CustomField } from "./custom-field";
 import { BaseFormModel } from "./base-form-model";
-import { CustomForm } from "./custom-form";
 
 export class CustomSection extends BaseFormModel{
     name:string = null;
@@ -10,7 +9,7 @@ export class CustomSection extends BaseFormModel{
     createdAt:Date = null;
     ancestorSections:string[] = [];
     parentSection:string = null;
-    parentForm:CustomForm = null;
+    parentForm:any = null;
     sortOrder:number = 0;
     sections:CustomSection[] = [];
     fields:CustomField[] = [];
@@ -39,7 +38,7 @@ export class CustomSection extends BaseFormModel{
             this.fields = data.fields.map(field => new CustomField(field));
         }
         if(data.parentForm){
-            this.parentForm = new CustomForm(this.parentForm);
+            this.parentForm = {...data.parentForm};
         }
 
         this.combineChildren();
@@ -48,7 +47,6 @@ export class CustomSection extends BaseFormModel{
     serialize():any{
         let data = super.serialize();
         data.parentForm = this.parentForm?.id;
-        debugger;
         return data;
     }
 

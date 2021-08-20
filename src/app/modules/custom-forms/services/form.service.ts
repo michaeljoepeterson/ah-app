@@ -40,7 +40,7 @@ export class FormService {
   newFieldUpdated:Observable<boolean> = this._newFieldUpdated.asObservable();
   private _onFormAdded:BehaviorSubject<CustomForm> = new BehaviorSubject(null);
   /**
-   * forms for the project
+   * emitter when new form is added
    */
   onFormAdded:Observable<CustomForm> = this._onFormAdded.asObservable();
 
@@ -48,7 +48,13 @@ export class FormService {
   /**
    * forms for the project
    */
-   onSectionAdded:Observable<CustomSection> = this._onSectionAdded.asObservable();
+  onSectionAdded:Observable<CustomSection> = this._onSectionAdded.asObservable();
+
+  private _onFieldAdded:BehaviorSubject<CustomField> = new BehaviorSubject(null);
+  /**
+   * forms for the project
+   */
+  onFieldAdded:Observable<CustomField> = this._onFieldAdded.asObservable();
 
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
@@ -146,6 +152,11 @@ export class FormService {
     return combinedChildren.filter(child => child.id);
   }
 
+  /**
+   * create a new form
+   * @param form 
+   * @returns 
+   */
   createNewForm(form:CustomForm):Observable<CustomForm>{
     let headers = this.authService.getAuthHeaders();
     let url = `${environment.apiUrl}${this.endpoint}`;
@@ -173,6 +184,11 @@ export class FormService {
     )
   }
 
+  /**
+   * create a new section
+   * @param section 
+   * @returns 
+   */
   createNewSection(section:CustomSection):Observable<CustomSection>{
     let headers = this.authService.getAuthHeaders();
     let url = `${environment.apiUrl}${this.endpoint}/section`;
@@ -188,6 +204,7 @@ export class FormService {
     return this.http.post(url,body,options).pipe(
       map((response:any) => {
         let newSection = new CustomSection(response.section);
+        this._onSectionAdded.next(newSection);
         return newSection;
       }),
       catchError(err => {
@@ -225,5 +242,61 @@ export class FormService {
     newSection.parentForm = form;
 
     return newSection;
+  }
+
+  generateNewField(parentSection:CustomSection):CustomField{
+    let newField = new CustomField();
+    newField.name = 'New Field';
+    newField.createdAt = new Date();
+    newField.ancestorSections = parentSection.ancestorSections;
+    newField.ancestorSections.push(parentSection.id);
+    newField.parentSection = parentSection.id;
+    newField.parentForm = parentSection.parentForm;
+
+    return newField;
+  }
+
+  /**
+   * generate generic empty section
+   * @returns 
+   */
+  generateNewFieldFromForm(form:CustomForm):CustomField{
+    let newField = new CustomField();
+    newField.name = 'New Field';
+    newField.createdAt = new Date();
+    newField.parentForm = form;
+
+    return newField;
+  }
+
+  /**
+   * create a new field
+   * @param field 
+   * @returns 
+   */
+  createNewField(field:CustomField):Observable<CustomField>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/field`;
+    let options = {
+      headers
+    };
+    let fieldData = field.serialize();
+    fieldData.createdAt = new Date();
+    let body = {
+      field:fieldData
+    };
+
+    return this.http.post(url,body,options).pipe(
+      map((response:any) => {
+        let newfield = new CustomField(response.field);
+        this._onFieldAdded.next(newfield);
+        return newfield;
+      }),
+      catchError(err => {
+        let message = 'Error creating field';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
   }
 }

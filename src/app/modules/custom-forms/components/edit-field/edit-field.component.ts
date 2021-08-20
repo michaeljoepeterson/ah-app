@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } 
 import { CustomField } from '../../models/custom-field';
 import { FieldTypes, fieldTypes } from '../../constants';
 import { FormService } from '../../services/form.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-field',
@@ -18,6 +19,18 @@ export class EditFieldComponent implements OnInit {
   currentField:CustomField;
   newOption:string;
   isNew:boolean = false;
+
+  private _sub:Subscription;
+  get sub():Subscription{
+    return this._sub;
+  }
+
+  set sub(subscription:Subscription){
+    if(this._sub){
+      this._sub.unsubscribe();
+    }
+    this._sub = subscription;
+  }
 
   constructor(
     private formService:FormService,
@@ -65,8 +78,7 @@ export class EditFieldComponent implements OnInit {
     this.setEditing(false);
     if(this.isNew){
       this.formService.updateNewField(true);
-      //temp until new id from server
-      this.field.id = 'test' + new Date().valueOf();
+      this.createNewField();
     }
   }
 
@@ -78,5 +90,15 @@ export class EditFieldComponent implements OnInit {
   addOption(){
     this.currentField.fieldOptions.push(this.newOption);
     this.newOption = '';
+  }
+
+  createNewField(){
+    this.sub = this.formService.createNewField(this.field).subscribe({
+      next:res => {
+        if(!this.field.id){
+          this.field.id = res.id;
+        }
+      }
+    })
   }
 }

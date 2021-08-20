@@ -29,7 +29,6 @@ export class CreateCustomFormComponent implements OnInit {
   subs:Subscription[] = [];
   formName:string;
   editMode:boolean = false;
-  newSection:CustomSection;
 
   constructor(
     private formService:FormService,
@@ -75,14 +74,15 @@ export class CreateCustomFormComponent implements OnInit {
   }
 
   sectionAdded(){
-    this.newSection = this.formService.generateNewSectionFromForm(this.form);
-    this.form.combinedChildren = [...this.form.combinedChildren,this.newSection];
+    let newSection = this.formService.generateNewSectionFromForm(this.form);
+    this.form.combinedChildren = [...this.form.combinedChildren,newSection];
     this.isAdding = true;
     this.ref.detectChanges();
   }
 
   fieldAdded(){
-    this.form.combinedChildren = this.formService.addNewField(this.form.combinedChildren);
+    let newField = this.formService.generateNewFieldFromForm(this.form);
+    this.form.combinedChildren = [...this.form.combinedChildren,newField];
     this.isAdding = true;
   }
 
