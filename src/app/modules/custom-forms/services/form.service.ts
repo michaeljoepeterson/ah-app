@@ -44,6 +44,12 @@ export class FormService {
    */
   onFormAdded:Observable<CustomForm> = this._onFormAdded.asObservable();
 
+  private _onSectionAdded:BehaviorSubject<CustomSection> = new BehaviorSubject(null);
+  /**
+   * forms for the project
+   */
+   onSectionAdded:Observable<CustomSection> = this._onSectionAdded.asObservable();
+
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
 
@@ -203,7 +209,7 @@ export class FormService {
     newSection.ancestorSections = parentSection.ancestorSections;
     newSection.ancestorSections.push(parentSection.id);
     newSection.parentSection = parentSection.id;
-    newSection.parentForm = newSection.parentForm;
+    newSection.parentForm = parentSection.parentForm;
 
     return newSection;
   }
@@ -216,7 +222,7 @@ export class FormService {
     let newSection = new CustomSection();
     newSection.name = 'New Section';
     newSection.createdAt = new Date();
-    newSection.parentForm = form.id;
+    newSection.parentForm = form;
 
     return newSection;
   }
