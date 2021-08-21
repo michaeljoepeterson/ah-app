@@ -335,4 +335,33 @@ export class FormService {
       })
     )
   }
+
+    /**
+     * update a section
+     * @param section 
+     * @returns 
+     */
+    updateSection(section:CustomSection):Observable<CustomSection>{
+      let headers = this.authService.getAuthHeaders();
+      let url = `${environment.apiUrl}${this.endpoint}/section/${section.id}`;
+      let options = {
+        headers
+      };
+      let sectionData = section.serialize();
+      let body = {
+        section:sectionData
+      };
+
+      return this.http.put(url,body,options).pipe(
+        map((response:any) => {
+          let newSection = new CustomSection(response.section);
+          return newSection;
+        }),
+        catchError(err => {
+          let message = 'Error updating section';
+          this.notificationService.displayErrorSnackBar(message,err);
+          throw err;
+        })
+      )
+  }
 }

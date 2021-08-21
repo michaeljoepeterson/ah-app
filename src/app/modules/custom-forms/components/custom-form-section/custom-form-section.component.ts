@@ -164,6 +164,9 @@ export class CustomFormSectionComponent implements OnInit {
       //temp until new id from server
       this.createNewSection();
     }
+    else{
+      this.updateSection();
+    }
   }
 
   cancelClicked(){
@@ -180,6 +183,14 @@ export class CustomFormSectionComponent implements OnInit {
         if(!this.section.id){
           this.section.id = res.id;
         }
+        this.ref.markForCheck();
+      }
+    })
+  }
+
+  updateSection(){
+    this.sub = this.formService.updateSection(this.section).subscribe({
+      next:res => {
         this.ref.markForCheck();
       }
     })

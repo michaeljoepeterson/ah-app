@@ -23,7 +23,6 @@ export class EditFormSectionComponent implements OnInit {
     this.cancelClicked.emit();
   }
 
-  //todo hookup to put request
   onConfirmClicked(){
     this.section.name = this.sectionName;
     this.confirmClicked.emit();
