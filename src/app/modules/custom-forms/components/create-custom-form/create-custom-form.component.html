@@ -3,7 +3,7 @@
         <ng-container *ngIf="!editMode">
             <h4 class="flex-header">{{formHeader}}</h4>
         </ng-container>
-        <ng-container *ngIf=editMode>
+        <ng-container *ngIf="editMode">
             <input 
             class="form-control"
             [(ngModel)]="formName"
@@ -33,11 +33,13 @@
                 </mat-icon>
             </button>
         </ng-container>
-        <app-form-edit-controls 
-        [hidden]="false"
-        (editModeUpdated)="setEditMode($event)"
-        (addNewSection)="sectionAdded()"
-        (addNewField)="fieldAdded()"></app-form-edit-controls>
+        <ng-container *ngIf="!editMode">
+            <app-form-edit-controls 
+            [hidden]="false"
+            (editModeUpdated)="setEditMode($event)"
+            (addNewSection)="sectionAdded()"
+            (addNewField)="fieldAdded()"></app-form-edit-controls>
+        </ng-container>
     </div>
     <app-form-selector
     (formSelected)="formSelected($event)"></app-form-selector>
