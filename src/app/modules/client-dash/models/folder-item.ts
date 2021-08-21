@@ -1,4 +1,4 @@
-import { FileItem, IfileItem } from "./file-item";
+import { PatientFile, IfileItem } from "./patient-file";
 import { DateEvent, IDateEvent } from "./date-event"; 
 import { DynamicFormData } from "../../notifications/models/dynamic-form-models";
 
@@ -6,7 +6,7 @@ export const folderType = 'folder';
 
 export interface IFolderItem{
     name:string;
-    files?:(FileItem|IfileItem)[];
+    files?:(PatientFile|IfileItem)[];
     subFolders?:(FolderItem|IFolderItem)[];
     sortOrder?:number;
     customSort?:boolean;
@@ -23,7 +23,7 @@ export interface IFolderRequest{
 
 export class FolderItem implements IFolderItem{
     name:string = null;
-    files?:FileItem[] = [];
+    files?:PatientFile[] = [];
     subFolders?:FolderItem[] = [];
     type:string = folderType;
     sortOrder?:number = null;
@@ -58,14 +58,14 @@ export class FolderItem implements IFolderItem{
                     this.subFolders = folders;
                 }
                 else if(data[key] &&  key === files){
-                    let files = data.files.map(file => new FileItem(file));
+                    let files = data.files.map(file => new PatientFile(file));
                     this.files = files;
                 }
             }
         });
     }
     
-    flattenItems():(FolderItem|FileItem)[]{
+    flattenItems():(FolderItem|PatientFile)[]{
         let items = [];
         if(this.customSort){
             items = this.getCustomSortedItems();
@@ -77,7 +77,7 @@ export class FolderItem implements IFolderItem{
         return items;
     }
 
-    getCustomSortedItems():(FolderItem|FileItem)[]{
+    getCustomSortedItems():(FolderItem|PatientFile)[]{
         let combinedItems = [];
 
         let length = this.files.length + this.subFolders.length;
@@ -86,7 +86,7 @@ export class FolderItem implements IFolderItem{
         }
         this.files.forEach(file => {
           let {sortOrder} = file;
-          combinedItems[sortOrder] = new FileItem(file);
+          combinedItems[sortOrder] = new PatientFile(file);
         });
         this.subFolders.forEach(folder => {
           let {sortOrder} = folder;

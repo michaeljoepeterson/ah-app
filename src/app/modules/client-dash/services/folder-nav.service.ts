@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { DateEvent } from '../models/date-event';
-import { FileItem } from '../models/file-item';
+import { PatientFile } from '../models/patient-file';
 import { FolderItem, IFolderItem } from '../models/folder-item';
 import {GetCurrentStatusColorPipe} from '../pipes/folder-card.pipe';
 import { environment } from '../../../../environments/environment';
@@ -21,11 +21,11 @@ export class FolderNavService {
    */
   selectedFolder:Observable<FolderItem> = this._selectedFolder.asObservable();
 
-  private _selectedItem:BehaviorSubject<(FolderItem|FileItem)> = new BehaviorSubject(null);
+  private _selectedItem:BehaviorSubject<(FolderItem|PatientFile)> = new BehaviorSubject(null);
   /**
    * currently selected item to populate details section, selected item from the folder nav
    */
-  selectedItem:Observable<(FolderItem|FileItem)> = this._selectedItem.asObservable();
+  selectedItem:Observable<(FolderItem|PatientFile)> = this._selectedItem.asObservable();
 
   /**
    * current user folders
@@ -216,7 +216,7 @@ export class FolderNavService {
     //this._selectedItem.next(folder);
   }
 
-  selectItem(item:(FolderItem|FileItem)){
+  selectItem(item:(FolderItem|PatientFile)){
     this._selectedItem.next(item);
   }
 
@@ -362,7 +362,7 @@ export class FolderNavService {
     );
   }
 
-  createFile(file:FileItem,parentFolder:FolderItem):Observable<any>{
+  createFile(file:PatientFile,parentFolder:FolderItem):Observable<any>{
     let headers = this.authService.getAuthHeaders();
     let url = `${environment.apiUrl}${this.endpoint}/file`;
     file.ancestors = [...parentFolder.ancestors];
@@ -379,7 +379,7 @@ export class FolderNavService {
 
     return this.http.post(url,body,options).pipe(
       map((response:any) => {
-        let newFile:FileItem = response.file;
+        let newFile:PatientFile = response.file;
         this.notificationService.displaySnackBar('File Created!');
         let currentFolders = this._currentFolders.value;
         file.id = newFile.id;
@@ -478,7 +478,7 @@ export class FolderNavService {
    * @param file 
    * @returns 
    */
-  deleteFile(file:FileItem):Observable<any>{
+  deleteFile(file:PatientFile):Observable<any>{
     let headers = this.authService.getAuthHeaders();
     let url = `${environment.apiUrl}${this.endpoint}/file/${file.id}`;
     let options = {
@@ -567,7 +567,7 @@ export class FolderNavService {
     );
   }
 
-  updateFile(file:FileItem):Observable<any>{
+  updateFile(file:PatientFile):Observable<any>{
     let headers = this.authService.getAuthHeaders();
     let url = `${environment.apiUrl}${this.endpoint}/file/${file.id}`;
 
@@ -581,7 +581,7 @@ export class FolderNavService {
     
     return this.http.put(url,body,options).pipe(
       map((response:any) => {
-        let newFile:FileItem = response.file;
+        let newFile:PatientFile = response.file;
         this.notificationService.displaySnackBar('Folder Updated!');
         let currentFolders = this._currentFolders.value;
         let foundFile = this.findFile(currentFolders,file.id);
@@ -596,7 +596,7 @@ export class FolderNavService {
     );
   }
 
-  findFile(folders:FolderItem[],targetFileId:string):FileItem{
+  findFile(folders:FolderItem[],targetFileId:string):PatientFile{
     for(let folder of folders){
       let foundFile = folder.files.find(file => file.id === targetFileId);
       if(foundFile){

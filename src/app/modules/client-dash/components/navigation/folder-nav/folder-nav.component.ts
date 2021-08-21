@@ -6,7 +6,7 @@ import { FolderItem } from '../../../models/folder-item';
 import { FolderNavService } from '../../../services/folder-nav.service';
 import { MenuItem } from 'primeng/api';
 import { User } from '../../../../../models/users/user';
-import { CreateCustomFormComponent } from 'src/app/modules/custom-forms/components/create-custom-form/create-custom-form.component';
+import { CreateCustomFormComponent } from '../../../../custom-forms/components/create-custom-form/create-custom-form.component';
 
 /**
  * wrapper to handle the side navbar component 

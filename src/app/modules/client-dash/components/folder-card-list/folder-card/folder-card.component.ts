@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FileItem } from '../../../models/file-item';
+import { PatientFile } from '../../../models/patient-file';
 import { FolderItem } from '../../../models/folder-item';
 import { FolderNavService } from '../../../services/folder-nav.service';
 
@@ -10,7 +10,7 @@ import { FolderNavService } from '../../../services/folder-nav.service';
   styleUrls: ['./folder-card.component.css']
 })
 export class FolderCardComponent implements OnInit {
-  @Input() item:(FolderItem|FileItem);
+  @Input() item:(FolderItem|PatientFile);
   statuses:string[] = ['Scan Taken','Approved','Production'];
   itemStatsues:string[] = [];
 

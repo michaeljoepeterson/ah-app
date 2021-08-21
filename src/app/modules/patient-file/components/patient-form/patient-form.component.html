@@ -1,0 +1,110 @@
+<div>
+    <form class="patient-form" (submit)="onSubmit()">
+        <div class="form-center">
+            <h5>{{formHeader}}</h5>
+            <hr>
+        </div>
+        <div>
+            <app-form-selector></app-form-selector>
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span 
+                [ngClass]="{
+                    'input-group-text':true,
+                    'text-danger':formErrors.patientId
+                }"
+                (click)="$event.stopPropagation()">
+                    Patient ID
+                </span>
+            </div>
+            <input 
+            [ngClass]="{
+                'form-control':true, 
+                'is-invalid':formErrors.patientId
+            }"
+            [(ngModel)]="patientFile.patientId"
+            required
+            type="text"
+            name="patient-id"
+            (click)="$event.stopPropagation()">
+        </div>
+        <div class="row">
+            <div class="input-group col-lg-4">
+                <div 
+                class="input-group-prepend">
+                    <span 
+                    [ngClass]="{
+                        'input-group-text':true,
+                        'text-danger':formErrors.height
+                    }"
+                    (click)="$event.stopPropagation()">
+                        Height
+                    </span>
+                </div>
+                <input 
+                [ngClass]="{
+                    'form-control':true, 
+                    'is-invalid':formErrors.height
+                }"
+                [(ngModel)]="patientFile.height"
+                required
+                type="number"
+                name="height"
+                (click)="$event.stopPropagation()">
+            </div>
+            <div class="input-group col-lg-4">
+                <div 
+                class="input-group-prepend">
+                    <span 
+                    [ngClass]="{
+                        'input-group-text':true,
+                        'text-danger':formErrors.height
+                    }"
+                    (click)="$event.stopPropagation()">
+                        Weight
+                    </span>
+                </div>
+                <input 
+                [ngClass]="{
+                    'form-control':true, 
+                    'is-invalid':formErrors.weight
+                }"
+                [(ngModel)]="patientFile.weight"
+                required
+                type="number"
+                name="weight"
+                (click)="$event.stopPropagation()">
+            </div>
+            <div class="input-group col-lg-4">
+                <div class="input-group-prepend">
+                    <span 
+                    [ngClass]="{
+                        'input-group-text':true,
+                        'text-danger':formErrors.activityLevel
+                    }"
+                    (click)="$event.stopPropagation()">
+                        Activity Level
+                    </span>
+                </div>
+                <input 
+                [ngClass]="{
+                    'form-control':true, 
+                    'is-invalid':formErrors.activityLevel
+                }"
+                [(ngModel)]="patientFile.activityLevel"
+                required
+                type="string"
+                name="activity-level"
+                (click)="$event.stopPropagation()">
+            </div>
+        </div>
+        <div class="form-center">
+            <button
+            type="submit"
+            class="btn btn-outline-primary">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>

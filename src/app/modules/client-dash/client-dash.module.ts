@@ -43,6 +43,7 @@ import { AddFolderItemComponent } from './components/navigation/folder-nav/add-f
 import { NewFolderComponent } from './components/navigation/folder-nav/new-folder/new-folder.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomFormsModule } from '../custom-forms/custom-forms.module';
+import { PatientFileModule } from '../patient-file/patient-file.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -96,7 +97,8 @@ FullCalendarModule.registerPlugins([
     MatSelectModule,
     FullCalendarModule,
     HttpClientModule,
-    CustomFormsModule
+    CustomFormsModule,
+    PatientFileModule
   ]
 })
 export class ClientDashModule { }

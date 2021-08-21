@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FileItem } from '../../models/file-item';
+import { PatientFile } from '../../models/patient-file';
 import { FolderItem } from '../../models/folder-item';
 import { FolderNavService } from '../../services/folder-nav.service';
 
@@ -13,7 +13,7 @@ import { FolderNavService } from '../../services/folder-nav.service';
 export class FolderCardListComponent implements OnInit {
   subscriptions:Subscription[];
   @Input() folder:FolderItem;
-  folderItems:(FolderItem|FileItem)[] = [];
+  folderItems:(FolderItem|PatientFile)[] = [];
 
   constructor(
     private ref:ChangeDetectorRef,

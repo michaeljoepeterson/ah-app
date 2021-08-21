@@ -23,7 +23,7 @@
     id="forms"
     [(ngModel)]="selectedFormId"
     (change)="onFormSelected()">
-        <option [value]="null">New Form</option>
+        <option [value]="null">{{isEditing ? 'New Form' : 'None'}}</option>
         <option 
         *ngFor="let form of forms;trackBy: trackByFn"
         [value]="form.id">

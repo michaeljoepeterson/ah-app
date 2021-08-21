@@ -19,7 +19,7 @@ export interface IFileRequest{
 }
 
 
-export class FileItem implements IfileItem{
+export class PatientFile implements IfileItem{
     name:string = null;
     //to do event type
     event?:any = null;
@@ -30,7 +30,13 @@ export class FileItem implements IfileItem{
     id?:string = null;
     ancestors?:string[] = [];
     parent?:string = null;
-    
+    patientId:string = null;
+    activityLevel:string = null;
+    height:number = null;
+    weight:number = null;
+    heightString:string = null;
+    weightString:string = null;   
+     
     constructor(data?:any){
         if(data){
             this.init(data);

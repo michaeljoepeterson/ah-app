@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FolderNavService } from '../../../../services/folder-nav.service';
-import { FileItem } from '../../../../models/file-item';
+import { PatientFile } from '../../../../models/patient-file';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./file-item.component.css']
 })
 export class FileItemComponent implements OnInit {
-  @Input() file:FileItem;
+  @Input() file:PatientFile;
   @Input() folderSpace:number = 0;
   subscriptions:Subscription[] = [];
   isSelected:boolean = false;

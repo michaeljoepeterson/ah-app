@@ -1,0 +1,7 @@
+.form-center{
+    text-align: center;
+}
+
+.patient-form > *{
+    margin-bottom: 1em;
+}

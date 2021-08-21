@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FolderNavService } from '../../../../services/folder-nav.service';
-import { FileItem } from '../../../../models/file-item';
+import { PatientFile } from '../../../../models/patient-file';
 import { FolderItem } from '../../../../models/folder-item';
 import { Subscription } from 'rxjs';
 
@@ -124,7 +124,7 @@ export class FolderItemComponent implements OnInit {
     }
     this.folder.files.forEach(file => {
       let {sortOrder} = file;
-      this.combinedItems[sortOrder] = new FileItem(file);
+      this.combinedItems[sortOrder] = new PatientFile(file);
     });
     this.folder.subFolders.forEach(folder => {
       let {sortOrder} = folder;

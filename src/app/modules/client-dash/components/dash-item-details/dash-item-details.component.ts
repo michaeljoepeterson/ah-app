@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FileItem } from '../../models/file-item';
+import { PatientFile } from '../../models/patient-file';
 import { FolderItem } from '../../models/folder-item';
 
 @Component({
@@ -8,7 +8,7 @@ import { FolderItem } from '../../models/folder-item';
   styleUrls: ['./dash-item-details.component.css']
 })
 export class DashItemDetailsComponent implements OnInit {
-  @Input() item:(FolderItem|FileItem);
+  @Input() item:(FolderItem|PatientFile);
 
   constructor() { }
 

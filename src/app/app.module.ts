@@ -31,7 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
     AuthModalComponent,
     LoginComponent,
     CreateAccountComponent,
-    NotFoundComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

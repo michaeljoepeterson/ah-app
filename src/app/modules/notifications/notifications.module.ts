@@ -11,7 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 @NgModule({
-  declarations: [DynamicFormComponent, ConfirmModalComponent],
+  declarations: [
+    DynamicFormComponent, 
+    ConfirmModalComponent],
   imports: [
     CommonModule,
     MatDialogModule,

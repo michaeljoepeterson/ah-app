@@ -99,7 +99,6 @@ export class CustomFormSectionComponent implements OnInit {
       if(this.section.id && section?.parentSection === this.section.id){
         this.section.removeNewItems();
         this.section.addSection(section);
-        debugger;
       }
     });
 

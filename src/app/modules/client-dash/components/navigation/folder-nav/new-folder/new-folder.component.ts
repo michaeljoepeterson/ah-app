@@ -5,7 +5,8 @@ import { FolderItem,baseFolderFormData } from '../../../../models/folder-item';
 import { FolderNavService } from '../../../../services/folder-nav.service';
 import { DynamicFormData } from '../../../../../notifications/models/dynamic-form-models';
 import { switchMap } from 'rxjs/operators';
-import { baseFileFormData, FileItem } from '../../../../models/file-item';
+import { baseFileFormData, PatientFile } from '../../../../models/patient-file';
+import { PatientFormComponent } from '../../../../../patient-file/components/patient-form/patient-form.component';
 
 /**
  * folder controls
@@ -20,8 +21,8 @@ export class NewFolderComponent implements OnInit {
   selectedFolder:FolderItem;
   newFolderData:DynamicFormData = baseFolderFormData;
   newFileData:DynamicFormData = baseFileFormData;
-  formWidth:string = '30%';
-  selectedItem:(FolderItem|FileItem);
+  formWidth:string = '55%';
+  selectedItem:(FolderItem|PatientFile);
 
   constructor(
     private folderService:FolderNavService,
@@ -83,11 +84,13 @@ export class NewFolderComponent implements OnInit {
       this.notificationService.displaySnackBar('Please select a folder before creating a file');
       return;
     }
-    let formModal = this.notificationService.openDynamicFormModal(this.newFileData,this.formWidth);
+    //let formModal = this.notificationService.openDynamicFormModal(this.newFileData,this.formWidth);
+    let formModal = this.notificationService.openModal(PatientFormComponent,null,this.formWidth);
+    /*
     let sub = formModal.componentInstance.formSubmit.pipe(
       switchMap(response => {
         if(response[0].value){
-          let file = new FileItem();
+          let file = new PatientFile();
           file.name = response[0].value;
           return this.folderService.createFile(file,this.selectedFolder);
         }
@@ -104,13 +107,14 @@ export class NewFolderComponent implements OnInit {
         console.warn(e);
       }
     });
+    */
   }
 
   deleteItem(){
     if(this.selectedItem instanceof FolderItem){
       this.deleteFolder(this.selectedItem);
     }
-    else if(this.selectedItem instanceof FileItem){
+    else if(this.selectedItem instanceof PatientFile){
       this.deleteFile(this.selectedItem);
     }
     else{
@@ -145,7 +149,7 @@ export class NewFolderComponent implements OnInit {
     });
   }
 
-  deleteFile(file:FileItem){
+  deleteFile(file:PatientFile){
     let message = 'Are you sure you want to delete this file?';
     let confirmation = this.notificationService.openConfirmModal({
       message
@@ -174,7 +178,7 @@ export class NewFolderComponent implements OnInit {
     if(this.selectedItem instanceof FolderItem){
       this.updateFolder(this.selectedItem);
     }
-    else if(this.selectedItem instanceof FileItem){
+    else if(this.selectedItem instanceof PatientFile){
       this.updateFile(this.selectedItem);
     }
     else{
@@ -208,14 +212,15 @@ export class NewFolderComponent implements OnInit {
     });
   }
 
-  updateFile(newFile:FileItem){
+  updateFile(newFile:PatientFile){
     let fileFormData = {...this.newFileData};
     fileFormData.formTitle = 'Update Patient File'
-    let formModal = this.notificationService.openDynamicFormModal(fileFormData,this.formWidth);
+    //let formModal = this.notificationService.openDynamicFormModal(fileFormData,this.formWidth);
+    let formModal = this.notificationService.openModal(PatientFormComponent,null,this.formWidth);
     let sub = formModal.componentInstance.formSubmit.pipe(
       switchMap(response => {
         if(response[0].value){
-          let file = new FileItem(newFile);
+          let file = new PatientFile(newFile);
           file.name = response[0].value;
           return this.folderService.updateFile(file);
         }

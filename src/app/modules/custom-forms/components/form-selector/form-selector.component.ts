@@ -18,6 +18,7 @@ export class FormSelectorComponent implements OnInit {
   formSelectLabel:string = 'Select a Form';
   selectedFormId:string = null;
   subs:Subscription[];
+  isEditing:boolean;
 
   private _sub:Subscription;
   get sub():Subscription{
@@ -47,9 +48,11 @@ export class FormSelectorComponent implements OnInit {
     let updatedSub = this.formService.onFormUpdated.subscribe(form => {
       this.selectedFormId = form ? form.id : null;
       this.getForms();
-    })
+    });
 
-    this.subs = [sub,updatedSub];
+    let editSub = this.formService.isEditing.subscribe(edit => {this.isEditing = edit});
+
+    this.subs = [sub,updatedSub,editSub];
   }
 
   trackByFn(index:number,form:CustomForm){
