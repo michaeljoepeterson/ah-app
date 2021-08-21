@@ -336,32 +336,56 @@ export class FormService {
     )
   }
 
-    /**
-     * update a section
-     * @param section 
-     * @returns 
-     */
-    updateSection(section:CustomSection):Observable<CustomSection>{
-      let headers = this.authService.getAuthHeaders();
-      let url = `${environment.apiUrl}${this.endpoint}/section/${section.id}`;
-      let options = {
-        headers
-      };
-      let sectionData = section.serialize();
-      let body = {
-        section:sectionData
-      };
+  /**
+   * update a section
+   * @param section 
+   * @returns 
+   */
+  updateSection(section:CustomSection):Observable<CustomSection>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/section/${section.id}`;
+    let options = {
+      headers
+    };
+    let sectionData = section.serialize();
+    let body = {
+      section:sectionData
+    };
 
-      return this.http.put(url,body,options).pipe(
-        map((response:any) => {
-          let newSection = new CustomSection(response.section);
-          return newSection;
-        }),
-        catchError(err => {
-          let message = 'Error updating section';
-          this.notificationService.displayErrorSnackBar(message,err);
-          throw err;
-        })
-      )
+    return this.http.put(url,body,options).pipe(
+      map((response:any) => {
+        let newSection = new CustomSection(response.section);
+        return newSection;
+      }),
+      catchError(err => {
+        let message = 'Error updating section';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
+  }
+
+  updateField(field:CustomField):Observable<CustomField>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/field/${field.id}`;
+    let options = {
+      headers
+    };
+    let fieldData = field.serialize();
+    let body = {
+      field:fieldData
+    };
+
+    return this.http.put(url,body,options).pipe(
+      map((response:any) => {
+        let newfield = new CustomField(response.field);
+        return newfield;
+      }),
+      catchError(err => {
+        let message = 'Error updating field';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
   }
 }

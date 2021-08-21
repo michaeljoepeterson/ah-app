@@ -80,6 +80,9 @@ export class EditFieldComponent implements OnInit {
       this.formService.updateNewField(true);
       this.createNewField();
     }
+    else{
+      this.updateField();
+    }
   }
 
   removeOption(option:string){
@@ -98,6 +101,14 @@ export class EditFieldComponent implements OnInit {
         if(!this.field.id){
           this.field.id = res.id;
         }
+      }
+    })
+  }
+
+  updateField(){
+    this.sub = this.formService.updateField(this.field).subscribe({
+      next:res => {
+        return res;
       }
     })
   }
