@@ -7,7 +7,7 @@ import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-form-selector',
-  changeDetection:ChangeDetectionStrategy.OnPush,
+  //changeDetection:ChangeDetectionStrategy.OnPush,
   templateUrl: './form-selector.component.html',
   styleUrls: ['./form-selector.component.css']
 })
@@ -44,7 +44,16 @@ export class FormSelectorComponent implements OnInit {
       this.getForms();
     });
 
-    this.subs = [sub];
+    let updatedSub = this.formService.onFormUpdated.subscribe(form => {
+      this.selectedFormId = form ? form.id : null;
+      this.getForms();
+    })
+
+    this.subs = [sub,updatedSub];
+  }
+
+  trackByFn(index:number,form:CustomForm){
+    return form.id;
   }
   
   ngOnDestroy(){
@@ -87,7 +96,7 @@ export class FormSelectorComponent implements OnInit {
     this.sub = this.formService.getCustomForms().subscribe({
         next:response => {
         this.forms = [...response];
-        console.log(this.forms);
+        console.log(this.selectedFormId,this.forms);
         this.ref.markForCheck();
       },
       error:err => {

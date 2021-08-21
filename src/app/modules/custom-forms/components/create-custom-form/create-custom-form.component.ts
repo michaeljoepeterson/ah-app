@@ -101,6 +101,7 @@ export class CreateCustomFormComponent implements OnInit {
     }
     else{
       this.form.name = this.formName;
+      this.updateForm();
     }
     this.formHeader = `Editing: ${this.form.name}`;
     this.setEditMode(false);
@@ -112,6 +113,14 @@ export class CreateCustomFormComponent implements OnInit {
     this.sub = this.formService.createNewForm(this.form).subscribe({
       next:response => {
         this.form = new CustomForm(response);
+      }
+    });
+  }
+
+  updateForm(){
+    this.sub = this.formService.updateForm(this.form).subscribe({
+      next:response => {
+        return response;
       }
     });
   }

@@ -56,6 +56,12 @@ export class FormService {
    */
   onFieldAdded:Observable<CustomField> = this._onFieldAdded.asObservable();
 
+  private _onFormUpdated:BehaviorSubject<CustomForm> = new BehaviorSubject(null);
+  /**
+   * forms for the project
+   */
+  onFormUpdated:Observable<CustomForm> = this._onFormUpdated.asObservable();
+
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
 
@@ -69,7 +75,7 @@ export class FormService {
     this._forms.next(forms);
   }
 
-  updateForm(form:CustomForm){
+  setForm(form:CustomForm){
     let currentForms = this._forms.value;
     let index = currentForms.findIndex(f => f.id === form.id);
     currentForms[index] = form;
@@ -108,7 +114,7 @@ export class FormService {
     return this.http.get(url,options).pipe(
       map((response:any) => {
         let form = new CustomForm(response.form);
-        this.updateForm(form);
+        this.setForm(form);
         return form;
       }),
       catchError(err => {
@@ -294,6 +300,36 @@ export class FormService {
       }),
       catchError(err => {
         let message = 'Error creating field';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
+  }
+
+  /**
+   * update a form
+   * @param form 
+   */
+  updateForm(form:CustomForm):Observable<CustomForm>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/${form.id}`;
+    let options = {
+      headers
+    };
+
+    let formData = form.serialize();
+    let body = {
+      form:formData
+    };
+
+    return this.http.put(url,body,options).pipe(
+      map((response:any) => {
+        let newForm = new CustomForm(response.form);
+        this._onFormUpdated.next(newForm);
+        return newForm;
+      }),
+      catchError(err => {
+        let message = 'Error updating form';
         this.notificationService.displayErrorSnackBar(message,err);
         throw err;
       })
