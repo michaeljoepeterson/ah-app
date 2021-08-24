@@ -7,6 +7,7 @@ import { DynamicFormData } from '../../../../../notifications/models/dynamic-for
 import { switchMap } from 'rxjs/operators';
 import { baseFileFormData, PatientFile } from '../../../../models/patient-file';
 import { PatientFormComponent } from '../../../../../patient-file/components/patient-form/patient-form.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 /**
  * folder controls
@@ -85,29 +86,8 @@ export class NewFolderComponent implements OnInit {
       return;
     }
     //let formModal = this.notificationService.openDynamicFormModal(this.newFileData,this.formWidth);
-    let formModal = this.notificationService.openModal(PatientFormComponent,null,this.formWidth);
-    /*
-    let sub = formModal.componentInstance.formSubmit.pipe(
-      switchMap(response => {
-        if(response[0].value){
-          let file = new PatientFile();
-          file.name = response[0].value;
-          return this.folderService.createFile(file,this.selectedFolder);
-        }
-        else{
-          return of(null);
-        }
-      })
-    ).subscribe(resp => {
-      formModal.close();
-      try{
-        sub.unsubscribe();
-      }
-      catch(e){
-        console.warn(e);
-      }
-    });
-    */
+    let formModal:MatDialogRef<PatientFormComponent> = this.notificationService.openModal(PatientFormComponent,null,this.formWidth);
+    formModal.componentInstance.parentFolder = this.selectedFolder;
   }
 
   deleteItem(){
@@ -216,7 +196,9 @@ export class NewFolderComponent implements OnInit {
     let fileFormData = {...this.newFileData};
     fileFormData.formTitle = 'Update Patient File'
     //let formModal = this.notificationService.openDynamicFormModal(fileFormData,this.formWidth);
-    let formModal = this.notificationService.openModal(PatientFormComponent,null,this.formWidth);
+    let formModal:MatDialogRef<PatientFormComponent> = this.notificationService.openModal(PatientFormComponent,null,this.formWidth);
+    formModal.componentInstance.patientFile = newFile;
+    /*
     let sub = formModal.componentInstance.formSubmit.pipe(
       switchMap(response => {
         if(response[0].value){
@@ -237,5 +219,6 @@ export class NewFolderComponent implements OnInit {
         console.warn(e);
       }
     });
+    */
   }
 }

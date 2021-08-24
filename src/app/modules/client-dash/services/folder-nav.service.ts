@@ -370,7 +370,7 @@ export class FolderNavService {
     file.parent = parentFolder.id;
 
     let body ={
-      file
+      file:file.serialize()
     };
 
     let options = {
@@ -582,7 +582,7 @@ export class FolderNavService {
     return this.http.put(url,body,options).pipe(
       map((response:any) => {
         let newFile:PatientFile = response.file;
-        this.notificationService.displaySnackBar('Folder Updated!');
+        this.notificationService.displaySnackBar('File Updated!');
         let currentFolders = this._currentFolders.value;
         let foundFile = this.findFile(currentFolders,file.id);
         foundFile.init(newFile);
@@ -590,7 +590,7 @@ export class FolderNavService {
         return response;
       }),
       catchError(err => {
-        this.notificationService.displayErrorSnackBar('Error creating folder',err);
+        this.notificationService.displayErrorSnackBar('Error creating file',err);
         throw err;
       })
     );

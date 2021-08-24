@@ -1,3 +1,4 @@
+import { BaseModel } from "../../../models/baseModel";
 import { DynamicFormData } from "../../notifications/models/dynamic-form-models";
 import { DateEvent, IDateEvent } from "./date-event";
 
@@ -19,7 +20,7 @@ export interface IFileRequest{
 }
 
 
-export class PatientFile implements IfileItem{
+export class PatientFile extends BaseModel{
     name:string = null;
     //to do event type
     event?:any = null;
@@ -38,24 +39,18 @@ export class PatientFile implements IfileItem{
     weightString:string = null;   
      
     constructor(data?:any){
+        super();
         if(data){
             this.init(data);
         }
     }
 
     init(data:any){
-        let keys = Object.keys(this);
+        super.init(data);
         let dates = "dateEvents";
         if(data[dates] && data[dates].length > 0){
             this.dateEvents = data[dates].map(date => new DateEvent(date));
         }
-        keys.forEach(key => {
-            if(key !== dates){
-                if(data[key] || data[key] === 0){
-                    this[key] = data[key];
-                }
-            }
-        });
     }
 
     getStatuses():string[]{
@@ -66,6 +61,7 @@ export class PatientFile implements IfileItem{
     /**
      * convert object to post object for sending to server
      */
+    /*
      serialize():IFileRequest{
         let obj:IFileRequest = {
             name:this.name,
@@ -75,6 +71,7 @@ export class PatientFile implements IfileItem{
         
         return obj;
     }
+    */
 }
 
 export let baseFileFormData:DynamicFormData ={

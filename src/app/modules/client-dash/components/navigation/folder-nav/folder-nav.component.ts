@@ -34,16 +34,6 @@ export class FolderNavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    /*
-    let sub = this.authService.authInfo.subscribe(auth => {
-      let user = auth ? auth.email : null;
-      if(user){
-        this.user = auth.user;
-        this.getUserFolders();
-      }
-    });
-    */
-
     let sub = this.authService.isLoggedIn.subscribe(loggedIn => {
       if(loggedIn){
         this.isLoggedIn = true;
