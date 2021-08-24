@@ -51,6 +51,7 @@ export class PatientFile extends BaseModel{
         if(data[dates] && data[dates].length > 0){
             this.dateEvents = data[dates].map(date => new DateEvent(date));
         }
+        this.name = this.patientId;
     }
 
     getStatuses():string[]{

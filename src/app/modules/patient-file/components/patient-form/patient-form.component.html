@@ -5,7 +5,7 @@
             <hr>
         </div>
         <div>
-            <app-form-selector></app-form-selector>
+            <app-form-selector (formSelected)="formSelected($event)"></app-form-selector>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -98,6 +98,13 @@
                 name="activity-level"
                 (click)="$event.stopPropagation()">
             </div>
+        </div>
+        <div>
+            <ng-container *ngIf="selectedForm">
+                <app-custom-form 
+                [form]="selectedForm"
+                [children]="selectedForm?.combinedChildren"></app-custom-form>
+            </ng-container>
         </div>
         <div class="form-center">
             <button

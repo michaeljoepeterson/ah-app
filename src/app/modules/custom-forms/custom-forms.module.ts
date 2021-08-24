@@ -55,6 +55,7 @@ import { MatMenuModule } from '@angular/material/menu';
   exports:[
     FormSelectorComponent,
     CreateCustomFormComponent,
+    CustomFormComponent
   ]
 })
 export class CustomFormsModule { }

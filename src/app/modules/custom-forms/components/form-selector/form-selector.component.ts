@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { NotificationsService } from '../../../notifications/services/notifications.service';
 import { CustomForm } from '../../models/custom-form';
 import { FormService } from '../../services/form.service';
@@ -12,7 +11,7 @@ import { FormService } from '../../services/form.service';
   styleUrls: ['./form-selector.component.css']
 })
 export class FormSelectorComponent implements OnInit {
-  @Output() formSelected = new EventEmitter();
+  @Output() formSelected:EventEmitter<CustomForm> = new EventEmitter();
   
   forms:CustomForm[] = [];
   formSelectLabel:string = 'Select a Form';

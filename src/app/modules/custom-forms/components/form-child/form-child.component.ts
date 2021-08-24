@@ -22,7 +22,10 @@ export class FormChildComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.editSub = this.formService.isEditing.subscribe(isEditing => this.isEditing = isEditing);
+    this.editSub = this.formService.isEditing.subscribe(isEditing => {
+      this.isEditing = isEditing;
+      console.log(this.isEditing);
+    });
   }
 
   ngOnDestroy(){

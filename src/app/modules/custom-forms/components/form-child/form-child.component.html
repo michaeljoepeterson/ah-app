@@ -8,7 +8,8 @@
         <ng-container *ngIf="child.type === fieldType">
             <ng-container *ngIf="!isEditing">
                 <app-custom-field
-                [field]="child"></app-custom-field>
+                [field]="child"
+                [fieldType]="child.fieldType"></app-custom-field>
             </ng-container>
             <ng-container *ngIf="isEditing">
                 <app-edit-field

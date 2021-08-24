@@ -5,6 +5,7 @@ import { PatientErrors } from '../../models/patient-errors';
 import { FolderItem } from '../../../client-dash/models/folder-item';
 import { Subscription } from 'rxjs';
 import { FolderNavService } from '../../../client-dash/services/folder-nav.service';
+import { CustomForm } from 'src/app/modules/custom-forms/models/custom-form';
 
 @Component({
   selector: 'app-patient-form',
@@ -28,6 +29,7 @@ export class PatientFormComponent implements OnInit {
 
   formHeader:string = 'Create a New Patient File';
   formErrors:PatientErrors = new PatientErrors();
+  selectedForm:CustomForm;
 
   constructor(
     private formService:FormService,
@@ -63,5 +65,10 @@ export class PatientFormComponent implements OnInit {
         console.log(res);
       }
     });
+  }
+
+  formSelected(form:CustomForm){
+    this.selectedForm = form;
+    console.log(this.selectedForm);
   }
 }
