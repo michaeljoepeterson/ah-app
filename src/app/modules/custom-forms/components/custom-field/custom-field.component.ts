@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { FieldTypes } from '../../constants';
 import { CustomField } from '../../models/custom-field';
 import { CustomFieldValue } from '../../models/custom-field-value';
@@ -12,10 +14,12 @@ import { FormService } from '../../services/form.service';
 })
 export class CustomFieldComponent implements OnInit {
   @Input() field:CustomField;
-  @Input() fieldValue:CustomFieldValue;
+  @Input() fieldValue:CustomFieldValue = null;
   @Input() fieldType:string;
 
   fieldTypes:FieldTypes;
+  valueControl = new FormControl();
+  subs:Subscription[];
 
   constructor(
     private formService:FormService,
@@ -25,8 +29,21 @@ export class CustomFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!this.fieldValue){
-      this.handleTypeChange();
+    this.initFieldValue();
+    this.registerCustomFieldValue();
+    let sub = this.valueControl.valueChanges.subscribe(val => {
+      console.log('val',val);
+    });
+
+    this.subs = [sub];
+  }
+
+  ngOnDestroy(){
+    try{
+      this.subs.forEach(s => s.unsubscribe());
+    }
+    catch(e){
+      console.warn(e);
     }
   }
 
@@ -36,14 +53,22 @@ export class CustomFieldComponent implements OnInit {
     }
   }
 
+  registerCustomFieldValue(){
+    this.formService.addCustomFieldValue(this.fieldValue);
+  }
+
+  initFieldValue(){
+    if(!this.fieldValue){
+      this.fieldValue = new CustomFieldValue(this.field);
+    }
+  }
+
   /**
    * handle type changes when editing fields
    */
   handleTypeChange(){
-    this.fieldValue = new CustomFieldValue({
-      customFieldId:this.field.id,
-      customField:this.field
-    });
+    this.initFieldValue();
+    this.fieldValue.fieldType = this.fieldType;
     if(this.fieldType === this.fieldTypes.checkbox){
       this.fieldValue.initCheckboxValues();
     }
@@ -55,5 +80,9 @@ export class CustomFieldComponent implements OnInit {
 
   onFileSelected(event:any){
     console.log(event);
+  }
+
+  valueChanged(){
+    
   }
 }

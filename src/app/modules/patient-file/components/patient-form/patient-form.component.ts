@@ -6,6 +6,7 @@ import { FolderItem } from '../../../client-dash/models/folder-item';
 import { Subscription } from 'rxjs';
 import { FolderNavService } from '../../../client-dash/services/folder-nav.service';
 import { CustomForm } from 'src/app/modules/custom-forms/models/custom-form';
+import { CustomFieldValue } from 'src/app/modules/custom-forms/models/custom-field-value';
 
 @Component({
   selector: 'app-patient-form',
@@ -30,6 +31,8 @@ export class PatientFormComponent implements OnInit {
   formHeader:string = 'Create a New Patient File';
   formErrors:PatientErrors = new PatientErrors();
   selectedForm:CustomForm;
+  customValues:CustomFieldValue[] = [];
+  subs:Subscription[] = [];
 
   constructor(
     private formService:FormService,
@@ -38,11 +41,29 @@ export class PatientFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.formService.setEditing(false);
+    let sub = this.formService.currentCustomValues.subscribe(values => {
+      this.customValues = values;
+      console.log('vals:',this.customValues);
+    });
+
+    this.subs.push(sub);
+  }
+
+  ngOnDestroy(){
+    try{
+      if(this._sub){
+        this._sub.unsubscribe();
+      }
+      this.subs.forEach(s => s.unsubscribe());
+      this.formService.resetCustomFieldValues();
+    }
+    catch(e){
+      console.warn(e);
+    }
   }
 
   onSubmit(){
     let hasErrors = this.formErrors.checkErrors(this.patientFile);
-    console.log(hasErrors);
     if(!hasErrors && this.parentFolder && !this.patientFile.id){
       this.createFile();
     }
@@ -69,6 +90,6 @@ export class PatientFormComponent implements OnInit {
 
   formSelected(form:CustomForm){
     this.selectedForm = form;
-    console.log(this.selectedForm);
+    this.formService.resetCustomFieldValues();
   }
 }

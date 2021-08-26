@@ -10,7 +10,7 @@
             </div>
             <input 
             class="form-control"
-            [(ngModel)]="fieldValue.value.stringValue"
+            [formControl]="valueControl"
             required
             type="text"
             name="field-value"
@@ -28,7 +28,7 @@
             </div>
             <input 
             class="form-control"
-            [(ngModel)]="fieldValue.value.numberValue"
+            [formControl]="valueControl"
             required
             type="number"
             name="field-value"
@@ -48,8 +48,7 @@
             <select 
             class="custom-select" 
             id="field-types"
-            [(ngModel)]="fieldValue.value.stringValue"
-            (change)="typeChange()"
+            [formControl]="valueControl"
             name="field-value">
                 <option value="null">None</option>
                 <option 
@@ -67,7 +66,7 @@
             class="flex-col"
             aria-labelledby="custom-radio" 
             aria-label="Select an option"
-            [(ngModel)]="fieldValue.value.stringValue">
+            [formControl]="valueControl">
                 <mat-radio-button 
                 *ngFor="let option of field.fieldOptions"
                 [value]="option"
@@ -92,7 +91,7 @@
         <mat-form-field>
             <mat-label>{{field.name}}</mat-label>
             <input 
-            [(ngModel)]="fieldValue.value.dateValue" 
+            [formControl]="valueControl"
             matInput 
             [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

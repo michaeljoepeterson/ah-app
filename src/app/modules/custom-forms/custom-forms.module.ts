@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormSelectorComponent } from './components/form-selector/form-selector.component';
 import { CreateCustomFormComponent } from './components/create-custom-form/create-custom-form.component';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormChildComponent } from './components/form-child/form-child.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
@@ -50,7 +50,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   exports:[
     FormSelectorComponent,

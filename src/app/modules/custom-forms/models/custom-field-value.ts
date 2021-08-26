@@ -24,8 +24,6 @@ export class CustomFieldValue extends BaseModel{
         objectValue:null,
         dateValue:null,
     };
-    customFieldId:string = null;
-    customField:CustomField = null;
     name:string = null;
     id:string = null;
     owner:User = null;
@@ -50,18 +48,22 @@ export class CustomFieldValue extends BaseModel{
 
     initFieldValue(data:any){
         this.init(data);
-        if(data.value && this.customField.fieldType === fieldTypes.date){
+        if(data instanceof CustomField){
+            this.parentField = data;
+        }
+        if(data.value && this.parentField.fieldType === fieldTypes.date){
             this.value.dateValue = new Date(data.value);
         }
         //init empty field checkbox vals
-        if(this.customField?.fieldOptions?.length > 0 && this.customField?.fieldType === fieldTypes.checkbox && !this.value){
+        if(this.parentField?.fieldOptions?.length > 0 && this.parentField?.fieldType === fieldTypes.checkbox && !this.value){
             this.initCheckboxValues()
         }
+    
     }
     
     initCheckboxValues(){
         this.value.arrayValue = [];
-        this.customField.fieldOptions.forEach(option => this.value.arrayValue.push(false));
+        this.parentField.fieldOptions.forEach(option => this.value.arrayValue.push(false));
     }
 
     initDate(value?:any){

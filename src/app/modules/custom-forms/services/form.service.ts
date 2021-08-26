@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { NotificationsService } from '../../notifications/services/notifications.service';
 import { fieldTypes, FieldTypes } from '../constants';
 import { CustomField } from '../models/custom-field';
+import { CustomFieldValue } from '../models/custom-field-value';
 import { CustomForm } from '../models/custom-form';
 import { CustomSection } from '../models/custom-section';
 
@@ -61,6 +62,11 @@ export class FormService {
    * forms for the project
    */
   onFormUpdated:Observable<CustomForm> = this._onFormUpdated.asObservable();
+  private _currentCustomValues:BehaviorSubject<CustomFieldValue[]> = new BehaviorSubject([]);
+  /**
+   * forms for the project
+   */
+   currentCustomValues:Observable<CustomFieldValue[]> = this._currentCustomValues.asObservable();
 
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
@@ -387,5 +393,25 @@ export class FormService {
         throw err;
       })
     )
+  }
+  
+  resetCustomFieldValues(){
+    this._currentCustomValues.next([]);
+  }
+
+  addCustomFieldValue(value:CustomFieldValue){
+    let values = this._currentCustomValues.value;
+    let id = value.id ? value.id : value.parentField.id;
+    values = values.filter(v => v.id !== id || v.parentField.id !== id);
+    values.push(value);
+    this._currentCustomValues.next(values);
+  }
+
+  updateCustomFieldValue(value:CustomFieldValue){
+    let id = value.id ? value.id : value.parentField.id;
+    let values = this._currentCustomValues.value;
+    let valIndex = values.findIndex(v => v.id === id || v.parentField.id === id);
+    values[valIndex] = value;
+    this._currentCustomValues.next(values);
   }
 }
