@@ -10,7 +10,7 @@
             </div>
             <input 
             class="form-control"
-            [(ngModel)]="fieldValue.value"
+            [(ngModel)]="fieldValue.value.stringValue"
             required
             type="text"
             name="field-value"
@@ -28,7 +28,7 @@
             </div>
             <input 
             class="form-control"
-            [(ngModel)]="fieldValue.value"
+            [(ngModel)]="fieldValue.value.numberValue"
             required
             type="number"
             name="field-value"
@@ -48,7 +48,7 @@
             <select 
             class="custom-select" 
             id="field-types"
-            [(ngModel)]="fieldValue.value"
+            [(ngModel)]="fieldValue.value.stringValue"
             (change)="typeChange()"
             name="field-value">
                 <option value="null">None</option>
@@ -67,7 +67,7 @@
             class="flex-col"
             aria-labelledby="custom-radio" 
             aria-label="Select an option"
-            [(ngModel)]="fieldValue.value">
+            [(ngModel)]="fieldValue.value.stringValue">
                 <mat-radio-button 
                 *ngFor="let option of field.fieldOptions"
                 [value]="option"
@@ -83,7 +83,7 @@
             <mat-checkbox 
             class="example-margin"
             *ngFor="let option of field.fieldOptions;let i = index;"
-            [ngModel]="fieldValue.value[i]">
+            [ngModel]="fieldValue.value.arrayValue[i]">
                 {{option}}
             </mat-checkbox>
         </div>
@@ -92,7 +92,7 @@
         <mat-form-field>
             <mat-label>{{field.name}}</mat-label>
             <input 
-            [(ngModel)]="fieldValue.value" 
+            [(ngModel)]="fieldValue.value.dateValue" 
             matInput 
             [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
