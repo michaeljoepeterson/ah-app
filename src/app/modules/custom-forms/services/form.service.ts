@@ -440,7 +440,27 @@ export class FormService {
   }
 
   updateFieldValue(value:CustomFieldValue):Observable<CustomFieldValue>{
-    return of(value);
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/value/${value.id}`;
+    let options = {
+      headers
+    };
+    let data = value.serialize();
+    let body = {
+      fieldValue:data
+    };
+
+    return this.http.put(url,body,options).pipe(
+      map((response:any) => {
+        let newfValue = new CustomFieldValue(response.fieldValue);
+        return newfValue;
+      }),
+      catchError(err => {
+        let message = 'Error updating value';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
   }
 
   addFieldValues(values:CustomFieldValue[]):Observable<CustomFieldValue[]>{
