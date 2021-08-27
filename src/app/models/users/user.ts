@@ -1,10 +1,12 @@
-export class User{
+import { BaseModel } from "../baseModel";
+
+export class User extends BaseModel{
     email:string = null;
-    id:string = null;
     
     constructor(data:any){
+        super();
         if(data){
-            this.mapData(data);
+            this.init(data);
         }
     }
 

@@ -6,7 +6,6 @@ import { BaseFormModel } from "./base-form-model";
 export class CustomForm extends BaseFormModel{
     name:string = null;
     owner:User = null;
-    id:string = null;
     createdAt:Date = null;
     sections:CustomSection[] = [];
     fields:CustomField[] = [];

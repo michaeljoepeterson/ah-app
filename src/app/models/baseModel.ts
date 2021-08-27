@@ -2,6 +2,14 @@
  * base model for app data models
  */
  export class BaseModel{
+    _id:string = null;
+    get id():string{
+        return this._id;
+    }
+    set id(idVal:string){
+        this._id = idVal;
+    }
+
     constructor(){
 
     }
@@ -17,10 +25,12 @@
         dataKeys.forEach(key => {
             keyLookup[key] = key;
         });
-
         keys.forEach(key => {
-            if(keyLookup[key] && data[key]){
+            if(data[key]){
                 this[key] = data[key];
+            }
+            else if(key === '_id'){
+                this.id = data._id || data.id;
             }
         });
     }

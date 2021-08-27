@@ -28,7 +28,6 @@ export class PatientFile extends BaseModel{
     sortOrder?:number = null;
     dateEvents?:DateEvent[] = [];
     details?:string = null;
-    id?:string = null;
     ancestors?:string[] = [];
     parent?:string = null;
     patientId:string = null;

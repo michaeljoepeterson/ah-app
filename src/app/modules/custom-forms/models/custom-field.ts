@@ -3,7 +3,6 @@ import { BaseModel } from "../../../models/baseModel"
 
 export class CustomField extends BaseModel{
     name:string = null;
-    id:string = null;
     owner:User = null;
     createdAt:Date = null;
     ancestorSections:string[] = [];

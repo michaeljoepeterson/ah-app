@@ -50,6 +50,9 @@ export class PatientFormComponent implements OnInit {
     });
     this.patientFileService.setFile(this.patientFile);
     this.subs.push(sub);
+    if(this.patientFile.id){
+      this.init();
+    }
   }
 
   ngOnDestroy(){
@@ -98,5 +101,13 @@ export class PatientFormComponent implements OnInit {
   formSelected(form:CustomForm){
     this.selectedForm = form;
     this.formService.resetCustomFieldValues();
+  }
+
+  init(){
+    this.sub = this.patientFileService.getFileValues(this.patientFile).subscribe({
+      next:res => {
+        console.log(res);
+      }
+    })
   }
 }

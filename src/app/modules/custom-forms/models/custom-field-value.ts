@@ -25,7 +25,6 @@ export class CustomFieldValue extends BaseModel{
         dateValue:null,
     };
     name:string = null;
-    id:string = null;
     owner:User = null;
     createdAt:Date = null;
     ancestorSections:string[] = [];

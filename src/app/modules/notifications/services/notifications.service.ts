@@ -43,7 +43,8 @@ export class NotificationsService {
    displayErrorSnackBar(message:string, error:any, action?:string, duration?:number){
     action = action ? action : this.defaultAction;
     duration = duration ? duration : this.defaultDuration;
-    const errorMessage = `Error: ${message.trim()} Message: ${error.message}`;
+    let errMessage = error.customMessage ? error.customMessage : error.message;
+    const errorMessage = `Error: ${message.trim()} Message: ${errMessage}`;
     this._snackBar.open(errorMessage, action, {
       duration: duration,
     });

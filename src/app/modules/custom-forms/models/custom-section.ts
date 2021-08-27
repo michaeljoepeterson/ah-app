@@ -4,7 +4,6 @@ import { BaseFormModel } from "./base-form-model";
 
 export class CustomSection extends BaseFormModel{
     name:string = null;
-    id:string = null;
     owner:User = null;
     createdAt:Date = null;
     ancestorSections:string[] = [];
