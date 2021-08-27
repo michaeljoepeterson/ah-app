@@ -2,6 +2,8 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { forkJoin, Subscription } from 'rxjs';
+import { PatientFileService } from '../../../patient-file/services/patient-file.service';
+import { PatientFile } from '../../../client-dash/models/patient-file';
 import { FieldTypes } from '../../constants';
 import { CustomField } from '../../models/custom-field';
 import { CustomFieldValue } from '../../models/custom-field-value';
@@ -18,12 +20,26 @@ export class CustomFieldComponent implements OnInit {
   @Input() fieldValue:CustomFieldValue = null;
   @Input() fieldType:string;
 
+  private _sub:Subscription;
+  get sub():Subscription{
+    return this._sub;
+  }
+
+  set sub(subscription:Subscription){
+    if(this._sub){
+      this._sub.unsubscribe();
+    }
+    this._sub = subscription;
+  }
+
+
   fieldTypes:FieldTypes;
   valueControl = new FormControl();
   subs:Subscription[] = [];
 
   constructor(
     private formService:FormService,
+    private patientFileService:PatientFileService
     //private ref:ChangeDetectorRef
   ) { 
     this.fieldTypes = this.formService.fieldTypes;
@@ -35,8 +51,13 @@ export class CustomFieldComponent implements OnInit {
     let sub = this.valueControl.valueChanges.subscribe(val => {
       this.valueChanged(val);
     });
-    
-    this.subs.push(sub);
+
+    let fileSub = this.patientFileService.onFileSubmitted.subscribe(file => {
+      if(file){
+        this.onFormSubmit(file);
+      }
+    })
+    this.subs = [sub,fileSub];
   }
 
   ngOnDestroy(){
@@ -92,5 +113,32 @@ export class CustomFieldComponent implements OnInit {
     let {checked} = event;
     this.fieldValue.setArrayValue(checked,index);
     this.formService.updateCustomFieldValue(this.fieldValue);
+  }
+
+  onFormSubmit(patientFile:PatientFile){
+    if(!this.fieldValue.id){
+      this.createValue(patientFile);
+    }
+    else{
+      this.updateValue(patientFile);
+    }
+  }
+
+  createValue(parentFile:PatientFile){
+    this.fieldValue.parentFile = parentFile;
+    this.sub = this.formService.createFieldValue(this.fieldValue).subscribe({
+      next:res => {
+        this.fieldValue.id = res.id;
+      }
+    });
+  }
+
+  updateValue(parentFile:PatientFile){
+    this.fieldValue.parentFile = parentFile;
+    this.sub = this.formService.updateFieldValue(this.fieldValue).subscribe({
+      next:res => {
+        return res;
+      }
+    });
   }
 }

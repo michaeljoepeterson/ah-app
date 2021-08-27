@@ -12,9 +12,19 @@ export class PatientFileService {
    */
   selectedFile:Observable<PatientFile> = this._selectedFile.asObservable();
 
+  private _onFileSubmitted:BehaviorSubject<PatientFile> = new BehaviorSubject(null);
+  /**
+   * currently selected form
+   */
+   onFileSubmitted:Observable<PatientFile> = this._onFileSubmitted.asObservable();
+
   constructor() { }
 
   setFile(file:PatientFile){
     this._selectedFile.next(file);
+  }
+
+  submitFile(file:PatientFile){
+    this._onFileSubmitted.next(file);
   }
 }
