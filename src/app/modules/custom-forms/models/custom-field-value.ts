@@ -50,6 +50,7 @@ export class CustomFieldValue extends BaseModel{
         this.init(data);
         if(data instanceof CustomField){
             this.parentField = data;
+            this.id = null;
         }
         if(data.value && this.parentField.fieldType === fieldTypes.date){
             this.value.dateValue = new Date(data.value);
@@ -68,5 +69,29 @@ export class CustomFieldValue extends BaseModel{
 
     initDate(value?:any){
         this.value.dateValue = !value ? new Date() : new Date(value);
+    }
+
+    setValue(value:any){
+        if(this.fieldType === fieldTypes.date){
+            this.value.dateValue = value;
+        }
+        else if(this.fieldType === fieldTypes.dropdown || this.fieldType === fieldTypes.text || this.fieldType === fieldTypes.radio){
+            this.value.stringValue = value;
+        }
+        else if(this.fieldType === fieldTypes.checkbox){
+            this.value.arrayValue = value;
+        }
+    }
+
+    setArrayValue(val:any,i:number){
+        this.value.arrayValue[i] = val;
+    }
+
+    serialize(){
+        let data = super.serialize();
+        data.parentField = this.parentField?.id;
+        data.parentForm = this.parentForm?.id;
+        data.parentFile = this.parentFile?.id;
+        return data;
     }
 }

@@ -3,10 +3,12 @@ import { FormService } from '../../../custom-forms/services/form.service';
 import { PatientFile } from '../../../client-dash/models/patient-file';
 import { PatientErrors } from '../../models/patient-errors';
 import { FolderItem } from '../../../client-dash/models/folder-item';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FolderNavService } from '../../../client-dash/services/folder-nav.service';
 import { CustomForm } from 'src/app/modules/custom-forms/models/custom-form';
 import { CustomFieldValue } from 'src/app/modules/custom-forms/models/custom-field-value';
+import { map, switchMap } from 'rxjs/operators';
+import { PatientFileService } from '../../services/patient-file.service';
 
 @Component({
   selector: 'app-patient-form',
@@ -36,7 +38,8 @@ export class PatientFormComponent implements OnInit {
 
   constructor(
     private formService:FormService,
-    private folderService:FolderNavService
+    private folderService:FolderNavService,
+    private patientFileService:PatientFileService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +48,7 @@ export class PatientFormComponent implements OnInit {
       this.customValues = values;
       console.log('vals:',this.customValues);
     });
-
+    this.patientFileService.setFile(this.patientFile);
     this.subs.push(sub);
   }
 
@@ -73,7 +76,11 @@ export class PatientFormComponent implements OnInit {
   }
 
   createFile(){
-    this.sub = this.folderService.createFile(this.patientFile,this.parentFolder).subscribe({
+    this.sub = this.folderService.createFile(this.patientFile,this.parentFolder).pipe(
+      switchMap(res => {
+        return this.addFieldValues();
+      })
+    ).subscribe({
       next:res => {
         console.log(res);
       }
@@ -81,7 +88,11 @@ export class PatientFormComponent implements OnInit {
   }
 
   updateFile(){
-    this.sub = this.folderService.updateFile(this.patientFile).subscribe({
+    this.sub = this.folderService.updateFile(this.patientFile).pipe(
+      switchMap(res => {
+        return this.addFieldValues();
+      })
+    ).subscribe({
       next:res => {
         console.log(res);
       }
@@ -91,5 +102,15 @@ export class PatientFormComponent implements OnInit {
   formSelected(form:CustomForm){
     this.selectedForm = form;
     this.formService.resetCustomFieldValues();
+  }
+
+  addFieldValues():Observable<CustomFieldValue[]>{
+    this.customValues = this.customValues.map(val => {
+      val.parentFile = this.patientFile;
+      return val;
+    });
+    return this.formService.addFieldValues(this.customValues).pipe(
+      map(res => res)
+    );
   }
 }

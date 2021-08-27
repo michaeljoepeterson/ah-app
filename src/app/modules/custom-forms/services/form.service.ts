@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
@@ -392,7 +392,7 @@ export class FormService {
         this.notificationService.displayErrorSnackBar(message,err);
         throw err;
       })
-    )
+    );
   }
   
   resetCustomFieldValues(){
@@ -413,5 +413,51 @@ export class FormService {
     let valIndex = values.findIndex(v => v.id === id || v.parentField.id === id);
     values[valIndex] = value;
     this._currentCustomValues.next(values);
+  }
+
+  createFieldValue(value:CustomFieldValue):Observable<CustomFieldValue>{
+    let headers = this.authService.getAuthHeaders();
+    let url = `${environment.apiUrl}${this.endpoint}/value`;
+    let options = {
+      headers
+    };
+    let data = value.serialize();
+    let body = {
+      fieldValue:data
+    };
+
+    return this.http.post(url,body,options).pipe(
+      map((response:any) => {
+        let newfValue = new CustomFieldValue(response.fieldValue);
+        return newfValue;
+      }),
+      catchError(err => {
+        let message = 'Error creating value';
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    )
+  }
+
+  updateFieldValue(value:CustomFieldValue):Observable<CustomFieldValue>{
+    return of(value);
+  }
+
+  addFieldValues(values:CustomFieldValue[]):Observable<CustomFieldValue[]>{
+    let reqs:Observable<CustomFieldValue>[] = [];
+    values.forEach(val => {
+      if(!val.id){
+        reqs.push(this.createFieldValue(val));
+      }
+      else{
+        reqs.push(this.updateFieldValue(val));
+      }
+    });
+    return forkJoin(reqs).pipe(
+      map(res => {
+        let vals = res.map(r => new CustomFieldValue(r));
+        return vals;
+      })
+    );
   }
 }

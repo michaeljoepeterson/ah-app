@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { forkJoin, Subscription } from 'rxjs';
 import { FieldTypes } from '../../constants';
 import { CustomField } from '../../models/custom-field';
 import { CustomFieldValue } from '../../models/custom-field-value';
@@ -19,7 +20,7 @@ export class CustomFieldComponent implements OnInit {
 
   fieldTypes:FieldTypes;
   valueControl = new FormControl();
-  subs:Subscription[];
+  subs:Subscription[] = [];
 
   constructor(
     private formService:FormService,
@@ -32,10 +33,10 @@ export class CustomFieldComponent implements OnInit {
     this.initFieldValue();
     this.registerCustomFieldValue();
     let sub = this.valueControl.valueChanges.subscribe(val => {
-      console.log('val',val);
+      this.valueChanged(val);
     });
-
-    this.subs = [sub];
+    
+    this.subs.push(sub);
   }
 
   ngOnDestroy(){
@@ -82,7 +83,14 @@ export class CustomFieldComponent implements OnInit {
     console.log(event);
   }
 
-  valueChanged(){
-    
+  valueChanged(value:any){
+    this.fieldValue.setValue(value);
+    this.formService.updateCustomFieldValue(this.fieldValue);
+  }
+
+  checkboxChanged(event:MatCheckboxChange,index:number){
+    let {checked} = event;
+    this.fieldValue.setArrayValue(checked,index);
+    this.formService.updateCustomFieldValue(this.fieldValue);
   }
 }
