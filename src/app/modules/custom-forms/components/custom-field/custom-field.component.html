@@ -82,6 +82,7 @@
             <mat-checkbox 
             class="example-margin"
             *ngFor="let option of field.fieldOptions;let i = index;"
+            [(ngModel)]="fieldValue.value.arrayValue[i]"
             (change)="checkboxChanged($event,i)">
                 {{option}}
             </mat-checkbox>

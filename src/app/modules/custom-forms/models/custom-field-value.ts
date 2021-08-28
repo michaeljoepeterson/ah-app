@@ -52,7 +52,7 @@ export class CustomFieldValue extends BaseModel{
             this.id = null;
         }
         if(data.value && this.fieldType === fieldTypes.date){
-            this.value.dateValue = new Date(data.value);
+            this.value.dateValue = new Date(data.value.dateValue);
         }
         //init empty field checkbox vals
         if(this.fieldOptions?.length > 0 && this.fieldType === fieldTypes.checkbox && !this.value){
@@ -72,7 +72,7 @@ export class CustomFieldValue extends BaseModel{
 
     setValue(value:any){
         if(this.fieldType === fieldTypes.date){
-            this.value.dateValue = value;
+            this.value.dateValue = new Date(value);
         }
         else if(this.fieldType === fieldTypes.dropdown || this.fieldType === fieldTypes.text || this.fieldType === fieldTypes.radio){
             this.value.stringValue = value;

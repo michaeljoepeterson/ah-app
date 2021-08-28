@@ -152,11 +152,22 @@ export class CustomFieldComponent implements OnInit {
     });
   }
 
+  setInitialValue(){
+    if(this.fieldValue.fieldType === this.fieldTypes.date){
+      this.valueControl.setValue(this.fieldValue.value.dateValue);
+    }
+    else if(this.fieldValue.fieldType === this.fieldTypes.dropdown || this.fieldValue.fieldType === this.fieldTypes.text || this.fieldValue.fieldType === this.fieldTypes.radio){
+      this.valueControl.setValue(this.fieldValue.value.stringValue);
+    }
+    console.log(this.fieldValue);
+  }
+
   findVal(vals:CustomFieldValue[]){
     let foundVal = vals.find(val => val.parentField === this.fieldValue.parentField);
     if(foundVal){
       this.fieldValue = foundVal;
       this.formService.updateCustomFieldValue(this.fieldValue);
+      this.setInitialValue();
     }
   }
 }
