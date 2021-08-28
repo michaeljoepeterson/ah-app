@@ -52,17 +52,26 @@ export class CustomFieldComponent implements OnInit {
       this.valueChanged(val);
     });
 
+    let valSub = this.patientFileService.currentCustomValues.subscribe(vals => {
+      this.findVal(vals);
+    });
+
     let fileSub = this.patientFileService.onFileSubmitted.subscribe(file => {
       if(file){
+        console.log('handle submit');
         this.onFormSubmit(file);
       }
-    })
-    this.subs = [sub,fileSub];
+    });
+
+
+    this.subs = [sub,fileSub,valSub];
   }
 
   ngOnDestroy(){
     try{
       this.subs.forEach(s => s.unsubscribe());
+      this.formService.removeCustomFieldValue(this.fieldValue);
+      console.log('clean',this.fieldValue);
     }
     catch(e){
       console.warn(e);
@@ -116,6 +125,7 @@ export class CustomFieldComponent implements OnInit {
   }
 
   onFormSubmit(patientFile:PatientFile){
+    console.log(this.fieldValue.id);
     if(!this.fieldValue.id){
       this.createValue(patientFile);
     }
@@ -140,5 +150,13 @@ export class CustomFieldComponent implements OnInit {
         return res;
       }
     });
+  }
+
+  findVal(vals:CustomFieldValue[]){
+    let foundVal = vals.find(val => val.parentField === this.fieldValue.parentField);
+    if(foundVal){
+      this.fieldValue = foundVal;
+      this.formService.updateCustomFieldValue(this.fieldValue);
+    }
   }
 }

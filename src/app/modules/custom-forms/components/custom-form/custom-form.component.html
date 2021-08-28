@@ -1,7 +1,8 @@
 <div>
     <ng-container *ngIf="form">
         <app-form-child 
-        [combinedChildren]="form.combinedChildren"></app-form-child>
+        [combinedChildren]="form.combinedChildren"
+        [fieldValues]="fieldValues"></app-form-child>
     </ng-container>
     <ng-container *ngIf="!form">
         <p>new custom form</p>

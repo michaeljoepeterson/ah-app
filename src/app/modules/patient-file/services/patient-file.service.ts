@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { PatientFile } from '../../client-dash/models/patient-file';
 import { environment } from '../../../../environments/environment';
@@ -18,12 +18,12 @@ export class PatientFileService {
    */
   selectedFile:Observable<PatientFile> = this._selectedFile.asObservable();
 
-  private _onFileSubmitted:BehaviorSubject<PatientFile> = new BehaviorSubject(null);
+  private _onFileSubmitted:Subject<PatientFile> = new Subject();
   /**
    * currently selected form
    */
    onFileSubmitted:Observable<PatientFile> = this._onFileSubmitted.asObservable();
-   private _currentCustomValues:BehaviorSubject<CustomFieldValue[]> = new BehaviorSubject(null);
+   private _currentCustomValues:BehaviorSubject<CustomFieldValue[]> = new BehaviorSubject([]);
   /**
    * currently selected form
    */

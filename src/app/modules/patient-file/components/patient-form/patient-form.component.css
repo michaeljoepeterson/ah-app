@@ -5,3 +5,8 @@
 .patient-form > *{
     margin-bottom: 1em;
 }
+
+.custom-form{
+    overflow-y: auto;
+    max-height: 500px;
+}

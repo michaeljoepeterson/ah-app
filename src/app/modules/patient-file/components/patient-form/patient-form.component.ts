@@ -70,6 +70,7 @@ export class PatientFormComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log('form submitted');
     let hasErrors = this.formErrors.checkErrors(this.patientFile);
     if(!hasErrors && this.parentFolder && !this.patientFile.id){
       this.createFile();

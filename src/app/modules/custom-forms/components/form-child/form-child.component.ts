@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomField } from '../../models/custom-field';
+import { CustomFieldValue } from '../../models/custom-field-value';
 import { CustomSection } from '../../models/custom-section';
 import { FormService } from '../../services/form.service';
 
@@ -12,6 +13,7 @@ import { FormService } from '../../services/form.service';
 export class FormChildComponent implements OnInit {
   @Input() combinedChildren:(CustomSection|CustomField)[] = [];
   @Input() sectionSpace:number = 0;
+  @Input() fieldValues:CustomFieldValue[];
   fieldType:string = 'field';
   sectionType:string = 'section';
   isEditing:boolean = false;

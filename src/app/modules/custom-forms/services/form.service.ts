@@ -401,17 +401,26 @@ export class FormService {
 
   addCustomFieldValue(value:CustomFieldValue){
     let values = this._currentCustomValues.value;
-    let id = value.id ? value.id : value.parentField.id;
-    values = values.filter(v => v.id !== id || v.parentField.id !== id);
+    let id = value.parentField;
+    values = values.filter(v => v.id !== id || v.parentField !== id);
     values.push(value);
     this._currentCustomValues.next(values);
   }
 
   updateCustomFieldValue(value:CustomFieldValue){
-    let id = value.id ? value.id : value.parentField.id;
+    let id = value.parentField;
     let values = this._currentCustomValues.value;
-    let valIndex = values.findIndex(v => v.id === id || v.parentField.id === id);
-    values[valIndex] = value;
+    let valIndex = values.findIndex(v => v.id === id || v.parentField === id);
+    if(valIndex >= 0){
+      values[valIndex] = value;
+      this._currentCustomValues.next(values);
+    }
+  }
+
+  removeCustomFieldValue(value:CustomFieldValue){
+    let id = value.parentField;
+    let values = this._currentCustomValues.value;
+    values = values.filter(val => val.parentField !== id);
     this._currentCustomValues.next(values);
   }
 

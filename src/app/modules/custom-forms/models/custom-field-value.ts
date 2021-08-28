@@ -35,7 +35,7 @@ export class CustomFieldValue extends BaseModel{
     fieldOptions:any[] = null;
     min:string = null;
     max:string = null;
-    parentField:CustomField = null;
+    parentField:string = null;
     parentFile:PatientFile = null;
 
     constructor(data?:any){
@@ -48,14 +48,14 @@ export class CustomFieldValue extends BaseModel{
     initFieldValue(data:any){
         this.init(data);
         if(data instanceof CustomField){
-            this.parentField = data;
+            this.parentField = data.id;
             this.id = null;
         }
-        if(data.value && this.parentField.fieldType === fieldTypes.date){
+        if(data.value && this.fieldType === fieldTypes.date){
             this.value.dateValue = new Date(data.value);
         }
         //init empty field checkbox vals
-        if(this.parentField?.fieldOptions?.length > 0 && this.parentField?.fieldType === fieldTypes.checkbox && !this.value){
+        if(this.fieldOptions?.length > 0 && this.fieldType === fieldTypes.checkbox && !this.value){
             this.initCheckboxValues()
         }
     
@@ -63,7 +63,7 @@ export class CustomFieldValue extends BaseModel{
     
     initCheckboxValues(){
         this.value.arrayValue = [];
-        this.parentField.fieldOptions.forEach(option => this.value.arrayValue.push(false));
+        this.fieldOptions.forEach(option => this.value.arrayValue.push(false));
     }
 
     initDate(value?:any){
@@ -88,7 +88,7 @@ export class CustomFieldValue extends BaseModel{
 
     serialize(){
         let data = super.serialize();
-        data.parentField = this.parentField?.id;
+        data.parentField = this.parentField;
         data.parentForm = this.parentForm?.id;
         data.parentFile = this.parentFile?.id;
         return data;
