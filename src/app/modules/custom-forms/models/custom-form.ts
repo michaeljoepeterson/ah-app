@@ -2,6 +2,7 @@ import { User } from "../../../models/users/user";
 import { CustomSection } from "./custom-section";
 import { CustomField } from "./custom-field";
 import { BaseFormModel } from "./base-form-model";
+import { CustomFieldValue } from "./custom-field-value";
 
 export class CustomForm extends BaseFormModel{
     name:string = null;
@@ -10,6 +11,7 @@ export class CustomForm extends BaseFormModel{
     sections:CustomSection[] = [];
     fields:CustomField[] = [];
     combinedChildren:(CustomSection|CustomField)[] = [];
+    values:CustomFieldValue[] = [];
 
     constructor(data?:any){
         super();
@@ -32,7 +34,9 @@ export class CustomForm extends BaseFormModel{
         if(data.fields){
             this.fields = data.fields.map(field => new CustomField(field));
         }
-        
+        if(data.values){
+            this.values = data.values.map(val => new CustomFieldValue(val));
+        }
         this.combineChildren();
     }
 }

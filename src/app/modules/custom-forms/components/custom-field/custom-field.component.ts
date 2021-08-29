@@ -58,7 +58,6 @@ export class CustomFieldComponent implements OnInit {
 
     let fileSub = this.patientFileService.onFileSubmitted.subscribe(file => {
       if(file){
-        console.log('handle submit');
         this.onFormSubmit(file);
       }
     });

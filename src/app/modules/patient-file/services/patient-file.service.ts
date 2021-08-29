@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { CustomFieldValue } from '../../custom-forms/models/custom-field-value';
 import { NotificationsService } from '../../notifications/services/notifications.service';
+import { CustomForm } from '../../custom-forms/models/custom-form';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,27 @@ export class PatientFileService {
         let values = response.fieldValues.map(val => new CustomFieldValue(val));
         this.setValues(values);
         return values;
+      }),
+      catchError(err => {
+        let message = 'Error getting values';
+        console.warn(err);
+        this.notificationService.displayErrorSnackBar(message,err);
+        throw err;
+      })
+    );
+  }
+
+  getFileForm(file:PatientFile):Observable<CustomForm>{
+    let headers = this.authService.getAuthHeaders();
+    let options = {
+      headers
+    };
+    let url = `${environment.apiUrl}${this.endpoint}/form/values/${file.id}`;
+    return this.http.get(url,options).pipe(
+      map((response:any) => {
+        let form = new CustomForm(response.form);
+        console.log('form with vals:',form);
+        return form;
       }),
       catchError(err => {
         let message = 'Error getting values';

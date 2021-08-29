@@ -1,6 +1,7 @@
 import { User } from "../../../models/users/user";
 import { CustomField } from "./custom-field";
 import { BaseFormModel } from "./base-form-model";
+import { CustomFieldValue } from "./custom-field-value";
 
 export class CustomSection extends BaseFormModel{
     name:string = null;
@@ -14,6 +15,7 @@ export class CustomSection extends BaseFormModel{
     fields:CustomField[] = [];
     type:string = 'section';
     combinedChildren:(CustomSection|CustomField)[] = [];
+    values:CustomFieldValue[] = [];
 
     constructor(data?:any){
         super();
