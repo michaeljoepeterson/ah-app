@@ -35,7 +35,8 @@ export class PatientFile extends BaseModel{
     height:number = null;
     weight:number = null;
     heightString:string = null;
-    weightString:string = null;   
+    weightString:string = null;
+    formType:string = null;   
      
     constructor(data?:any){
         super();

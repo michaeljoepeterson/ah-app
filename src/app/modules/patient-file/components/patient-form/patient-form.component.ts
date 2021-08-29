@@ -46,7 +46,6 @@ export class PatientFormComponent implements OnInit {
     this.formService.setEditing(false);
     let sub = this.formService.currentCustomValues.subscribe(values => {
       this.customValues = values;
-      console.log('vals:',this.customValues);
     });
     this.patientFileService.setFile(this.patientFile);
     this.subs.push(sub);
@@ -70,7 +69,6 @@ export class PatientFormComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log('form submitted');
     let hasErrors = this.formErrors.checkErrors(this.patientFile);
     if(!hasErrors && this.parentFolder && !this.patientFile.id){
       this.createFile();
@@ -102,6 +100,7 @@ export class PatientFormComponent implements OnInit {
   formSelected(form:CustomForm){
     this.selectedForm = form;
     this.formService.resetCustomFieldValues();
+    this.patientFile.formType = this.selectedForm.id;
   }
 
   init(){
