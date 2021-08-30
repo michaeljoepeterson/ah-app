@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } 
 import { FolderNavService } from '../../../../services/folder-nav.service';
 import { PatientFile } from '../../../../models/patient-file';
 import { Subscription } from 'rxjs';
+import { PatientFileService } from '../../../../../patient-file/services/patient-file.service';
 
 @Component({
   selector: 'app-file-item',
@@ -14,10 +15,22 @@ export class FileItemComponent implements OnInit {
   @Input() folderSpace:number = 0;
   subscriptions:Subscription[] = [];
   isSelected:boolean = false;
+  private _sub:Subscription;
+  get sub():Subscription{
+    return this._sub;
+  }
+
+  set sub(subscription:Subscription){
+    if(this._sub){
+      this._sub.unsubscribe();
+    }
+    this._sub = subscription;
+  }
 
   constructor(
     private ref:ChangeDetectorRef,
-    private folderService:FolderNavService
+    private folderService:FolderNavService,
+    private patientFileService:PatientFileService
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +57,11 @@ export class FileItemComponent implements OnInit {
   selectFile(){
     this.folderService.selectItem(this.file);
     this.folderService.selectFolder(null);
+    this.sub = this.patientFileService.getFileData(this.file).subscribe({
+      next:res => {
+        return res;
+      }
+    });
   }
 
   ngOnDestroy(){

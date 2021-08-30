@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { PatientFile } from '../../client-dash/models/patient-file';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { CustomFieldValue } from '../../custom-forms/models/custom-field-value';
 import { NotificationsService } from '../../notifications/services/notifications.service';
 import { CustomForm } from '../../custom-forms/models/custom-form';
+import { FormService } from '../../custom-forms/services/form.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,8 @@ export class PatientFileService {
   constructor(
     private http: HttpClient,
     private authService:AuthService,
-    private notificationService:NotificationsService
+    private notificationService:NotificationsService,
+    private formService:FormService
   ) { }
 
   setFile(file:PatientFile){
@@ -87,6 +89,20 @@ export class PatientFileService {
         console.warn(err);
         this.notificationService.displayErrorSnackBar(message,err);
         throw err;
+      })
+    );
+  }
+
+  getFileData(file:PatientFile):Observable<any>{
+    return this.getFileValues(file).pipe(
+      switchMap(response => {
+        if(file.formType){
+          return this.formService.getSingleCustomForm(file.formType);
+        }
+        else{
+          this.formService.setForm(null);
+          return of(null);
+        }
       })
     );
   }

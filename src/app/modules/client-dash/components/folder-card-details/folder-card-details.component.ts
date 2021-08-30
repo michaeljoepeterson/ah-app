@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { PatientFile } from '../../models/patient-file';
 import { FolderItem } from '../../models/folder-item';
 import { FolderNavService } from '../../services/folder-nav.service';
+import { FormService } from '../../../custom-forms/services/form.service';
+import { CustomForm } from '../../../custom-forms/models/custom-form';
 
 @Component({
   selector: 'app-folder-card-details',
@@ -14,10 +16,12 @@ export class FolderCardDetailsComponent implements OnInit {
   subs:Subscription[] = [];
   selectedItem:(FolderItem|PatientFile);
   selectedFolder:FolderItem;
+  selectedForm:CustomForm
 
   constructor(
     private ref:ChangeDetectorRef,
-    private folderNavService:FolderNavService
+    private folderNavService:FolderNavService,
+    private formService:FormService
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +30,13 @@ export class FolderCardDetailsComponent implements OnInit {
       this.ref.markForCheck();
     });
 
-    this.subs = [itemSub];
+    let formSub = this.formService.selectedForm.subscribe(form => {
+      this.selectedForm = form;
+      console.log(this.selectedForm);
+      this.ref.markForCheck();
+    });
+
+    this.subs = [itemSub,formSub];
   }
 
   ngOnDestroy(){

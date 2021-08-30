@@ -5,10 +5,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomFormsModule } from '../custom-forms/custom-forms.module';
 import { MatButtonModule } from '@angular/material/button';
+import { PatientDetailsComponent } from './components/patient-details/patient-details.component';
+import { BasePatientDetailsComponent } from './components/base-patient-details/base-patient-details.component';
+import { PatientCustomValuesComponent } from './components/patient-custom-values/patient-custom-values.component';
+import { PatientCustomFormComponent } from './components/patient-custom-form/patient-custom-form.component';
+import { PatientCustomSectionComponent } from './components/patient-custom-section/patient-custom-section.component';
+import { PatientCustomValueComponent } from './components/patient-custom-value/patient-custom-value.component';
 
 @NgModule({
   declarations: [
-    PatientFormComponent
+    PatientFormComponent,
+    PatientDetailsComponent,
+    BasePatientDetailsComponent,
+    PatientCustomValuesComponent,
+    PatientCustomFormComponent,
+    PatientCustomSectionComponent,
+    PatientCustomValueComponent
   ],
   imports: [
     CommonModule,
@@ -20,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   exports:[
     PatientFormComponent,
+    PatientDetailsComponent
   ]
 })
 export class PatientFileModule { }

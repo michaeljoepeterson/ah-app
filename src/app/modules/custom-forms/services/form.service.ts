@@ -83,9 +83,12 @@ export class FormService {
 
   setForm(form:CustomForm){
     let currentForms = this._forms.value;
-    let index = currentForms.findIndex(f => f.id === form.id);
-    currentForms[index] = form;
-    this.setForms(currentForms);
+    if(currentForms && form){
+      let index = currentForms.findIndex(f => f.id === form.id);
+      currentForms[index] = form;
+      this.setForms(currentForms);
+    }
+    this._selectedForm.next(form);
   }
 
   /**

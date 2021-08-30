@@ -27,7 +27,6 @@ export class FolderCardComponent implements OnInit {
     this._sub = subscription;
   }
 
-
   constructor(
     private folderNavService:FolderNavService,
     private patientFileService:PatientFileService
@@ -40,7 +39,7 @@ export class FolderCardComponent implements OnInit {
   selectItem(){
     this.folderNavService.selectItem(this.item);
     if(this.item instanceof PatientFile){
-      this.sub = this.patientFileService.getFileForm(this.item).subscribe({
+      this.sub = this.patientFileService.getFileData(this.item).subscribe({
         next:res => {
           return res;
         }
