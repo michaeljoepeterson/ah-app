@@ -32,7 +32,7 @@ export class FormEditControlsComponent implements OnInit {
   }
 
   menuOpened(){
-    console.log('open menu');
+
     this.menuOpen = false;
   }
 

@@ -77,7 +77,6 @@ export class FormSelectorComponent implements OnInit {
     if(form){
       this.sub = this.formService.getSingleCustomForm(form.id).subscribe({
         next:response => {
-          console.log('form',response);
           this.formSelected.emit(response);
           this.formService.setSelectedForm(response);
           this.ref.markForCheck();
@@ -98,7 +97,6 @@ export class FormSelectorComponent implements OnInit {
     this.sub = this.formService.getCustomForms().subscribe({
         next:response => {
         this.forms = [...response];
-        console.log(this.selectedFormId,this.forms);
         this.ref.markForCheck();
       },
       error:err => {

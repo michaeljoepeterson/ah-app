@@ -70,7 +70,6 @@ export class CustomFieldComponent implements OnInit {
     try{
       this.subs.forEach(s => s.unsubscribe());
       this.formService.removeCustomFieldValue(this.fieldValue);
-      console.log('clean',this.fieldValue);
     }
     catch(e){
       console.warn(e);
@@ -124,7 +123,6 @@ export class CustomFieldComponent implements OnInit {
   }
 
   onFormSubmit(patientFile:PatientFile){
-    console.log(this.fieldValue.id);
     if(!this.fieldValue.id){
       this.createValue(patientFile);
     }
@@ -158,7 +156,6 @@ export class CustomFieldComponent implements OnInit {
     else if(this.fieldValue.fieldType === this.fieldTypes.dropdown || this.fieldValue.fieldType === this.fieldTypes.text || this.fieldValue.fieldType === this.fieldTypes.radio){
       this.valueControl.setValue(this.fieldValue.value.stringValue);
     }
-    console.log(this.fieldValue);
   }
 
   findVal(vals:CustomFieldValue[]){

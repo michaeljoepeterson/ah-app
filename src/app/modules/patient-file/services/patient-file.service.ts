@@ -9,6 +9,7 @@ import { CustomFieldValue } from '../../custom-forms/models/custom-field-value';
 import { NotificationsService } from '../../notifications/services/notifications.service';
 import { CustomForm } from '../../custom-forms/models/custom-form';
 import { FormService } from '../../custom-forms/services/form.service';
+import { CustomField } from '../../custom-forms/models/custom-field';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,12 @@ export class PatientFileService {
   
   setValues(values:CustomFieldValue[]){
     this._currentCustomValues.next(values);
+  }
+
+  findValue(field:CustomField):CustomFieldValue{
+    let values = this._currentCustomValues.value;
+    let value = values.find(val => val.parentField === field.id);
+    return value;
   }
 
   getFileValues(file:PatientFile):Observable<CustomFieldValue>{
@@ -105,5 +112,10 @@ export class PatientFileService {
         }
       })
     );
+  }
+
+  cleanupPatientDetails(){
+    this.setValues([]);
+    this.formService.setForm(null);
   }
 }

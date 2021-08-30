@@ -52,7 +52,6 @@ export class NewFolderComponent implements OnInit {
   createFolder(){
     this.folderService.setEditFolder(this.selectedFolder);
     let formModal = this.notificationService.openDynamicFormModal(this.newFolderData,this.formWidth);
-    console.log(this.selectedFolder);
     let sub = formModal.componentInstance.formSubmit.pipe(
       switchMap(response => {
         if(response[0].value){

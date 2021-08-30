@@ -5,6 +5,7 @@
         [sectionSpace]="sectionSpace"></app-patient-custom-section>
     </ng-container>
     <ng-container *ngIf="child.type === fieldType">
-        <app-patient-custom-value></app-patient-custom-value>
+        <app-patient-custom-value
+        [field]="child"></app-patient-custom-value>
     </ng-container>
 </ng-container>

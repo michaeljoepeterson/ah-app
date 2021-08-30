@@ -1,1 +1,15 @@
-<p>patient-custom-value works!</p>
+<ng-container *ngIf="fieldValue">
+    <div>
+        <span>{{fieldValue.name}}:</span>
+        <ng-container *ngIf="!arrayValue">
+            <span> {{fieldValue.name}}</span>
+        </ng-container>
+        <ng-container *ngIf="arrayValue">
+            <ng-container *ngFor="let value of arrayValue;let i = index">
+                <ng-container *ngIf="value">
+                    <span> {{fieldValue.fieldOptions[i]}}</span>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>

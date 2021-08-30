@@ -82,7 +82,6 @@ export class PatientFormComponent implements OnInit {
     this.sub = this.folderService.createFile(this.patientFile,this.parentFolder).subscribe({
       next:res => {
         this.patientFile.id = res.id;
-        console.log(res);
         this.patientFileService.submitFile(this.patientFile);
       }
     });
@@ -91,7 +90,6 @@ export class PatientFormComponent implements OnInit {
   updateFile(){
     this.sub = this.folderService.updateFile(this.patientFile).subscribe({
       next:res => {
-        console.log(res);
         this.patientFileService.submitFile(this.patientFile);
       }
     });
