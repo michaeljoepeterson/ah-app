@@ -4,7 +4,7 @@
 <ng-container *ngIf="selectedItem">
     <app-dash-item-details [item]="selectedItem"></app-dash-item-details>
 </ng-container>
-<ng-container *ngIf="selectedForm && selectedFile">
+<ng-container *ngIf="selectedForm && selectedFile || selectedItem">
     <app-patient-details 
     [file]="selectedFile"
     [form]="selectedForm"></app-patient-details>

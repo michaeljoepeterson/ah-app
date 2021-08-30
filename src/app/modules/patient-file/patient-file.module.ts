@@ -11,6 +11,7 @@ import { PatientCustomValuesComponent } from './components/patient-custom-values
 import { PatientCustomFormComponent } from './components/patient-custom-form/patient-custom-form.component';
 import { PatientCustomSectionComponent } from './components/patient-custom-section/patient-custom-section.component';
 import { PatientCustomValueComponent } from './components/patient-custom-value/patient-custom-value.component';
+import { ImageSlideshowComponent } from './components/details/image-slideshow/image-slideshow.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PatientCustomValueComponent } from './components/patient-custom-value/p
     PatientCustomValuesComponent,
     PatientCustomFormComponent,
     PatientCustomSectionComponent,
-    PatientCustomValueComponent
+    PatientCustomValueComponent,
+    ImageSlideshowComponent
   ],
   imports: [
     CommonModule,

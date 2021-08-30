@@ -1,4 +1,6 @@
 <div class="color-1">
     <app-base-patient-details [file]="file"></app-base-patient-details>
-    <app-patient-custom-form [form]="form"></app-patient-custom-form>
+    <ng-container *ngIf="form">
+        <app-patient-custom-form [form]="form"></app-patient-custom-form>
+    </ng-container>
 </div>

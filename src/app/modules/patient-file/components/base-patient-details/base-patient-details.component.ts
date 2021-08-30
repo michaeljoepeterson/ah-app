@@ -13,6 +13,7 @@ export class BasePatientDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.file);
   }
 
 }
