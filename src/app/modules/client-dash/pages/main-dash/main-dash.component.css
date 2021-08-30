@@ -9,6 +9,7 @@
 
 .main-content{
     margin: 0;
+    height: 100%;
 }
 .folder-list-container > *{
     margin-top: 10px;

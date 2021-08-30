@@ -1,8 +1,24 @@
-<div>
-    <div>
-        {{section?.name}}
+<div [ngStyle]="{'margin-left':sectionSpace + 'px'}">
+    <div 
+    class="flex-vertical-center section form-section-header"
+    matRipple
+    (click)="expandSection()">
+        <mat-icon 
+        [ngClass]="{
+            'open-icon':true,
+            'close-icon':sectionExpanded
+        }"
+        aria-hidden="false" 
+        aria-label="expand folder">chevron_right</mat-icon>
+        <span class="section-header-container">
+            <h5 class="section-header">
+                {{section.name}}
+            </h5>
+        </span>
     </div>
-    <div>
-        <app-patient-custom-values [combinedChildren]="section.combinedChildren"></app-patient-custom-values>
+    <div *ngIf="sectionExpanded" [@enterAnimation]>
+        <app-patient-custom-values 
+        [combinedChildren]="section.combinedChildren"
+        [sectionSpace]="childSpacing"></app-patient-custom-values>
     </div>
 </div>

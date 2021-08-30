@@ -1,6 +1,8 @@
 <ng-container *ngFor="let child of combinedChildren">
     <ng-container *ngIf="child.type === sectionType">
-        <app-patient-custom-section [section]="child"></app-patient-custom-section>
+        <app-patient-custom-section 
+        [section]="child"
+        [sectionSpace]="sectionSpace"></app-patient-custom-section>
     </ng-container>
     <ng-container *ngIf="child.type === fieldType">
         <app-patient-custom-value></app-patient-custom-value>

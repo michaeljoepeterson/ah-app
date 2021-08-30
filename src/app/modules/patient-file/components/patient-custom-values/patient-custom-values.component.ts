@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PatientCustomValuesComponent implements OnInit {
   @Input() combinedChildren:any[] = [];
+  @Input() sectionSpace:number = 0;
   fieldType:string = 'field';
   sectionType:string = 'section';
   constructor() { }

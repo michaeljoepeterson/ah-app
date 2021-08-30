@@ -12,6 +12,7 @@ import { PatientCustomFormComponent } from './components/patient-custom-form/pat
 import { PatientCustomSectionComponent } from './components/patient-custom-section/patient-custom-section.component';
 import { PatientCustomValueComponent } from './components/patient-custom-value/patient-custom-value.component';
 import { ImageSlideshowComponent } from './components/details/image-slideshow/image-slideshow.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ImageSlideshowComponent } from './components/details/image-slideshow/im
     HttpClientModule,
     CustomFormsModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   exports:[
     PatientFormComponent,

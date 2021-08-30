@@ -1,0 +1,25 @@
+.section-header{
+    margin: 0;
+    margin-left: 0.2rem;
+}
+
+.section{
+    height: 60px;
+}
+
+.section:hover{
+    cursor: pointer;
+}
+
+.edit-button,.add-button{
+    font-size: 21px;
+}
+
+.form-section-header{
+    border-bottom: 1px solid white;
+    margin-bottom: 1em;
+}
+
+.section-header-container{
+    width: 100%;
+}
