@@ -1,1 +1,8 @@
-<p>patient-custom-section works!</p>
+<div>
+    <div>
+        {{section?.name}}
+    </div>
+    <div>
+        <app-patient-custom-values [combinedChildren]="section.combinedChildren"></app-patient-custom-values>
+    </div>
+</div>

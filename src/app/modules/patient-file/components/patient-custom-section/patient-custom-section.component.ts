@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CustomSection } from '../../../custom-forms/models/custom-section';
 
 @Component({
   selector: 'app-patient-custom-section',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./patient-custom-section.component.css']
 })
 export class PatientCustomSectionComponent implements OnInit {
+  @Input() section:CustomSection;
+  fieldType:string = 'field';
+  sectionType:string = 'section';
 
   constructor() { }
 

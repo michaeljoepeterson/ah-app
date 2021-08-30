@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PatientFile } from '../../../client-dash/models/patient-file';
 import { CustomForm } from '../../../custom-forms/models/custom-form';
 
 @Component({
@@ -7,7 +8,8 @@ import { CustomForm } from '../../../custom-forms/models/custom-form';
   styleUrls: ['./patient-details.component.css']
 })
 export class PatientDetailsComponent implements OnInit {
-  @Input() form:CustomForm
+  @Input() form:CustomForm;
+  @Input() file:PatientFile
   constructor() { }
 
   ngOnInit(): void {

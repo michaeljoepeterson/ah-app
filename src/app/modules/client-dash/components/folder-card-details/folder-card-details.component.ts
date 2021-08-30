@@ -16,7 +16,8 @@ export class FolderCardDetailsComponent implements OnInit {
   subs:Subscription[] = [];
   selectedItem:(FolderItem|PatientFile);
   selectedFolder:FolderItem;
-  selectedForm:CustomForm
+  selectedForm:CustomForm;
+  selectedFile:PatientFile;
 
   constructor(
     private ref:ChangeDetectorRef,
@@ -27,6 +28,12 @@ export class FolderCardDetailsComponent implements OnInit {
   ngOnInit(): void {
     let itemSub = this.folderNavService.selectedItem.subscribe(item => {
       this.selectedItem = item;
+      if(this.selectedItem instanceof PatientFile){
+        this.selectedFile = item as PatientFile;
+      }
+      else{
+        this.selectedFile = null;
+      }
       this.ref.markForCheck();
     });
 

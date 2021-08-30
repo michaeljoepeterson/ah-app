@@ -1,10 +1,6 @@
 <div>
-    <ng-container *ngFor="let child of form?.combinedChildren">
-        <ng-container *ngIf="child.type === sectionType">
-            <app-patient-custom-section></app-patient-custom-section>
-        </ng-container>
-        <ng-container *ngIf="child.type === fieldType">
-            <app-patient-custom-value></app-patient-custom-value>
-        </ng-container>
-    </ng-container>
+    <div>
+        {{form.name}}
+    </div>
+    <app-patient-custom-values [combinedChildren]="form.combinedChildren"></app-patient-custom-values>
 </div>

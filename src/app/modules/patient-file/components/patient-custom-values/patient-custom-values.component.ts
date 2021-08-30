@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-patient-custom-values',
@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./patient-custom-values.component.css']
 })
 export class PatientCustomValuesComponent implements OnInit {
-
+  @Input() combinedChildren:any[] = [];
+  fieldType:string = 'field';
+  sectionType:string = 'section';
   constructor() { }
 
   ngOnInit(): void {
