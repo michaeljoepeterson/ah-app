@@ -8,6 +8,7 @@ import { FieldTypes } from '../../constants';
 import { CustomField } from '../../models/custom-field';
 import { CustomFieldValue } from '../../models/custom-field-value';
 import { FormService } from '../../services/form.service';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-custom-field',
@@ -39,7 +40,8 @@ export class CustomFieldComponent implements OnInit {
 
   constructor(
     private formService:FormService,
-    private patientFileService:PatientFileService
+    private patientFileService:PatientFileService,
+    private uploadService:UploadService
     //private ref:ChangeDetectorRef
   ) { 
     this.fieldTypes = this.formService.fieldTypes;
@@ -107,8 +109,10 @@ export class CustomFieldComponent implements OnInit {
     }
   }
 
-  onFileSelected(event:any){
-    console.log(event);
+  async onFileSelected(files:FileList){
+    let file:File = files.item(0);
+    console.log(file);
+    await this.uploadService.uploadImage(file);
   }
 
   valueChanged(value:any){
