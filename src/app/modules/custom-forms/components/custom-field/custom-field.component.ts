@@ -37,6 +37,7 @@ export class CustomFieldComponent implements OnInit {
   fieldTypes:FieldTypes;
   valueControl = new FormControl();
   subs:Subscription[] = [];
+  selectedPatient:PatientFile;
 
   constructor(
     private formService:FormService,
@@ -64,8 +65,12 @@ export class CustomFieldComponent implements OnInit {
       }
     });
 
+    let patientSub = this.patientFileService.selectedFile.subscribe(file =>{
+      this.selectedPatient = file;
+    })
 
-    this.subs = [sub,fileSub,valSub];
+
+    this.subs = [sub,fileSub,valSub,patientSub];
   }
 
   ngOnDestroy(){
@@ -110,9 +115,8 @@ export class CustomFieldComponent implements OnInit {
   }
 
   async onFileSelected(files:FileList){
-    let file:File = files.item(0);
-    console.log(file);
-    await this.uploadService.uploadImage(file);
+    let file:File = files.item(0);    
+    await this.uploadService.uploadImage(file,this.selectedPatient.id);
   }
 
   valueChanged(value:any){

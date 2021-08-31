@@ -11,6 +11,7 @@ export interface IValue{
     arrayValue:any[];
     objectValue:any;
     dateValue:Date;
+    filePath:string;
 }
 
 /**
@@ -23,6 +24,7 @@ export class CustomFieldValue extends BaseModel{
         arrayValue:[],
         objectValue:null,
         dateValue:null,
+        filePath:null
     };
     name:string = null;
     owner:User = null;
