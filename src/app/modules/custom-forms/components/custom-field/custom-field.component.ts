@@ -117,22 +117,30 @@ export class CustomFieldComponent implements OnInit {
 
   async onFileSelected(files:FileList){
     let file:File = files.item(0);
-    try{
-      await this.uploadService.uploadFile(file,this.selectedPatient.id);
-    }
-    catch(e){
-      
+    if(this.selectedPatient){
+      try{
+        await this.uploadService.uploadFile(file,this.selectedPatient.id);
+        this.fieldValue.value.filePath = file.name;
+        this.onFormSubmit(this.selectedPatient);
+      }
+      catch(e){
+        
+      }
     }
   }
 
   
   async onImageSelected(files:FileList){
     let file:File = files.item(0);
-    try{
-      await this.uploadService.uploadImage(file,this.selectedPatient.id);
-    }
-    catch(e){
-      
+    if(this.selectedPatient){
+      try{
+        await this.uploadService.uploadImage(file,this.selectedPatient.id);
+        this.fieldValue.value.filePath = file.name;
+        this.onFormSubmit(this.selectedPatient);
+      }
+      catch(e){
+        
+      }
     }
   }
 

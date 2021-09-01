@@ -472,7 +472,7 @@ export class FormService {
         this.notificationService.displayErrorSnackBar(message,err);
         throw err;
       })
-    )
+    );
   }
 
   addFieldValues(values:CustomFieldValue[]):Observable<CustomFieldValue[]>{

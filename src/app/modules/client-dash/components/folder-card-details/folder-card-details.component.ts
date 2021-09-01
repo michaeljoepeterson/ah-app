@@ -39,7 +39,6 @@ export class FolderCardDetailsComponent implements OnInit {
 
     let formSub = this.formService.selectedForm.subscribe(form => {
       this.selectedForm = form;
-      console.log(this.selectedForm);
       this.ref.markForCheck();
     });
 
