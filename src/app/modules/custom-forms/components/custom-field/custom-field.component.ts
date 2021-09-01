@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { forkJoin, Subscription } from 'rxjs';
@@ -38,12 +38,13 @@ export class CustomFieldComponent implements OnInit {
   valueControl = new FormControl();
   subs:Subscription[] = [];
   selectedPatient:PatientFile;
+  downloadUrl:string;
 
   constructor(
     private formService:FormService,
     private patientFileService:PatientFileService,
-    private uploadService:UploadService
-    //private ref:ChangeDetectorRef
+    private uploadService:UploadService,
+    private ref:ChangeDetectorRef
   ) { 
     this.fieldTypes = this.formService.fieldTypes;
   }
@@ -115,8 +116,24 @@ export class CustomFieldComponent implements OnInit {
   }
 
   async onFileSelected(files:FileList){
-    let file:File = files.item(0);    
-    await this.uploadService.uploadImage(file,this.selectedPatient.id);
+    let file:File = files.item(0);
+    try{
+      await this.uploadService.uploadFile(file,this.selectedPatient.id);
+    }
+    catch(e){
+      
+    }
+  }
+
+  
+  async onImageSelected(files:FileList){
+    let file:File = files.item(0);
+    try{
+      await this.uploadService.uploadImage(file,this.selectedPatient.id);
+    }
+    catch(e){
+      
+    }
   }
 
   valueChanged(value:any){

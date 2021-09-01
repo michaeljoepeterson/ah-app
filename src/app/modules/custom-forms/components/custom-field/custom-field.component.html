@@ -101,6 +101,7 @@
     </ng-container>
     <ng-container *ngIf="fieldType === fieldTypes.file">
         <div class="input-group mb-3">
+            <a download="test" [href]="downloadUrl" target="_blank">{{downloadUrl}}</a>
             <div class="input-group-prepend">
               <span class="input-group-text">Upload File</span>
             </div>
@@ -108,12 +109,9 @@
                 <input 
                 (change)="onFileSelected($event.target.files)" 
                 type="file" 
-                class="custom-file-input" 
-                id="inputGroupFile01">
+                class="custom-file-input">
                 <label 
-                class="custom-file-label" 
-                for="inputGroupFile01"
-                >
+                class="custom-file-label">
                     {{field.name}}
                 </label>
             </div>
@@ -121,19 +119,17 @@
     </ng-container>
     <ng-container *ngIf="fieldType === fieldTypes.image">
         <div class="input-group mb-3">
+            <!-- <a download="test" [href]="downloadUrl" target="_blank">{{downloadUrl}}</a> -->
             <div class="input-group-prepend">
               <span class="input-group-text">Upload Image</span>
             </div>
             <div class="custom-file">
                 <input 
-                (change)="onFileSelected($event.target.files)" 
+                (change)="onImageSelected($event.target.files)" 
                 type="file" 
-                class="custom-file-input" 
-                id="inputGroupFile01">
+                class="custom-file-input">
                 <label 
-                class="custom-file-label" 
-                for="inputGroupFile01"
-                >
+                class="custom-file-label">
                     {{field.name}}
                 </label>
             </div>
