@@ -4,7 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { PatientFile } from '../../client-dash/models/patient-file';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { CustomFieldValue } from '../../custom-forms/models/custom-field-value';
 import { NotificationsService } from '../../notifications/services/notifications.service';
 import { CustomForm } from '../../custom-forms/models/custom-form';
@@ -25,13 +25,20 @@ export class PatientFileService {
   /**
    * currently selected form
    */
-   onFileSubmitted:Observable<PatientFile> = this._onFileSubmitted.asObservable();
-   private _currentCustomValues:BehaviorSubject<CustomFieldValue[]> = new BehaviorSubject([]);
+  onFileSubmitted:Observable<PatientFile> = this._onFileSubmitted.asObservable();
+  private _currentCustomValues:BehaviorSubject<CustomFieldValue[]> = new BehaviorSubject([]);
   /**
    * currently selected form
    */
    currentCustomValues:Observable<CustomFieldValue[]> = this._currentCustomValues.asObservable();
    endpoint:string = 'files';
+  
+   private _patientForm:Subject<CustomForm> = new Subject();
+   /**
+    * currently selected form
+    */
+   patientForm:Observable<CustomForm> = this._patientForm.asObservable();
+   
 
   constructor(
     private http: HttpClient,
@@ -50,6 +57,10 @@ export class PatientFileService {
   
   setValues(values:CustomFieldValue[]){
     this._currentCustomValues.next(values);
+  }
+
+  setPatientForm(form:CustomForm){
+    this._patientForm.next(form);
   }
 
   findValue(field:CustomField):CustomFieldValue{
@@ -107,9 +118,12 @@ export class PatientFileService {
           return this.formService.getSingleCustomForm(file.formType);
         }
         else{
-          this.formService.setForm(null);
           return of(null);
         }
+      }),
+      tap(response => {
+        this.setPatientForm(response);
+        return response;
       })
     );
   }

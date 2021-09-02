@@ -67,6 +67,12 @@ export class FormService {
    * forms for the project
    */
    currentCustomValues:Observable<CustomFieldValue[]> = this._currentCustomValues.asObservable();
+   
+   private _isUpdatingPatient:BehaviorSubject<boolean> = new BehaviorSubject(false);
+  /**
+   * forms for the project
+   */
+   isUpdatingPatient:Observable<boolean> = this._isUpdatingPatient.asObservable();
 
   endpoint:string = 'form';
   fieldTypes:FieldTypes = fieldTypes;
@@ -107,6 +113,10 @@ export class FormService {
         return forms;
       })
     );
+  }
+
+  getSelectedForm():CustomForm{
+    return this._selectedForm.value;
   }
 
   /**

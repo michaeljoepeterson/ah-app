@@ -5,6 +5,7 @@ import { FolderItem } from '../../models/folder-item';
 import { FolderNavService } from '../../services/folder-nav.service';
 import { FormService } from '../../../custom-forms/services/form.service';
 import { CustomForm } from '../../../custom-forms/models/custom-form';
+import { PatientFileService } from '../../../patient-file/services/patient-file.service';
 
 @Component({
   selector: 'app-folder-card-details',
@@ -18,11 +19,14 @@ export class FolderCardDetailsComponent implements OnInit {
   selectedFolder:FolderItem;
   selectedForm:CustomForm;
   selectedFile:PatientFile;
+  isEditing:boolean = false;
+  isUpdationg:boolean = false;
 
   constructor(
     private ref:ChangeDetectorRef,
     private folderNavService:FolderNavService,
-    private formService:FormService
+    private formService:FormService,
+    private patientFileService:PatientFileService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +41,7 @@ export class FolderCardDetailsComponent implements OnInit {
       this.ref.markForCheck();
     });
 
-    let formSub = this.formService.selectedForm.subscribe(form => {
+    let formSub = this.patientFileService.patientForm.subscribe(form => {
       this.selectedForm = form;
       this.ref.markForCheck();
     });
