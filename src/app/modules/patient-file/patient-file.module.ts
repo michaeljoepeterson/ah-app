@@ -13,6 +13,7 @@ import { PatientCustomSectionComponent } from './components/patient-custom-secti
 import { PatientCustomValueComponent } from './components/patient-custom-value/patient-custom-value.component';
 import { ImageSlideshowComponent } from './components/details/image-slideshow/image-slideshow.component';
 import { MatIconModule } from '@angular/material/icon';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
     CustomFormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    NgbModule
   ],
   exports:[
     PatientFormComponent,

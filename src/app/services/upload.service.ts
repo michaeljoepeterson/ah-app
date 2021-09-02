@@ -55,8 +55,8 @@ export class UploadService {
     }
   }
 
-  async getImage(filePath:string){
-    let path = `${this.imagePath}/${filePath}`;
+  async getImage(filePath:string,patientId:string){
+    let path = `${this.imagePath}/${patientId}_${filePath}`;
     try{
       let url = await this.sotrageRef.child(path).getDownloadURL();
       return url;
@@ -69,8 +69,8 @@ export class UploadService {
     }
   }
 
-  async getFile(filePath:string){
-    let path = `${this.filesPath}/${filePath}`;
+  async getFile(filePath:string,patientId:string){
+    let path = `${this.filesPath}/${patientId}_${filePath}`;
     try{
       let url = await this.sotrageRef.child(path).getDownloadURL();
       return url;
