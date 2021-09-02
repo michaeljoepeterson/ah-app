@@ -7,6 +7,8 @@ import { NotificationsService } from '../modules/notifications/services/notifica
 })
 export class UploadService {
   private sotrageRef = firebase.storage().ref();
+  imagePath:string = 'images';
+  filesPath:string = 'files';
 
   constructor(
     private notificationService:NotificationsService
@@ -17,7 +19,7 @@ export class UploadService {
     try{
       let imageType = 'image';
       if(file.type.includes(imageType)){
-        let path = `images/${patientId}_${file.name}`;
+        let path = `${this.imagePath}/${patientId}_${file.name}`;
         let fileRef = this.sotrageRef.child(path);
         await fileRef.put(file);
         this.notificationService.displaySnackBar('Image Uploaded!');
@@ -33,14 +35,14 @@ export class UploadService {
     catch(e){
       let message = 'Error uploading image'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,message);
+      this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
 
   async uploadFile(file:File,patientId:string){
     try{
-      let path = `files/${patientId}_${file.name}`;
+      let path = `${this.filesPath}/${patientId}_${file.name}`;
       let fileRef = this.sotrageRef.child(path);
       await fileRef.put(file);
       this.notificationService.displaySnackBar('File Uploaded!');
@@ -48,13 +50,13 @@ export class UploadService {
     catch(e){
       let message = 'Error uploading file'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,message);
+      this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
 
   async getImage(filePath:string){
-    let path = `images/${filePath}`;
+    let path = `${this.imagePath}/${filePath}`;
     try{
       let url = await this.sotrageRef.child(path).getDownloadURL();
       return url;
@@ -62,13 +64,13 @@ export class UploadService {
     catch(e){
       let message = 'Error getting image'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,message);
+      this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
 
   async getFile(filePath:string){
-    let path = `files/${filePath}`;
+    let path = `${this.filesPath}/${filePath}`;
     try{
       let url = await this.sotrageRef.child(path).getDownloadURL();
       return url;
@@ -76,7 +78,35 @@ export class UploadService {
     catch(e){
       let message = 'Error getting file'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,message);
+      this.notificationService.displayErrorSnackBar(message,e);
+      throw e;
+    }
+  }
+
+  async deleteImage(filePath:string,patientId:string){
+    try{
+      let imageRef = this.sotrageRef.child(`${this.imagePath}/${patientId}_${filePath}`);
+      await imageRef.delete();
+    }
+    catch(e){
+      console.warn(e);
+      let message = 'Error deleting file'
+      console.warn(message,e);
+      this.notificationService.displayErrorSnackBar(message,e);
+      throw e;
+    }
+  }
+
+  async deleteFile(filePath:string,patientId:string){
+    try{
+      let fileRef = this.sotrageRef.child(`${this.filesPath}/${patientId}_${filePath}`);
+      await fileRef.delete();
+    }
+    catch(e){
+      console.warn(e);
+      let message = 'Error deleting file'
+      console.warn(message,e);
+      this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }

@@ -119,6 +119,9 @@ export class CustomFieldComponent implements OnInit {
     let file:File = files.item(0);
     if(this.selectedPatient){
       try{
+        if(this.fieldValue?.value?.filePath){
+          await this.uploadService.deleteFile(this.fieldValue.value.filePath,this.selectedPatient.id);
+        }
         await this.uploadService.uploadFile(file,this.selectedPatient.id);
         this.fieldValue.value.filePath = file.name;
         this.onFormSubmit(this.selectedPatient);
@@ -134,6 +137,9 @@ export class CustomFieldComponent implements OnInit {
     let file:File = files.item(0);
     if(this.selectedPatient){
       try{
+        if(this.fieldValue?.value?.filePath){
+          await this.uploadService.deleteImage(this.fieldValue.value.filePath,this.selectedPatient.id);
+        }
         await this.uploadService.uploadImage(file,this.selectedPatient.id);
         this.fieldValue.value.filePath = file.name;
         this.onFormSubmit(this.selectedPatient);

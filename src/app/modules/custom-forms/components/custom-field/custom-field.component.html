@@ -101,7 +101,7 @@
     </ng-container>
     <ng-container *ngIf="fieldType === fieldTypes.file">
         <div class="input-group mb-3">
-            <a download="test" [href]="downloadUrl" target="_blank">{{downloadUrl}}</a>
+            <!-- <a download="test" [href]="downloadUrl" target="_blank">{{downloadUrl}}</a> -->
             <div class="input-group-prepend">
               <span class="input-group-text">Upload File</span>
             </div>
@@ -112,7 +112,7 @@
                 class="custom-file-input">
                 <label 
                 class="custom-file-label">
-                    {{field.name}}
+                    {{fieldValue?.value?.filePath ? fieldValue.value.filePath : field.name}}
                 </label>
             </div>
           </div>
@@ -130,7 +130,7 @@
                 class="custom-file-input">
                 <label 
                 class="custom-file-label">
-                    {{field.name}}
+                    {{fieldValue?.value?.filePath ? fieldValue.value.filePath : field.name}}
                 </label>
             </div>
           </div>
