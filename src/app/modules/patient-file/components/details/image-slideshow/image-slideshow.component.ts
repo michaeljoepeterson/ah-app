@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { fieldTypes, FieldTypes } from '../../../../custom-forms/constants';
 import { CustomFieldValue } from '../../../../custom-forms/models/custom-field-value';
@@ -20,7 +20,8 @@ export class ImageSlideshowComponent implements OnInit {
 
   constructor(
     private patientFileService:PatientFileService,
-    private uploadService:UploadService
+    private uploadService:UploadService,
+    private ref:ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -55,5 +56,6 @@ export class ImageSlideshowComponent implements OnInit {
     });
     this.imageUrls = await Promise.all(requests);
     console.log(this.imageUrls);
+    this.ref.detectChanges();
   }
 }

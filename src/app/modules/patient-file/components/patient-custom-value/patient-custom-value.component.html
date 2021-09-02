@@ -2,7 +2,7 @@
     <div>
         <span>{{fieldValue.name}}:</span>
         <ng-container *ngIf="!arrayValue">
-            <span> {{fieldValue.name}}</span>
+            <span> {{value}}</span>
         </ng-container>
         <ng-container *ngIf="arrayValue">
             <ng-container *ngFor="let value of arrayValue;let i = index">
