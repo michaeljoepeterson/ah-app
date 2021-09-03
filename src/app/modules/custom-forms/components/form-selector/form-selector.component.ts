@@ -1,5 +1,7 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output,Input } from '@angular/core';
+import { of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { PatientFileService } from 'src/app/modules/patient-file/services/patient-file.service';
 import { NotificationsService } from '../../../notifications/services/notifications.service';
 import { CustomForm } from '../../models/custom-form';
 import { FormService } from '../../services/form.service';
@@ -11,13 +13,13 @@ import { FormService } from '../../services/form.service';
   styleUrls: ['./form-selector.component.css']
 })
 export class FormSelectorComponent implements OnInit {
+  @Input() isEditing:boolean;
   @Output() formSelected:EventEmitter<CustomForm> = new EventEmitter();
   
   forms:CustomForm[] = [];
   formSelectLabel:string = 'Select a Form';
   selectedFormId:string = null;
   subs:Subscription[];
-  isEditing:boolean;
 
   private _sub:Subscription;
   get sub():Subscription{
@@ -32,26 +34,37 @@ export class FormSelectorComponent implements OnInit {
   }
 
   constructor(
+    private patientFileService:PatientFileService,
     private formService:FormService,
     private notificationService:NotificationsService,
     private ref:ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.getForms();
+    this.initForms();
     let sub = this.formService.onFormAdded.subscribe(form => {
       this.selectedFormId = form ? form.id : null;
-      this.getForms();
+      if(form){
+        this.getForms();
+      }
     });
 
     let updatedSub = this.formService.onFormUpdated.subscribe(form => {
       this.selectedFormId = form ? form.id : null;
-      this.getForms();
+      if(form){
+        this.getForms();
+      }
+    });
+
+    let patientSub = this.patientFileService.selectedFile.subscribe(file => {
+      if(file){
+        this.selectedFormId = file.formType;
+      }
     });
 
     let editSub = this.formService.isEditing.subscribe(edit => {this.isEditing = edit});
 
-    this.subs = [sub,updatedSub,editSub];
+    this.subs = [sub,updatedSub,editSub,patientSub];
   }
 
   trackByFn(index:number,form:CustomForm){
@@ -69,17 +82,26 @@ export class FormSelectorComponent implements OnInit {
     }
   }
 
+  hanldeFormSelect(response:CustomForm){
+    this.formSelected.emit(response);
+    this.formService.setSelectedForm(response);
+    this.ref.markForCheck();
+  }
+
+  findForm(id:string):CustomForm{
+    let form = this.forms.find(form => form.id === id);
+    return form;
+  }
+
   /**
    * get the selected form and populate with the data for the form
    */
   onFormSelected(){
-    let form = this.forms.find(form => form.id === this.selectedFormId);
+    let form = this.findForm(this.selectedFormId);
     if(form){
       this.sub = this.formService.getSingleCustomForm(form.id).subscribe({
         next:response => {
-          this.formSelected.emit(response);
-          this.formService.setSelectedForm(response);
-          this.ref.markForCheck();
+          this.hanldeFormSelect(response);
         }
       })
     }
@@ -90,14 +112,44 @@ export class FormSelectorComponent implements OnInit {
 
   }
 
+  initForms(){
+    this.sub = this.formService.getCustomForms().pipe(
+      switchMap(response => {
+        this.forms = [...response];
+        return this.patientFileService.selectedFile
+      }),
+      switchMap(file => {
+        if(file){
+          this.selectedFormId = file.formType;
+          let form = this.findForm(this.selectedFormId);
+          return this.formService.getSingleCustomForm(form.id);
+        }
+        else{
+          return of(null);
+        }
+      })
+    ).subscribe({
+      next:response => {
+        if(response){
+          this.hanldeFormSelect(response);
+        }
+        this.ref.markForCheck();
+      },
+      error:err => {
+        let message = 'Error getting forms';
+        this.notificationService.displayErrorSnackBar(message,err);
+      }
+    });
+  }
+
   /**
    * get all possible forms
    */
   getForms(){
     this.sub = this.formService.getCustomForms().subscribe({
-        next:response => {
-        this.forms = [...response];
-        this.ref.markForCheck();
+      next:response => {
+      this.forms = [...response];
+      this.ref.markForCheck();
       },
       error:err => {
         let message = 'Error getting forms';

@@ -42,7 +42,8 @@
         </ng-container>
     </div>
     <app-form-selector
-    (formSelected)="formSelected($event)"></app-form-selector>
+    (formSelected)="formSelected($event)"
+    [isEditing]="true"></app-form-selector>
     <div class="custom-form">
         <app-custom-form 
         [form]="form"
