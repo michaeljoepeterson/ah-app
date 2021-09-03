@@ -49,7 +49,7 @@ export class PatientCustomValueComponent implements OnInit {
     if(this.fieldValue.fieldType === this.fieldTypes.date){
       this.value = new Date(this.fieldValue.value.dateValue);
     }
-    else if(this.fieldValue.fieldType === this.fieldTypes.dropdown || this.fieldValue.fieldType === this.fieldTypes.number || this.fieldValue.fieldType === this.fieldTypes.radio || this.fieldValue.fieldType === this.fieldTypes.text){
+    else if(this.fieldValue.fieldType === this.fieldTypes.dropdown || this.fieldValue.fieldType === this.fieldTypes.radio || this.fieldValue.fieldType === this.fieldTypes.text){
       this.value = this.fieldValue.value.stringValue;
     }
     else if(this.fieldValue.fieldType === this.fieldTypes.checkbox){
@@ -57,6 +57,9 @@ export class PatientCustomValueComponent implements OnInit {
     }
     else if(this.fieldValue.fieldType === this.fieldTypes.image || this.fieldValue.fieldType === this.fieldTypes.file){
       this.value = this.fieldValue.value.filePath;
+    }
+    else if(this.fieldValue.fieldType === this.fieldTypes.number){
+      this.value = this.fieldValue.value.numberValue;
     }
   }
 }

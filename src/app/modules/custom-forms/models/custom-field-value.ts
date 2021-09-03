@@ -82,6 +82,12 @@ export class CustomFieldValue extends BaseModel{
         else if(this.fieldType === fieldTypes.checkbox){
             this.value.arrayValue = value;
         }
+        else if(this.fieldType === fieldTypes.number){
+            this.value.numberValue = value;
+        }
+        else if(this.fieldType === fieldTypes.file || this.fieldType === fieldTypes.image){
+            this.value.filePath = value;
+        }
     }
 
     setArrayValue(val:any,i:number){

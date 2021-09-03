@@ -123,7 +123,8 @@ export class CustomFieldComponent implements OnInit {
           await this.uploadService.deleteFile(this.fieldValue.value.filePath,this.selectedPatient.id);
         }
         await this.uploadService.uploadFile(file,this.selectedPatient.id);
-        this.fieldValue.value.filePath = file.name;
+        //this.fieldValue.value.filePath = file.name;
+        this.fieldValue.setValue(file.name);
         this.onFormSubmit(this.selectedPatient);
       }
       catch(e){
@@ -141,7 +142,8 @@ export class CustomFieldComponent implements OnInit {
           await this.uploadService.deleteImage(this.fieldValue.value.filePath,this.selectedPatient.id);
         }
         await this.uploadService.uploadImage(file,this.selectedPatient.id);
-        this.fieldValue.value.filePath = file.name;
+        //this.fieldValue.value.filePath = file.name;
+        this.fieldValue.setValue(file.name);
         this.onFormSubmit(this.selectedPatient);
       }
       catch(e){
