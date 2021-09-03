@@ -5,18 +5,17 @@ import { CustomFieldValue } from '../../../../custom-forms/models/custom-field-v
 import { UploadService } from '../../../../../services/upload.service';
 import { PatientFileService } from '../../../services/patient-file.service';
 import { PatientFile } from '../../../../client-dash/models/patient-file';
-
 @Component({
-  selector: 'app-image-slideshow',
-  templateUrl: './image-slideshow.component.html',
-  styleUrls: ['./image-slideshow.component.css']
+  selector: 'app-file-downloads',
+  templateUrl: './file-downloads.component.html',
+  styleUrls: ['./file-downloads.component.css']
 })
-export class ImageSlideshowComponent implements OnInit {
+export class FileDownloadsComponent implements OnInit {
   @Input() file:PatientFile;
-  imageUrls:string[] = [];
   customValues:CustomFieldValue[] = [];
+  fileUrls:string[] = [];
   subs:Subscription[];
-  fieldTypes:FieldTypes = fieldTypes
+  fieldTypes:FieldTypes = fieldTypes;
 
   constructor(
     private patientFileService:PatientFileService,
@@ -27,33 +26,25 @@ export class ImageSlideshowComponent implements OnInit {
   ngOnInit(): void {
     let valSub = this.patientFileService.currentCustomValues.subscribe(values => {
       if(values){
-        this.getImageValues(values);
-        this.getImageUrls(this.customValues);
+        this.getFileValues(values);
+        this.getFileUrls(this.customValues);
       }
     });
 
     this.subs = [valSub];
   }
 
-  ngOnDestroy(){
-    try{
-      this.subs.forEach(sub => sub.unsubscribe());
-    }
-    catch(e){
-      console.warn(e);
-    }
+  getFileValues(values:CustomFieldValue[]){
+    this.customValues = values.filter(val => val.fieldType === this.fieldTypes.file);
   }
 
-  getImageValues(values:CustomFieldValue[]){
-    this.customValues = values.filter(value => value.fieldType === this.fieldTypes.image);
-  }
-
-  async getImageUrls(values:CustomFieldValue[]){
-    let requests:Promise<string>[] = [];
+  async getFileUrls(values:CustomFieldValue[]){
+    let requests = [];
     values.forEach(val => {
-      requests.push(this.uploadService.getImage(val.value.filePath,this.file.id));
+      requests.push(this.uploadService.getFile(val.value.filePath,this.file.id));
     });
-    this.imageUrls = await Promise.all(requests);
+    this.fileUrls = await Promise.all(requests);
+    console.log(this.fileUrls);
     this.ref.detectChanges();
   }
 }

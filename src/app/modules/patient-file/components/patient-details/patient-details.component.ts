@@ -10,7 +10,8 @@ import { PatientFileService } from '../../services/patient-file.service';
 })
 export class PatientDetailsComponent implements OnInit {
   @Input() form:CustomForm;
-  @Input() file:PatientFile
+  @Input() file:PatientFile;
+  
   constructor(
     private patientFileService:PatientFileService
   ) { }

@@ -14,7 +14,7 @@ import { PatientCustomValueComponent } from './components/patient-custom-value/p
 import { ImageSlideshowComponent } from './components/details/image-slideshow/image-slideshow.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FileDownloadsComponent } from './components/file-downloads/file-downloads.component';
+import { FileDownloadsComponent } from './components/details/file-downloads/file-downloads.component';
 
 @NgModule({
   declarations: [

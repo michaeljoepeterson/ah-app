@@ -1,0 +1,12 @@
+<ng-container *ngIf="fileUrls?.length > 0">
+    <h5>Attached Files:</h5>
+    <ul>
+        <li *ngFor="let url of fileUrls;let i = index">
+            <a 
+            class="link"
+            [download]="customValues[i].name" 
+            [href]="url" 
+            target="_blank">{{customValues[i].name}} : {{customValues[i].value.filePath}}</a>
+        </li>
+    </ul>
+</ng-container>

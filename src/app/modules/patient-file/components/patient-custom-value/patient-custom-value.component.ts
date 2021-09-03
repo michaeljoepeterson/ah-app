@@ -27,7 +27,9 @@ export class PatientCustomValueComponent implements OnInit {
     let patientSub = this.patientFileService.currentCustomValues.subscribe(values => {
       if(values){
         this.fieldValue = this.patientFileService.findValue(this.field);
-        this.initValue();
+        if(this.fieldValue){
+          this.initValue();
+        }
       }
     });
 
@@ -52,6 +54,9 @@ export class PatientCustomValueComponent implements OnInit {
     }
     else if(this.fieldValue.fieldType === this.fieldTypes.checkbox){
       this.arrayValue = this.fieldValue.value.arrayValue;
+    }
+    else if(this.fieldValue.fieldType === this.fieldTypes.image || this.fieldValue.fieldType === this.fieldTypes.file){
+      this.value = this.fieldValue.value.filePath;
     }
   }
 }

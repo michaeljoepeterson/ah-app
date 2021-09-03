@@ -29,11 +29,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .color-1,.fc-col-header-cell-cushion,.fc-toolbar-title{
-  color: white;
+  color: white !important;
 }
 
 .color-2,.fc-daygrid-day-number{
-  color: lightgray;
+  color: lightgray !important;
 }
 
 .primary-button{
@@ -41,27 +41,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .background-1{
-  background-color: #1e262b;
+  background-color: #1e262b !important;
 }
 
 .background-2,.fc-daygrid{
-  background-color: #2b343a;
+  background-color: #2b343a !important;
 }
 
 .background-3{
-  background-color: rgb(30,43,49);
+  background-color: rgb(30,43,49) !important;
 }
 
 .background-4{
-  background-color: rgb(26,36,41);
+  background-color: rgb(26,36,41) !important;
 }
 
 .background-5{
-  background-color: rgb(41,51,58);
+  background-color: rgb(41,51,58) !important;
 }
 
 .background-6{
-  background-color: rgb(48,51,58);
+  background-color: rgb(48,51,58) !important;
+}
+
+.link{
+  color: white !important;
 }
 
 .scan-taken{

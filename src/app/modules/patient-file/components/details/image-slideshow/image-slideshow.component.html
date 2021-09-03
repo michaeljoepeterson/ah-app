@@ -1,15 +1,17 @@
-<div>
-    <ngb-carousel *ngIf="imageUrls.length > 0" [interval]="0">
-        <ng-template *ngFor="let url of imageUrls;let i = index" ngbSlide>
-            <div class="picsum-img-wrapper image-container">
-                <img 
-                class="slide-image" 
-                [src]="url" 
-                alt="customValues[i]?.value?.filePath">
-            </div>
-            <div class="carousel-caption">
-                <h3>{{customValues[i]?.value?.filePath}}</h3>
-            </div>
-        </ng-template>
-    </ngb-carousel>
-</div>
+<ng-container *ngIf="imageUrls && imageUrls.length > 0">
+    <div>
+        <ngb-carousel *ngIf="imageUrls.length > 0" [interval]="0">
+            <ng-template *ngFor="let url of imageUrls;let i = index" ngbSlide>
+                <div class="picsum-img-wrapper image-container">
+                    <img 
+                    class="slide-image" 
+                    [src]="url" 
+                    alt="customValues[i]?.value?.filePath">
+                </div>
+                <div class="carousel-caption">
+                    <h3>{{customValues[i]?.value?.filePath}}</h3>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </div>
+</ng-container>
