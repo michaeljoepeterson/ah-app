@@ -126,6 +126,7 @@ export class CustomFieldComponent implements OnInit {
         //this.fieldValue.value.filePath = file.name;
         this.fieldValue.setValue(file.name);
         this.onFormSubmit(this.selectedPatient);
+        this.ref.detectChanges();
       }
       catch(e){
         
@@ -145,6 +146,7 @@ export class CustomFieldComponent implements OnInit {
         //this.fieldValue.value.filePath = file.name;
         this.fieldValue.setValue(file.name);
         this.onFormSubmit(this.selectedPatient);
+        this.ref.detectChanges();
       }
       catch(e){
         

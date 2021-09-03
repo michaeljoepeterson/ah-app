@@ -35,7 +35,7 @@ export class FileDownloadsComponent implements OnInit {
   }
 
   getFileValues(values:CustomFieldValue[]){
-    this.customValues = values.filter(val => val.fieldType === this.fieldTypes.file);
+    this.customValues = values.filter(val => val.fieldType === this.fieldTypes.file && val.value.filePath);
   }
 
   async getFileUrls(values:CustomFieldValue[]){

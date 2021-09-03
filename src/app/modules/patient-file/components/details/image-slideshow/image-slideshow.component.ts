@@ -45,7 +45,7 @@ export class ImageSlideshowComponent implements OnInit {
   }
 
   getImageValues(values:CustomFieldValue[]){
-    this.customValues = values.filter(value => value.fieldType === this.fieldTypes.image);
+    this.customValues = values.filter(value => value.fieldType === this.fieldTypes.image && value.value.filePath);
   }
 
   async getImageUrls(values:CustomFieldValue[]){
