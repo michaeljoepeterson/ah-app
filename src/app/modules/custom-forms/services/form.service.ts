@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
@@ -45,13 +45,13 @@ export class FormService {
    */
   onFormAdded:Observable<CustomForm> = this._onFormAdded.asObservable();
 
-  private _onSectionAdded:BehaviorSubject<CustomSection> = new BehaviorSubject(null);
+  private _onSectionAdded:Subject<CustomSection> = new Subject();
   /**
    * forms for the project
    */
   onSectionAdded:Observable<CustomSection> = this._onSectionAdded.asObservable();
 
-  private _onFieldAdded:BehaviorSubject<CustomField> = new BehaviorSubject(null);
+  private _onFieldAdded:Subject<CustomField> = new Subject();
   /**
    * forms for the project
    */
@@ -310,7 +310,7 @@ export class FormService {
     let body = {
       field:fieldData
     };
-
+    debugger
     return this.http.post(url,body,options).pipe(
       map((response:any) => {
         let newfield = new CustomField(response.field);
