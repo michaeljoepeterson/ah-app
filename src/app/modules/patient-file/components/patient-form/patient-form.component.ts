@@ -5,10 +5,12 @@ import { PatientErrors } from '../../models/patient-errors';
 import { FolderItem } from '../../../client-dash/models/folder-item';
 import { Observable, Subscription } from 'rxjs';
 import { FolderNavService } from '../../../client-dash/services/folder-nav.service';
-import { CustomForm } from 'src/app/modules/custom-forms/models/custom-form';
-import { CustomFieldValue } from 'src/app/modules/custom-forms/models/custom-field-value';
+import { CustomForm } from '../../../custom-forms/models/custom-form';
+import { CustomFieldValue } from '../../../custom-forms/models/custom-field-value';
 import { map, switchMap } from 'rxjs/operators';
 import { PatientFileService } from '../../services/patient-file.service';
+import { UploadRequest, UploadService } from '../../../../services/upload.service';
+import { fieldTypes, FieldTypes } from '../../../custom-forms/constants';
 
 @Component({
   selector: 'app-patient-form',
@@ -35,11 +37,13 @@ export class PatientFormComponent implements OnInit {
   selectedForm:CustomForm;
   customValues:CustomFieldValue[] = [];
   subs:Subscription[] = [];
+  fieldTypes:FieldTypes = fieldTypes
 
   constructor(
     private formService:FormService,
     private folderService:FolderNavService,
-    private patientFileService:PatientFileService
+    private patientFileService:PatientFileService,
+    private uploadService:UploadService
   ) { }
 
   ngOnInit(): void {
@@ -78,10 +82,27 @@ export class PatientFormComponent implements OnInit {
     }
   }
 
-  createFile(){
+  async runUploadRequests(uploads:UploadRequest[],patientId:string){
+    let requests = uploads.map(upload => {
+      if(upload.type === this.fieldTypes.file){
+        this.uploadService.uploadFile(upload.file,patientId);
+      }
+      else if(upload.type === this.fieldTypes.image){
+        return this.uploadService.uploadImage(upload.file,patientId);
+      }
+    });
+
+    await Promise.all(requests);
+  }
+
+  async createFile(){
     this.sub = this.folderService.createFile(this.patientFile,this.parentFolder).subscribe({
-      next:res => {
-        this.patientFile.id = res.id;
+      next:async (res) => {
+        this.patientFile.id = res.file.id;
+        let uploads = this.uploadService.getUploadRequests();
+        if(uploads.length > 0){
+          await this.runUploadRequests(this.uploadService.getUploadRequests(),this.patientFile.id);
+        }
         this.patientFileService.submitFile(this.patientFile);
       }
     });

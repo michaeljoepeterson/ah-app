@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
+import { PatientFile } from '../modules/client-dash/models/patient-file';
 import { NotificationsService } from '../modules/notifications/services/notifications.service';
+
+export interface UploadRequest{
+  fileName:string;
+  type:string;
+  file:File;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +16,8 @@ export class UploadService {
   private sotrageRef = firebase.storage().ref();
   imagePath:string = 'images';
   filesPath:string = 'files';
+  
+  private _uploadRequests:UploadRequest[] = [];
 
   constructor(
     private notificationService:NotificationsService
@@ -109,5 +118,21 @@ export class UploadService {
       this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
+  }
+
+  registerUploadRequest(fileName:string,type:string,file:File){
+    this._uploadRequests.push({
+      fileName,
+      type,
+      file
+    });
+  }
+
+  getUploadRequests(){
+    return this._uploadRequests;
+  }
+
+  requestsFinished(){
+    this._uploadRequests = [];
   }
 }

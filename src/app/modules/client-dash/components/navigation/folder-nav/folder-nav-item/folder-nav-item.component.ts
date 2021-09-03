@@ -1,6 +1,6 @@
 import { Component, OnInit,Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FolderNavService } from 'src/app/modules/client-dash/services/folder-nav.service';
+import { FolderNavService } from '../../../../services/folder-nav.service';
 import { fileType,PatientFile } from '../../../../models/patient-file';
 import { folderType,FolderItem } from '../../../../models/folder-item';
 

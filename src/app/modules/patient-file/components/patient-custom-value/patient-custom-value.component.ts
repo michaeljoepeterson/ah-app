@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { fieldTypes, FieldTypes } from 'src/app/modules/custom-forms/constants';
-import { CustomField } from 'src/app/modules/custom-forms/models/custom-field';
+import { fieldTypes, FieldTypes } from '../../../custom-forms/constants';
+import { CustomField } from '../../../custom-forms/models/custom-field';
 import { CustomFieldValue } from '../../../custom-forms/models/custom-field-value';
 import { PatientFileService } from '../../services/patient-file.service';
 
@@ -47,7 +47,7 @@ export class PatientCustomValueComponent implements OnInit {
 
   initValue(){
     if(this.fieldValue.fieldType === this.fieldTypes.date){
-      this.value = new Date(this.fieldValue.value.dateValue);
+      this.value = new Date(this.fieldValue.value.dateValue).toDateString();
     }
     else if(this.fieldValue.fieldType === this.fieldTypes.dropdown || this.fieldValue.fieldType === this.fieldTypes.radio || this.fieldValue.fieldType === this.fieldTypes.text){
       this.value = this.fieldValue.value.stringValue;

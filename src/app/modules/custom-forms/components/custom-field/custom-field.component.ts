@@ -8,7 +8,7 @@ import { FieldTypes } from '../../constants';
 import { CustomField } from '../../models/custom-field';
 import { CustomFieldValue } from '../../models/custom-field-value';
 import { FormService } from '../../services/form.service';
-import { UploadService } from 'src/app/services/upload.service';
+import { UploadService } from '../../../../services/upload.service';
 
 @Component({
   selector: 'app-custom-field',
@@ -117,7 +117,7 @@ export class CustomFieldComponent implements OnInit {
 
   async onFileSelected(files:FileList){
     let file:File = files.item(0);
-    if(this.selectedPatient){
+    if(this.selectedPatient && this.selectedPatient.id){
       try{
         if(this.fieldValue?.value?.filePath){
           await this.uploadService.deleteFile(this.fieldValue.value.filePath,this.selectedPatient.id);
@@ -132,12 +132,16 @@ export class CustomFieldComponent implements OnInit {
         
       }
     }
+    else{
+      this.fieldValue.setValue(file.name);
+      this.uploadService.registerUploadRequest(file.name,this.fieldTypes.file,file);
+    }
   }
 
   
   async onImageSelected(files:FileList){
     let file:File = files.item(0);
-    if(this.selectedPatient){
+    if(this.selectedPatient && this.selectedPatient.id){
       try{
         if(this.fieldValue?.value?.filePath){
           await this.uploadService.deleteImage(this.fieldValue.value.filePath,this.selectedPatient.id);
@@ -151,6 +155,10 @@ export class CustomFieldComponent implements OnInit {
       catch(e){
         
       }
+    }
+    else{
+      this.fieldValue.setValue(file.name);
+      this.uploadService.registerUploadRequest(file.name,this.fieldTypes.image,file);
     }
   }
 

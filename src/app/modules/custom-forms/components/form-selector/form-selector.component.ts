@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output,Input } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { PatientFileService } from 'src/app/modules/patient-file/services/patient-file.service';
+import { PatientFileService } from '../../../patient-file/services/patient-file.service';
 import { NotificationsService } from '../../../notifications/services/notifications.service';
 import { CustomForm } from '../../models/custom-form';
 import { FormService } from '../../services/form.service';
@@ -119,7 +119,7 @@ export class FormSelectorComponent implements OnInit {
         return this.patientFileService.selectedFile
       }),
       switchMap(file => {
-        if(file){
+        if(file?.id){
           this.selectedFormId = file.formType;
           let form = this.findForm(this.selectedFormId);
           return this.formService.getSingleCustomForm(form.id);
@@ -136,7 +136,7 @@ export class FormSelectorComponent implements OnInit {
         this.ref.markForCheck();
       },
       error:err => {
-        let message = 'Error getting forms';
+        let message = 'Error initializing forms';
         this.notificationService.displayErrorSnackBar(message,err);
       }
     });
