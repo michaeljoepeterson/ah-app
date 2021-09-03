@@ -21,11 +21,22 @@ export class FolderCardDetailsComponent implements OnInit {
   selectedFile:PatientFile;
   isEditing:boolean = false;
   isUpdationg:boolean = false;
+  private _sub:Subscription;
+  get sub():Subscription{
+    return this._sub;
+  }
+
+  set sub(subscription:Subscription){
+    if(this._sub){
+      this._sub.unsubscribe();
+    }
+    this._sub = subscription;
+  }
+
 
   constructor(
     private ref:ChangeDetectorRef,
     private folderNavService:FolderNavService,
-    private formService:FormService,
     private patientFileService:PatientFileService
   ) { }
 
@@ -46,7 +57,13 @@ export class FolderCardDetailsComponent implements OnInit {
       this.ref.markForCheck();
     });
 
-    this.subs = [itemSub,formSub];
+    let updatedSub = this.patientFileService.onFileUpdated.subscribe(file => {
+      if(file.id === this.selectedFile?.id){
+        this.selectFile();
+      }
+    });
+
+    this.subs = [itemSub,formSub,updatedSub];
   }
 
   ngOnDestroy(){
@@ -56,5 +73,13 @@ export class FolderCardDetailsComponent implements OnInit {
     catch(e){
       console.warn('Error cleaning up folder details:',e)
     }
+  }
+
+  selectFile(){
+    this.sub = this.patientFileService.getFileData(this.selectedFile).subscribe({
+      next:res => {
+        return res;
+      }
+    });
   }
 }

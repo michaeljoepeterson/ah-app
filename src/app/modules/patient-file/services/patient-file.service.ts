@@ -23,22 +23,23 @@ export class PatientFileService {
 
   private _onFileSubmitted:Subject<PatientFile> = new Subject();
   /**
-   * currently selected form
+   * file submit event
    */
   onFileSubmitted:Observable<PatientFile> = this._onFileSubmitted.asObservable();
   private _currentCustomValues:BehaviorSubject<CustomFieldValue[]> = new BehaviorSubject([]);
   /**
-   * currently selected form
+   * currently selected values
    */
-   currentCustomValues:Observable<CustomFieldValue[]> = this._currentCustomValues.asObservable();
-   endpoint:string = 'files';
-  
-   private _patientForm:Subject<CustomForm> = new Subject();
-   /**
-    * currently selected form
-    */
-   patientForm:Observable<CustomForm> = this._patientForm.asObservable();
-   
+  currentCustomValues:Observable<CustomFieldValue[]> = this._currentCustomValues.asObservable();
+  endpoint:string = 'files';
+
+  private _patientForm:Subject<CustomForm> = new Subject();
+  /**
+  * currently selected form
+  */
+  patientForm:Observable<CustomForm> = this._patientForm.asObservable();
+  private _onFileUpdated:Subject<PatientFile> = new Subject();
+  onFileUpdated:Observable<PatientFile> = this._onFileUpdated.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -131,5 +132,9 @@ export class PatientFileService {
   cleanupPatientDetails(){
     this.setValues([]);
     this.formService.setForm(null);
+  }
+
+  fileUpdated(file:PatientFile){
+    this._onFileUpdated.next(file);
   }
 }

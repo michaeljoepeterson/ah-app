@@ -195,6 +195,7 @@ export class CustomFieldComponent implements OnInit {
     this.fieldValue.parentFile = parentFile;
     this.sub = this.formService.updateFieldValue(this.fieldValue).subscribe({
       next:res => {
+        this.patientFileService.fileUpdated(parentFile);
         return res;
       }
     });
