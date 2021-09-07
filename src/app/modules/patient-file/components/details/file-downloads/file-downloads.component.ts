@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { fieldTypes, FieldTypes } from '../../../../custom-forms/constants';
 import { CustomFieldValue } from '../../../../custom-forms/models/custom-field-value';
@@ -16,6 +16,7 @@ export class FileDownloadsComponent implements OnInit {
   fileUrls:string[] = [];
   subs:Subscription[];
   fieldTypes:FieldTypes = fieldTypes;
+  initialLoad:boolean = true;
 
   constructor(
     private patientFileService:PatientFileService,
@@ -25,13 +26,19 @@ export class FileDownloadsComponent implements OnInit {
 
   ngOnInit(): void {
     let valSub = this.patientFileService.currentCustomValues.subscribe(values => {
-      if(values){
+      if(values && values.length > 0 && this.initialLoad){
         this.getFileValues(values);
         this.getFileUrls(this.customValues);
       }
     });
 
     this.subs = [valSub];
+  }
+
+  ngOnChanges(changes:SimpleChanges){
+    if(changes?.file?.currentValue){
+      this.initialLoad = true;
+    }
   }
 
   getFileValues(values:CustomFieldValue[]){
@@ -45,6 +52,7 @@ export class FileDownloadsComponent implements OnInit {
     });
     this.fileUrls = await Promise.all(requests);
     console.log(this.fileUrls);
+    this.initialLoad = false;
     this.ref.detectChanges();
   }
 }

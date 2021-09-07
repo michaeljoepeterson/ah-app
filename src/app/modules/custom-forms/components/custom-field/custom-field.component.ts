@@ -187,6 +187,9 @@ export class CustomFieldComponent implements OnInit {
     this.sub = this.formService.createFieldValue(this.fieldValue).subscribe({
       next:res => {
         this.fieldValue.id = res.id;
+        if(parentFile.id){
+          this.patientFileService.fileUpdated(parentFile);
+        }
       }
     });
   }

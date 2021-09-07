@@ -19,6 +19,10 @@ export class PatientDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnChanges(changes){
+    console.log(changes);
+  }
+
   ngOnDestroy(){
     try{
       this.patientFileService.cleanupPatientDetails();

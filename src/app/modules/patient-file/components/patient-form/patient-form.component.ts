@@ -123,6 +123,7 @@ export class PatientFormComponent implements OnInit {
   }
 
   init(){
+    debugger;
     this.sub = this.patientFileService.getFileValues(this.patientFile).subscribe({
       next:res => {
         console.log(res);

@@ -59,6 +59,7 @@ export class FolderCardDetailsComponent implements OnInit {
 
     let updatedSub = this.patientFileService.onFileUpdated.subscribe(file => {
       if(file.id === this.selectedFile?.id){
+        this.selectedFile = new PatientFile(file);
         this.selectFile();
       }
     });
@@ -78,6 +79,7 @@ export class FolderCardDetailsComponent implements OnInit {
   selectFile(){
     this.sub = this.patientFileService.getFileData(this.selectedFile).subscribe({
       next:res => {
+        this.ref.detectChanges();
         return res;
       }
     });
