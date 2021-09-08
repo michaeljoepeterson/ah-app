@@ -26,8 +26,10 @@ export class FileDownloadsComponent implements OnInit {
 
   ngOnInit(): void {
     let valSub = this.patientFileService.currentCustomValues.subscribe(values => {
-      if(values && values.length > 0 && this.initialLoad){
-        this.getFileValues(values);
+      let fileVals = this.getFileValues(values);
+      this.checkIfNewFile(fileVals);
+      if(values && fileVals.length > 0 && this.initialLoad){
+        this.customValues = this.getFileValues(values);
         this.getFileUrls(this.customValues);
       }
     });
@@ -41,8 +43,25 @@ export class FileDownloadsComponent implements OnInit {
     }
   }
 
-  getFileValues(values:CustomFieldValue[]){
-    this.customValues = values.filter(val => val.fieldType === this.fieldTypes.file && val.value.filePath);
+  checkIfNewFile(fileValues:CustomFieldValue[]){
+    if(this.customValues.length !== fileValues.length){
+      this.initialLoad = true;
+    }
+    else{
+      let currentValuesLookUp:Map<string,boolean> = new Map();
+      this.customValues.forEach(val => currentValuesLookUp.set(val.value.filePath,true));
+      for(let val of fileValues){
+        if(!currentValuesLookUp.has(val.id)){
+          this.initialLoad = true;
+          break;
+        }
+      }
+    }
+  }
+
+  getFileValues(values:CustomFieldValue[]):CustomFieldValue[]{
+    let customValues = values.filter(val => val.fieldType === this.fieldTypes.file && val.value.filePath);
+    return customValues;
   }
 
   async getFileUrls(values:CustomFieldValue[]){

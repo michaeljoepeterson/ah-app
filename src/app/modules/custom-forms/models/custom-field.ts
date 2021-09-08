@@ -42,7 +42,6 @@ export class CustomField extends BaseModel{
     serialize():any{
         let data = super.serialize();
         data.parentForm = this.parentForm?.id || this.parentForm?._id ? this.parentForm._id : this.parentForm;
-        debugger
         return data;
     }
 }

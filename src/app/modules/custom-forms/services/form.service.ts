@@ -310,7 +310,7 @@ export class FormService {
     let body = {
       field:fieldData
     };
-    debugger
+
     return this.http.post(url,body,options).pipe(
       map((response:any) => {
         let newfield = new CustomField(response.field);

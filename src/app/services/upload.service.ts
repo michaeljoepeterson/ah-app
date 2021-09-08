@@ -73,7 +73,7 @@ export class UploadService {
     catch(e){
       let message = 'Error getting image'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,e);
+      //this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
@@ -87,7 +87,7 @@ export class UploadService {
     catch(e){
       let message = 'Error getting file'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,e);
+      //this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
@@ -101,7 +101,7 @@ export class UploadService {
       console.warn(e);
       let message = 'Error deleting file'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,e);
+      //this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
@@ -115,7 +115,7 @@ export class UploadService {
       console.warn(e);
       let message = 'Error deleting file'
       console.warn(message,e);
-      this.notificationService.displayErrorSnackBar(message,e);
+      //this.notificationService.displayErrorSnackBar(message,e);
       throw e;
     }
   }
